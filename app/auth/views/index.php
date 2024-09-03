@@ -7,7 +7,7 @@ require_once("../controllers/AuthController.php");
 <!-- Content -->
 <div class="authentication-wrapper authentication-basic px-3">
     <div class="authentication-inner">
-        <!-- Register -->
+        <!-- Login Form -->
         <div class="card">
             <div class="card-body">
                 <!-- Logo -->
@@ -16,7 +16,7 @@ require_once("../controllers/AuthController.php");
                         <img src="../../assets/images/urbes.svg" width="100" height="100" alt="">
                     </span>
                 </div>
-                <!-- /Logo -->
+                <!-- titulo del formulario -->
                 <div class="text-center">
                     <h4 class="mb-2">Bienvenido Usuario! 👋</h4>
                     <p class="mb-4">Ingresa por favor tus credenciales.</p>
@@ -24,11 +24,12 @@ require_once("../controllers/AuthController.php");
 
                 <form id="formAuthentication" class="mb-3" autocomplete="off" method="POST" action="">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Documento</label>
+                        <label for="documento" class="form-label">Documento</label>
                         <div class="input-group input-group-merge">
                             <span class="input-group-text"><i class="bx bx-id-card"></i></span>
-                            <input type="email" class="form-control" required maxlength="50" id="email" name="email"
-                                placeholder="Ingresa tu numero de documento" autofocus />
+                            <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this);"
+                                onkeypress="return(multiplenumber(event));" class="form-control" required id="documento"
+                                name="documento" placeholder="Ingresa tu numero de documento" autofocus />
                         </div>
                     </div>
                     <div class="mb-3 form-password-toggle">

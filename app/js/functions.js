@@ -28,13 +28,27 @@ function multiplenumber(e) {
   for (var i in especiales) {
     if (key == especiales[i]) {
       teclado_especial = true;
-      alert('Debe ingresar solo numeros y debes tener en cuenta la cantidad de numeros requeridos');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de digitacion',
+        text: 'Debes ingresar solo numero y deben ser en un rango de 6 a 10 numeros',
+        customClass: {
+          confirmButton: 'btn btn-primary'
+        }
+      });
       break;
     }
   }
 
   if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
-    alert('Debe ingresar solo numeros y debes tener en cuenta la cantidad de numeros requeridos');
+    Swal.fire({
+      icon: 'error',
+      title: 'Error de digitacion',
+      text: 'Debes ingresar solo numero y deben ser en un rango de 6 a 10 numeros',
+      customClass: {
+        confirmButton: 'btn btn-primary'
+      }
+    });
     return false;
   }
 }
@@ -42,6 +56,13 @@ function multiplenumber(e) {
 function maxlengthNumber(obj) {
   if (obj.value.length > obj.maxLength) {
     obj.value = obj.value.slice(0, obj.maxLength);
-    alert('Debe ingresar solo numeros y debes tener en cuenta la cantidad de numeros requeridos');
+    Swal.fire({
+      icon: 'error',
+      title: 'Error de digitacion',
+      text: 'Debes ingresar solo numero y deben ser en un rango de 6 a 10 numeros',
+      customClass: {
+        confirmButton: 'btn btn-primary'
+      }
+    });
   }
 }
