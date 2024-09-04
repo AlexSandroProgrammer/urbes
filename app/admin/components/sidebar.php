@@ -35,6 +35,7 @@
     <!-- Helpers -->
     <script src="../../assets/vendor/js/helpers.js"></script>
     <script src="../../assets/js/config.js"></script>
+    <script src="../../js/functions.js"></script>
     <script src="../../js/sweetalert.js"></script>
     <script src="../../assets/css/sweetalert.css"></script>
 </head>

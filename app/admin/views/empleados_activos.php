@@ -21,7 +21,7 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                     <!-- Default Modal -->
                     <div class="col-xl-3 col-lg-4">
                         <!-- Button trigger modal -->
-                        <a class="btn btn-primary" href="registrar-aprendiz.php">
+                        <a class="btn btn-primary" href="registrar_empleado.php">
                             <i class="fas fa-layer-group"></i> Registrar Empleado
                         </a>
                     </div>
@@ -29,18 +29,15 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                         <div class="btn-group">
                             <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <i class="fas fa-star"></i> Filtrar Aprendices
+                                <i class="fas fa-star"></i> Filtrar Empleados
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="aprendices-lectiva.php">Aprendices Etapa Lectiva</a>
+                                <li><a class="dropdown-item" href="empleados_activos.php">Empleados Activos</a>
                                 </li>
-                                <li><a class="dropdown-item" href="aprendices-se.php">Aprendices SENA EMPRESA</a></li>
-                                <li><a class="dropdown-item" href="aprendices-productiva.php">Aprendices Etapa
-                                        Productiva</a>
+                                <li><a class="dropdown-item" href="empleados_bloqueados.php">Empleados Bloqueados</a>
                                 </li>
-                                <li><a class="dropdown-item" href="aprendices-historico.php">Aprendices Historico</a>
-                                </li>
-                                <li><a class="dropdown-item" href="aprendices-bloqueados.php">Aprendices Bloqueados</a>
+                                <li>
+                                    <a class="dropdown-item" href="empleados_eliminados.php">Empleados Eliminados</a>
                                 </li>
                             </ul>
                         </div>
@@ -66,8 +63,8 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                     <th>Parentezco Familiar</th>
                                     <th>Tipo de Usuario</th>
                                     <th>Estado</th>
-                                    <th>Fecja registro</th>
-                                    <th>Fecja actualizacion</th>
+                                    <th>Fecha registro</th>
+                                    <th>Fecha actualizacion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,20 +96,20 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                                 class="btn btn-info mt-2" title="Cambiar Imagen"><i
                                                     class='bx bx-image-add'></i></a>
                                         </td>
+                                        <td><?php echo $empleado['tipo_documento'] ?></td>
                                         <td><?php echo $empleado['documento'] ?></td>
                                         <td><?php echo $empleado['nombres'] ?></td>
                                         <td><?php echo $empleado['apellidos'] ?></td>
-                                        <td><?php echo $empleado['email'] ?></td>
                                         <td><?php echo $empleado['celular'] ?></td>
-                                        <td><?php echo $empleado['id_ficha'] ?></td>
-                                        <td><?php echo $empleado['nombre_programa'] ?></td>
-                                        <td><?php echo strtoupper($empleado['patrocinio']) ?></td>
-                                        <td><?php echo $empleado['nombre_empresa'] ?></td>
-                                        <td><?php echo $edad ?></td>
-                                        <td><?php echo $empleado['sexo'] ?></td>
+                                        <td><?php echo $empleado['eps'] ?></td>
+                                        <td><?php echo $empleado['arl'] ?></td>
+                                        <td><?php echo $empleado['nombre_familiar'] ?></td>
+                                        <td><?php echo $empleado['celular_familiar'] ?></td>
+                                        <td><?php echo $empleado['parentezco_familiar'] ?></td>
                                         <td><?php echo $empleado['tipo_usuario'] ?></td>
-                                        <td><?php echo $empleado['estado_empleado'] ?></td>
-                                        <td><?php echo $empleado['nombre_estado_se'] ?></td>
+                                        <td><?php echo $empleado['estado'] ?></td>
+                                        <td><?php echo $empleado['fecha_registro'] ?></td>
+                                        <td><?php echo $empleado['fecha_actualizacion'] ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

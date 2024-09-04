@@ -15,7 +15,7 @@ function multiplenumber(e) {
       Swal.fire({
         icon: 'error',
         title: 'Error de digitacion',
-        text: 'Debes ingresar solo numeros y deben ser en un rango de 6 a 10 numeros',
+        text: 'Debes ingresar solo numeros y deben ser en un rango requerido',
         confirmButtonText: 'Aceptar',
         customClass: {
           confirmButton: 'btn btn-primary'
@@ -29,7 +29,7 @@ function multiplenumber(e) {
     Swal.fire({
       icon: 'error',
       title: 'Error de digitacion',
-      text: 'Debes ingresar solo numeros y deben ser en un rango de 6 a 10 numeros',
+      text: 'Debes ingresar solo numeros y deben ser en un rango requerido',
       customClass: {
         confirmButton: 'btn btn-primary'
       }
@@ -44,7 +44,7 @@ function maxlengthNumber(obj) {
     Swal.fire({
       icon: 'error',
       title: 'Error de digitacion',
-      text: 'Debes ingresar solo numeros y deben ser en un rango de 6 a 10 numeros',
+      text: 'Debes ingresar solo numeros y deben ser en un rango requerido',
       customClass: {
         confirmButton: 'btn btn-primary'
       }

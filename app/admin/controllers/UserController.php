@@ -10,12 +10,12 @@ if ((isset($_POST["MM_formUpdateMyDates"])) && ($_POST["MM_formUpdateMyDates"] =
     $celular = $_POST['celular'];           // Captura el valor del celular enviado por el formulario
     $tipo_documento = $_POST['tipo_documento']; // Captura el tipo de documento enviado por el formulario
     $password = $_POST['password'];         // Captura el valor de la contraseña enviada por el formulario
+    $fecha_actual = date('Y-m-d H:i:s');
     // Validamos que no se haya recibido ningún dato vacío en los campos críticos
     if (isEmpty([$documento, $names, $surnames, $celular, $tipo_documento])) {
         showErrorFieldsEmpty("perfil.php"); // Si algún campo está vacío, muestra un error y redirige
         exit();                             // Termina la ejecución del script
     }
-
     // Prepara una consulta para verificar si el número de celular ya pertenece a otro usuario
     $useValidation = $connection->prepare("SELECT * FROM usuarios WHERE (celular = :celular) AND documento <> :documento");
     // Vincula el valor del celular a la consulta
@@ -51,17 +51,17 @@ if ((isset($_POST["MM_formUpdateMyDates"])) && ($_POST["MM_formUpdateMyDates"] =
                 $user_password = password_hash($password, PASSWORD_DEFAULT, $pass_encriptaciones);
             }
             // Inserta o actualiza los datos en la base de datos
-            $updateDataUser = $connection->prepare("UPDATE usuarios SET nombres = :names, apellidos = :surnames, celular = :celular, tipo_documento = :tipo_documento, password = :password  WHERE documento = :documento");
+            $updateDataUser = $connection->prepare("UPDATE usuarios SET nombres = :names, apellidos = :surnames, celular = :celular, tipo_documento = :tipo_documento, password = :password, fecha_actualizacion = :fecha_actualizacion  WHERE documento = :documento");
             // Vincula los parámetros a la consulta de actualización
             $updateDataUser->bindParam(':names', $names);
             $updateDataUser->bindParam(':surnames', $surnames);
             $updateDataUser->bindParam(':celular', $celular);
             $updateDataUser->bindParam(':tipo_documento', $tipo_documento);
             $updateDataUser->bindParam(':password', $user_password);
+            $updateDataUser->bindParam(':fecha_actualizacion', $fecha_actual);
             $updateDataUser->bindParam(':documento', $documento);
             // Ejecuta la consulta de actualización
             $updateDataUser->execute();
-
             // Verifica si la actualización fue exitosa
             if ($updateDataUser) {
                 // Muestra un mensaje de éxito y redirige al perfil
