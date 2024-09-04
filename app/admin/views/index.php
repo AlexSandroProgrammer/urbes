@@ -12,12 +12,13 @@ require_once("../components/sidebar.php");
                     <div class="d-flex align-items-end row">
                         <div class="col-sm-7">
                             <div class="card-body">
-                                <h5 class="card-title text-primary">Bienvenido(a) Administrador! 🎉</h5>
+                                <h5 class="card-title text-primary">Bienvenido(a) Administrador!🎉</h5>
                                 <p class="mb-4">
                                     En este Panel de Administrador puedes gestionar los diferentes datos de los
                                     empleados de tu empresa...
                                 </p>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary">Ver Empleados Activos</a>
+                                <a href="empleados_activos.php" class="btn btn-sm btn-outline-primary">Ver Empleados
+                                    Activos</a>
                             </div>
                         </div>
                         <div class="col-sm-5 text-center text-sm-left">
@@ -42,9 +43,33 @@ require_once("../components/sidebar.php");
                     <div class="card-body mt-3">
                         <ul class="p-0 m-0">
                             <?php
-                            countStatesUsers("conteoEmpleadosActivos", "usuarios", "Activos", "Empleados Activos", "1", "success", "2");
-                            countStatesUsers("conteoEmpleadosBloqueados", "usuarios", "Bloqueados", "Empleados Bloqueados", "1", "warning", "2");
-                            countStatesUsers("conteoEmpleadosEliminados", "usuarios", "Eliminados", "Empleados Eliminados", "1", "danger", "2");
+                            countStatesUsers(
+                                "conteoEmpleadosActivos",
+                                "usuarios",
+                                "Activos",
+                                "Empleados Activos",
+                                "1",
+                                "success",
+                                "3"
+                            );
+                            countStatesUsers(
+                                "conteoEmpleadosBloqueados",
+                                "usuarios",
+                                "Bloqueados",
+                                "Empleados Bloqueados",
+                                "1",
+                                "warning",
+                                "3"
+                            );
+                            countStatesUsers(
+                                "conteoEmpleadosEliminados",
+                                "usuarios",
+                                "Eliminados",
+                                "Empleados Eliminados",
+                                "1",
+                                "danger",
+                                "3"
+                            );
                             ?>
                         </ul>
                         <div class="text-center"><a href="empleados.php" class="btn btn-outline-primary">Ver
@@ -64,9 +89,9 @@ require_once("../components/sidebar.php");
                     <div class="card-body mt-3">
                         <ul class="p-0 m-0">
                             <?php
-                            countStatesUsers("conteoSociosActivos", "usuarios", "Activos", "Socios Activos", "1", "success", "3");
-                            countStatesUsers("conteoSociosBloqueados", "usuarios", "Bloqueados", "Socios Bloqueados", "1", "warning", "3");
-                            countStatesUsers("conteoSociosEliminados", "usuarios", "Eliminados", "Socios Eliminados", "1", "danger", "3");
+                            countStatesUsers("conteoSociosActivos", "usuarios", "Activos", "Socios Activos", "1", "success", "2");
+                            countStatesUsers("conteoSociosBloqueados", "usuarios", "Bloqueados", "Socios Bloqueados", "1", "warning", "2");
+                            countStatesUsers("conteoSociosEliminados", "usuarios", "Eliminados", "Socios Eliminados", "1", "danger", "2");
                             ?>
                         </ul>
                         <div class="text-center"><a href="socios.php" class="btn btn-outline-primary">Ver

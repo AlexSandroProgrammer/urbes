@@ -17,7 +17,7 @@ if (isset($_POST["iniciarSesion"])) {
     $authValidation->bindParam(':documento', $documento);
     $authValidation->execute();
     $authSession = $authValidation->fetch(PDO::FETCH_ASSOC);
-    if ($authSession and $password == $authSession['password']) {
+    if ($authSession && password_verify($password, $authSession['password'])) {
         // Si la autenticación es exitosa
         $_SESSION['id_rol'] = $authSession['id_tipo_usuario'];
         $_SESSION['rol'] = $authSession['tipo_usuario'];
