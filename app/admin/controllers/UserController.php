@@ -3,7 +3,6 @@
 
 // Verifica si se ha enviado el formulario de actualización y si corresponde al formulario correcto
 if ((isset($_POST["MM_formUpdateMyDates"])) && ($_POST["MM_formUpdateMyDates"] == "formUpdateMyDates")) {
-
     // VARIABLES DE ASIGNACIÓN DE VALORES QUE SE ENVÍAN DESDE EL FORMULARIO DE REGISTRO DE ÁREA
     $documento = $_POST['documento'];       // Captura el valor del documento enviado por el formulario
     $names = $_POST['names'];               // Captura el valor del nombre enviado por el formulario
@@ -11,7 +10,6 @@ if ((isset($_POST["MM_formUpdateMyDates"])) && ($_POST["MM_formUpdateMyDates"] =
     $celular = $_POST['celular'];           // Captura el valor del celular enviado por el formulario
     $tipo_documento = $_POST['tipo_documento']; // Captura el tipo de documento enviado por el formulario
     $password = $_POST['password'];         // Captura el valor de la contraseña enviada por el formulario
-
     // Validamos que no se haya recibido ningún dato vacío en los campos críticos
     if (isEmpty([$documento, $names, $surnames, $celular, $tipo_documento])) {
         showErrorFieldsEmpty("perfil.php"); // Si algún campo está vacío, muestra un error y redirige
@@ -28,7 +26,6 @@ if ((isset($_POST["MM_formUpdateMyDates"])) && ($_POST["MM_formUpdateMyDates"] =
     $useValidation->execute();
     // Obtiene el resultado de la consulta
     $fetch = $useValidation->fetch(PDO::FETCH_ASSOC);
-
     // Condicionales dependiendo del resultado de la consulta
     if ($fetch) {
         // Si ya existe un usuario con el mismo celular y diferente documento, muestra un error

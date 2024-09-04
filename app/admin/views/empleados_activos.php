@@ -4,11 +4,11 @@ require_once("../components/sidebar.php");
 // arreglo con ids de la consulta
 $array_keys = [1, 3];
 //*  CONSULTA PARA CONSUMIR LOS DATOS DE LOS EMPLEADOS ACTIVOS
-$listaEmpleados = $connection->prepare("SELECT * FROM usuarios INNER JOIN usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario INNER JOIN estados ON usuarios.id_estado = estados.id_estado WHERE usuarios.id_tipo_usuario = :id_tipo_usuario AND usuarios.id_estado = :id_estado");
+$listaEmpleados = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario INNER JOIN estados ON usuarios.id_estado = estados.id_estado WHERE usuarios.id_tipo_usuario = :id_tipo_usuario AND usuarios.id_estado = :id_estado");
 $listaEmpleados->bindParam(":id_tipo_usuario", $array_keys[1]);
 $listaEmpleados->bindParam(":id_estado", $array_keys[0]);
 $listaEmpleados->execute();
-$aprendices = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
+$empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -22,14 +22,7 @@ $aprendices = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col-xl-3 col-lg-4">
                         <!-- Button trigger modal -->
                         <a class="btn btn-primary" href="registrar-aprendiz.php">
-                            <i class="fas fa-layer-group"></i> Registrar
-                        </a>
-                    </div>
-                    <!-- Vertically Centered Modal -->
-                    <div class="col-xl-3 col-lg-4">
-                        <!-- Button trigger modal -->
-                        <a href="aprendices-lectiva.php?importarExcel" class="btn btn-success">
-                            <i class="fas fa-file-excel"></i> Importar Excel
+                            <i class="fas fa-layer-group"></i> Registrar Empleado
                         </a>
                     </div>
                     <div class="col-xl-3 col-lg-4">
@@ -53,91 +46,6 @@ $aprendices = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
                 </div>
-                <?php
-                if (isset($_GET['importarExcel'])) {
-                ?>
-                <div class="row">
-                    <div class="col-xl">
-                        <div class="card mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Importacion de Archivo Excel
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                                    name="aprendizMasivoExcel">
-                                    <div class=" mb-3">
-                                        <label class="form-label" for="aprendiz_excel">Subir Archivo</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="span_csv" class="input-group-text"><i
-                                                    class="fas fa-file-excel"></i></span>
-                                            <input type="file" autofocus class="form-control" required
-                                                name="aprendiz_excel" id="aprendiz_excel" />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-danger" href="aprendices-se.php">
-                                            Cancelar
-                                        </a>
-                                        <input type="submit" class="btn btn-success" value="Subir Imagen"></input>
-                                        <input type="hidden" class="btn btn-info" value="aprendizMasivoExcel"
-                                            name="MM_aprendizMasivoExcel"></input>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php
-                }
-                ?>
-                <?php
-                if (isset($_GET['document'], $_GET['ruta'])) {
-                    $documento = $_GET['document'];
-                    $datosAprendiz = $connection->prepare("SELECT * FROM usuarios WHERE documento = :documento");
-                    $datosAprendiz->bindParam(":documento", $documento);
-                    $datosAprendiz->execute();
-                    $aprendiz = $datosAprendiz->fetch(PDO::FETCH_ASSOC);
-
-                ?>
-                <div class="row">
-                    <div class="col-xl">
-                        <div class="card mb-4">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Actualizar Foto de <?php echo $aprendiz['nombres'] ?> -
-                                    <?php echo $aprendiz['apellidos'] ?>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                                    name="updateImageAprendiz">
-                                    <div class=" mb-3">
-                                        <label class="form-label" for="aprendiz_foto">Subir Archivo</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="span_csv" class="input-group-text"><i
-                                                    class='bx bx-image-add'></i></span>
-                                            <input type="file" accept="image/*" autofocus class="form-control" required
-                                                name="fotoAprendiz" id="aprendiz_foto" />
-                                        </div>
-                                        <input type="hidden" name="document" value="<?php echo $documento ?>">
-                                        <input type="hidden" name="ruta" value="<?php echo $ruta ?>">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-danger" href="<?php echo $ruta ?>">
-                                            Cancelar
-                                        </a>
-                                        <input type="submit" class="btn btn-success" value="Subir Archivo"></input>
-                                        <input type="hidden" class="btn btn-info" value="updateImageAprendiz"
-                                            name="MM_updateImageAprendiz"></input>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php
-                }
-                ?>
                 <div class="row">
                     <div class="col-lg-12 mt-5">
                         <table id="example"
@@ -146,98 +54,66 @@ $aprendices = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                             <thead>
                                 <tr>
                                     <th>Acciones</th>
-                                    <th>Foto del Aprendiz</th>
+                                    <th>Tipo documento</th>
                                     <th>N. documento</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
-                                    <th>Email</th>
                                     <th>Celular</th>
-                                    <th>Ficha de Formacion</th>
-                                    <th>Programa de formacion</th>
-                                    <th>Patrocinio</th>
-                                    <th>Empresa</th>
-                                    <th>Edad</th>
-                                    <th>sexo</th>
-                                    <th>Rol del Usuario</th>
-                                    <th>Estado Aprendiz</th>
-                                    <th>Estado SENA EMPRESA</th>
+                                    <th>EPS</th>
+                                    <th>ARL</th>
+                                    <th>Nombre Familiar</th>
+                                    <th>Celular Familiar</th>
+                                    <th>Parentezco Familiar</th>
+                                    <th>Tipo de Usuario</th>
+                                    <th>Estado</th>
+                                    <th>Fecja registro</th>
+                                    <th>Fecja actualizacion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($aprendices as $aprendiz) {
-                                    // Crear objetos DateTime para la fecha de nacimiento y la fecha actual
-                                    $fecha_nacimiento = $aprendiz['fecha_nacimiento'];
-                                    $fechaNacimiento = new DateTime($fecha_nacimiento);
-                                    $fechaActual = new DateTime();
-                                    // Calcular la diferencia entre las dos fechas
-                                    $diferencia = $fechaActual->diff($fechaNacimiento);
-                                    // Obtener la edad en años
-                                    $edad = $diferencia->y;
+                                <?php foreach ($empleados as $empleado) {
                                 ?>
-                                <tr>
-                                    <td>
-                                        <form method="GET" action="">
-                                            <input type="hidden" name="id_aprendiz-delete"
-                                                value="<?= $aprendiz['documento'] ?>">
-                                            <input type="hidden" name="ruta" value="aprendices-se.php">
-                                            <button class="btn btn-danger mt-2"
-                                                onclick="return confirm('¿Desea eliminar el registro seleccionado?');"
-                                                type="submit">
-                                                <i class="bx bx-trash" title="Eliminar"></i>
-                                            </button>
-                                        </form>
-                                        <form method="GET" class="mt-2" action="editar-aprendiz.php">
-                                            <input type="hidden" name="id_aprendiz-edit"
-                                                value="<?= $aprendiz['documento'] ?>">
-                                            <input type="hidden" name="ruta" value="aprendices-se.php">
-                                            <button class="btn btn-success"
-                                                onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                type="submit">
-                                                <i class="bx bx-refresh" title="Actualizar"></i>
-                                            </button>
-                                        </form>
-                                        <a href="aprendices-se.php?document=<?php echo $aprendiz['documento'] ?>&ruta=aprendices-se.php"
-                                            class="btn btn-info mt-2" title="Cambiar Imagen"><i
-                                                class='bx bx-image-add'></i></a>
-                                    </td>
-                                    <?php
-                                        if (isEmpty([$aprendiz['foto_data']])) {
-                                        ?>
-                                    <td class="avatar">
-                                        <img src="../assets/images/perfil_sin_foto.jpg" alt
-                                            class="w-px-100 mb-3 h-px-100 rounded-circle" />
-                                        <p>Sin foto</p>
-                                    </td>
-
-                                    <?php
-                                        } else {
-                                        ?>
-                                    <td class="avatar">
-                                        <img src="../assets/images/aprendices/<?php echo $aprendiz['foto_data'] ?>" alt
-                                            class="w-px-100 h-px-100 rounded-circle" />
-                                        <button class="btn btn-primary mt-2 view-photo-btn"
-                                            data-photo="../assets/images/aprendices/<?php echo $aprendiz['foto_data'] ?>">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </td>
-                                    <?php
-                                        }
-                                        ?>
-                                    <td><?php echo $aprendiz['documento'] ?></td>
-                                    <td><?php echo $aprendiz['nombres'] ?></td>
-                                    <td><?php echo $aprendiz['apellidos'] ?></td>
-                                    <td><?php echo $aprendiz['email'] ?></td>
-                                    <td><?php echo $aprendiz['celular'] ?></td>
-                                    <td><?php echo $aprendiz['id_ficha'] ?></td>
-                                    <td><?php echo $aprendiz['nombre_programa'] ?></td>
-                                    <td><?php echo strtoupper($aprendiz['patrocinio']) ?></td>
-                                    <td><?php echo $aprendiz['nombre_empresa'] ?></td>
-                                    <td><?php echo $edad ?></td>
-                                    <td><?php echo $aprendiz['sexo'] ?></td>
-                                    <td><?php echo $aprendiz['tipo_usuario'] ?></td>
-                                    <td><?php echo $aprendiz['estado_aprendiz'] ?></td>
-                                    <td><?php echo $aprendiz['nombre_estado_se'] ?></td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <form method="GET" action="">
+                                                <input type="hidden" name="id_empleado-delete"
+                                                    value="<?= $empleado['documento'] ?>">
+                                                <input type="hidden" name="ruta" value="aprendices-se.php">
+                                                <button class="btn btn-danger mt-2"
+                                                    onclick="return confirm('¿Desea eliminar el registro seleccionado?');"
+                                                    type="submit">
+                                                    <i class="bx bx-trash" title="Eliminar"></i>
+                                                </button>
+                                            </form>
+                                            <form method="GET" class="mt-2" action="editar-empleado.php">
+                                                <input type="hidden" name="id_empleado-edit"
+                                                    value="<?= $empleado['documento'] ?>">
+                                                <input type="hidden" name="ruta" value="aprendices-se.php">
+                                                <button class="btn btn-success"
+                                                    onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                    type="submit">
+                                                    <i class="bx bx-refresh" title="Actualizar"></i>
+                                                </button>
+                                            </form>
+                                            <a href="aprendices-se.php?document=<?php echo $empleado['documento'] ?>&ruta=aprendices-se.php"
+                                                class="btn btn-info mt-2" title="Cambiar Imagen"><i
+                                                    class='bx bx-image-add'></i></a>
+                                        </td>
+                                        <td><?php echo $empleado['documento'] ?></td>
+                                        <td><?php echo $empleado['nombres'] ?></td>
+                                        <td><?php echo $empleado['apellidos'] ?></td>
+                                        <td><?php echo $empleado['email'] ?></td>
+                                        <td><?php echo $empleado['celular'] ?></td>
+                                        <td><?php echo $empleado['id_ficha'] ?></td>
+                                        <td><?php echo $empleado['nombre_programa'] ?></td>
+                                        <td><?php echo strtoupper($empleado['patrocinio']) ?></td>
+                                        <td><?php echo $empleado['nombre_empresa'] ?></td>
+                                        <td><?php echo $edad ?></td>
+                                        <td><?php echo $empleado['sexo'] ?></td>
+                                        <td><?php echo $empleado['tipo_usuario'] ?></td>
+                                        <td><?php echo $empleado['estado_empleado'] ?></td>
+                                        <td><?php echo $empleado['nombre_estado_se'] ?></td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>

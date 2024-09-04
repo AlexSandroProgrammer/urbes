@@ -102,8 +102,18 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="empleaados.php" class="menu-link">
-                                    <div data-i18n="Error">Lista de Empleados</div>
+                                <a href="empleados_activos.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Empleados Activos</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="empleados_bloqueados.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Empleados Bloqueados</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="empleados_eliminados.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Empleados Eliminados</div>
                                 </a>
                             </li>
                             <li class="menu-item">
