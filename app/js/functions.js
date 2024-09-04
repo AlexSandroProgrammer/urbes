@@ -1,19 +1,3 @@
-function navigateTo(destination) {
-  let url;
-  switch (destination) {
-    case 'consultar':
-      url = 'consultar.php'; // Reemplaza 'url_de_tu_pagina_usuario_invitado' con la URL correspondiente
-      break;
-    case 'inicio':
-      url = 'https://urbes.com.co/operacion/mariquita'; // Reemplaza 'url_de_tu_pagina_blog' con la URL correspondiente
-      break;
-    default:
-      url = '#'; // URL por defecto, puedes cambiarlo según necesites
-      break;
-  }
-  window.location.href = url;
-}
-
 function multiplenumber(e) {
   key = e.keyCode || e.which;
 
@@ -32,6 +16,7 @@ function multiplenumber(e) {
         icon: 'error',
         title: 'Error de digitacion',
         text: 'Debes ingresar solo numero y deben ser en un rango de 6 a 10 numeros',
+        confirmButtonText: 'Aceptar',
         customClass: {
           confirmButton: 'btn btn-primary'
         }

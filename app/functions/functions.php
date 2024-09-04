@@ -37,6 +37,11 @@ function showErrorOrSuccessAndRedirect($icon, $title, $description, $location)
             icon: '$icon',
             title: '$title',
             text: '$description',
+            confirmButtonText: 'Aceptar',
+            customClass: { 
+             confirmButton: 'btn btn-primary'
+            }
+            
         }).then(() => {
             window.location='$location'    
         });</script>";
@@ -129,12 +134,12 @@ function cardStadicts($item, $table, $route, $nameTitle)
 }
 
 // FUNCION 
-function itemStatesAprenttices($item, $table, $title, $description, $id_estado, $id_estado_se, $state)
+function countStatesUsers($item, $table, $title, $description, $id_estado, $state, $id_tipo_usuario)
 {
     require_once("../../../database/connection.php");
     $db = new Database();
     $connection = $db->conectar();
-    $countTable = "SELECT COUNT(*) AS $item FROM $table WHERE id_tipo_usuario = 2 AND id_estado = $id_estado AND id_estado_se = $id_estado_se";
+    $countTable = "SELECT COUNT(*) AS $item FROM $table WHERE id_tipo_usuario = $id_tipo_usuario AND id_estado = $id_estado";
     try {
         $resultado = $connection->query($countTable);
         $count = $resultado->fetch(PDO::FETCH_ASSOC)[$item];

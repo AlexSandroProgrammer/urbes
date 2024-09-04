@@ -21,7 +21,6 @@ require_once("../controllers/AuthController.php");
                     <h4 class="mb-2">Bienvenido Usuario! 👋</h4>
                     <p class="mb-4">Ingresa por favor tus credenciales.</p>
                 </div>
-
                 <form id="formAuthentication" class="mb-3" autocomplete="off" method="POST" action="">
                     <div class="mb-3">
                         <label for="documento" class="form-label">Documento</label>
