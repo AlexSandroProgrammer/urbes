@@ -1,14 +1,16 @@
 <?php
 $titlePage = "Editar Aprendiz";
 require_once("../components/sidebar.php");
-if (isNotEmpty([$_GET['id_aprendiz-edit'], $_GET['ruta']])) {
-    $id_aprendiz = $_GET['id_aprendiz-edit'];
+if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
+    $id_employee = $_GET['id_employee-edit'];
     $ruta = $_GET['ruta'];
-    $getFindByIdAprendiz = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario INNER JOIN estados ON usuarios.id_estado = estados.id_estado WHERE usuarios.documento = :documento");
-    $getFindByIdAprendiz->bindParam(":documento", $id_aprendiz);
-    $getFindByIdAprendiz->execute();
-    $aprendizFindById = $getFindByIdAprendiz->fetch(PDO::FETCH_ASSOC);
-    if ($aprendizFindById) {
+    $getFindByIdEmployee = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario INNER JOIN estados ON usuarios.id_estado = estados.id_estado WHERE usuarios.documento = :documento");
+    $getFindByIdEmployee->bindParam(":documento", $id_employee);
+    $getFindByIdEmployee->execute();
+    $employeeGetId = $getFindByIdEmployee->fetch(PDO::FETCH_ASSOC);
+    if ($employeeGetId) {
+        // desencriptacion de contraseña 
+        $password = bcrypt_password($employeeGetId['password']);
 ?>
         <!-- Content wrapper -->
         <div class="content-wrapper">
@@ -19,16 +21,18 @@ if (isNotEmpty([$_GET['id_aprendiz-edit'], $_GET['ruta']])) {
                     <div class="col-xl">
                         <div class="card mb-4">
                             <div class="card-header justify-content-between align-items-center">
-                                <h3 class="fw-bold py-2"><span class="text-muted fw-light">Aprendices/</span>Editar datos de
-                                    <?php echo $aprendizFindById['nombres'] ?> - <?php echo $aprendizFindById['apellidos'] ?>
+                                <h3 class="fw-bold py-2">Editar datos de
+                                    <?php echo $employeeGetId['nombres'] ?> - <?php echo $employeeGetId['apellidos'] ?>
                                 </h3>
-                                <h6 class="mb-0">Ingresa por favor los siguientes datos.</h6>
+                                <h6 class="mb-0">Edita por favor los siguientes datos necesarios.</h6>
                             </div>
                             <div class="card-body">
                                 <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
                                     name="formUpdateAprendiz">
                                     <div class="row">
                                         <input type="hidden" name="ruta" value="<?php echo $ruta ?>">
+                                        <h6 class="mb-3 fw-bold"> <i class="bx bx-user"></i> DATOS PERSONALES</h6>
+
                                         <!-- tipo de documento -->
                                         <div class="mb-3 col-12 col-lg-6">
                                             <label for="tipo_documento" class="form-label">Tipo de Documento</label>
@@ -37,8 +41,8 @@ if (isNotEmpty([$_GET['id_aprendiz-edit'], $_GET['ruta']])) {
                                                         class="fas fa-user"></i></span>
                                                 <select class="form-select" autofocus name="tipo_documento" id="tipo_documento"
                                                     required>
-                                                    <option value="<?php echo $aprendizFindById['tipo_documento'] ?>">
-                                                        <?php echo $aprendizFindById['tipo_documento'] ?></option>
+                                                    <option value="<?php echo $employeeGetId['tipo_documento'] ?>">
+                                                        <?php echo $employeeGetId['tipo_documento'] ?></option>
                                                     <option value="C.C.">C.C.</option>
                                                     <option value="C.E.">C.E.</option>
                                                     <option value="T.I.">T.I.</option>
@@ -53,7 +57,7 @@ if (isNotEmpty([$_GET['id_aprendiz-edit'], $_GET['ruta']])) {
                                                         class="fas fa-user"></i></span>
                                                 <input type="text" class="form-control"
                                                     onkeypress="return(multiplenumber(event));"
-                                                    value="<?php echo $aprendizFindById['documento'] ?>" readonly minlength="10"
+                                                    value="<?php echo $employeeGetId['documento'] ?>" readonly minlength="10"
                                                     maxlength="10" oninput="maxlengthNumber(this);" id="documento"
                                                     name="documento" placeholder="Ingresar numero de documento"
                                                     aria-describedby="documento-icon" />
@@ -66,7 +70,7 @@ if (isNotEmpty([$_GET['id_aprendiz-edit'], $_GET['ruta']])) {
                                                 <span id="nombres_span" class="input-group-text"><i
                                                         class="fas fa-user"></i></span>
                                                 <input type="text" required minlength="2"
-                                                    value="<?php echo $aprendizFindById['nombres'] ?>" maxlength="100"
+                                                    value="<?php echo $employeeGetId['nombres'] ?>" maxlength="100"
                                                     class="form-control" name="nombres" id="nombres"
                                                     placeholder="Ingresar nombres completos" />
                                             </div>
@@ -78,36 +82,12 @@ if (isNotEmpty([$_GET['id_aprendiz-edit'], $_GET['ruta']])) {
                                                 <span id="nombre_area-span" class="input-group-text"><i
                                                         class="fas fa-user"></i></span>
                                                 <input type="text" required minlength="2"
-                                                    value="<?php echo $aprendizFindById['apellidos'] ?>" maxlength="100"
+                                                    value="<?php echo $employeeGetId['apellidos'] ?>" maxlength="100"
                                                     class="form-control" name="apellidos" id="apellidos"
                                                     placeholder="Ingresar apellidos completos" />
                                             </div>
                                         </div>
-                                        <!-- correo electronico -->
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label class="form-label" for="email">Correo Electronico</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="email_span" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <input type="email" required minlength="2"
-                                                    value="<?php echo $aprendizFindById['email'] ?>" maxlength="100"
-                                                    class="form-control" name="email" id="email"
-                                                    placeholder="Ingresar corrreo electronico" />
-                                            </div>
-                                        </div>
-                                        <!-- correo electronico institucional -->
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label class="form-label" for="email_institucional">Correo Electronico
-                                                Institucional</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="email_institucional_span" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <input type="email_institucional" required minlength="2" maxlength="100"
-                                                    class="form-control" name="email_institucional" id="email_institucional"
-                                                    placeholder="Ingresar corrreo electronico"
-                                                    value="<?php echo $aprendizFindById['email_institucional'] ?>" />
-                                            </div>
-                                        </div>
+
                                         <!-- numero de celular -->
                                         <div class="mb-3 col-12 col-lg-6">
                                             <label class="form-label" for="celular">Numero de Celular</label>
@@ -116,265 +96,19 @@ if (isNotEmpty([$_GET['id_aprendiz-edit'], $_GET['ruta']])) {
                                                         class="fas fa-user"></i></span>
                                                 <input type="text" required onkeypress="return(multiplenumber(event));"
                                                     minlength="10" maxlength="10"
-                                                    value="<?php echo $aprendizFindById['celular'] ?>" class="form-control"
+                                                    value="<?php echo $employeeGetId['celular'] ?>" class="form-control"
                                                     name="celular" id="celular" placeholder="Ingresar numero de celular" />
                                             </div>
                                         </div>
-                                        <!-- fecha de nacimiento -->
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label class="form-label" for="fecha_nacimiento">Fecha de nacimiento</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="fecha_nacimiento_span" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <input type="date" readonly
-                                                    value="<?php echo $aprendizFindById['fecha_nacimiento'] ?>" required
-                                                    class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" />
-                                            </div>
-                                        </div>
-                                        <!-- ficha de formacion -->
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label for="ficha_formacion" class="form-label">Ficha de formacion</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="ficha_formacion-2" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <select class="form-select" name="ficha_formacion" required>
-                                                    <option value=" <?php echo $aprendizFindById['id_ficha'] ?>">Ficha:
-                                                        <?php echo $aprendizFindById['id_ficha'] ?></option>
-                                                    <?php
-                                                    // CONSUMO DE DATOS DE LOS PROCESOS
-                                                    $get_fichas = $connection->prepare("SELECT * FROM fichas LEFT JOIN programas_formacion
-                                            ON fichas.id_programa = programas_formacion.id_programa");
-                                                    $get_fichas->execute();
-                                                    $fichas = $get_fichas->fetchAll(PDO::FETCH_ASSOC);
-                                                    // Verificar si no hay datos
-                                                    if (empty($fichas)) {
-                                                        echo "<option value=''>No hay datos...</option>";
-                                                    } else {
-                                                        // Iterar sobre los estados
-                                                        foreach ($fichas as $ficha) {
-                                                            echo "<option value='{$ficha['codigoFicha']}'>{$ficha['codigoFicha']} - {$ficha['nombre_programa']}</option>";
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <?php
-                                        if ($aprendizFindById['patrocinio'] == 'si') {
-                                        ?>
-                                            <!-- patrocinio -->
-                                            <div class="mb-3 col-12 col-lg-6">
-                                                <label for="tipo_patrocinio" class="form-label">Patrocinio</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input type="text" readonly
-                                                        value="<?php echo $aprendizFindById['patrocinio'] ?>" name="patrocinio"
-                                                        required class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 col-12 col-lg-6">
-                                                <label for="empresa" class="form-label">Empresa</label>
-                                                <div class="input-group input-group-merge">
-                                                    <span id="empresa-2" class="input-group-text"><i class="fas fa-user"></i></span>
-                                                    <select class="form-select" readonly name="empresa" required>
-                                                        <option value="<?php echo $aprendizFindById['empresa_patrocinadora'] ?>">
-                                                            <?php echo $aprendizFindById['nombre_empresa'] ?></option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <div class="mb-3 col-12 col-lg-6">
-                                                <label for="tipo_patrocinio" class="form-label">Patrocinio</label>
-                                                <div class="input-group input-group-merge">
-                                                    <span id="tipo_patrocinio-2" class="input-group-text"><i
-                                                            class="fas fa-user"></i></span>
-                                                    <select class="form-select" name="patrocinio" id="tipo_patrocinio" required>
-                                                        <option value="<?php echo $aprendizFindById['patrocinio'] ?>">
-                                                            <?php echo ucfirst($aprendizFindById['patrocinio']) ?></option>
-                                                        <option value="si">Si</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 col-12 col-lg-6" id="empresa-input" style="display: none;">
-                                                <label for="empresa" class="form-label">Empresa</label>
-                                                <div class="input-group input-group-merge">
-                                                    <span id="empresa-2" class="input-group-text"><i class="fas fa-user"></i></span>
-                                                    <select class="form-select" name="empresa" id="empresa">
-                                                        <option value="<?php echo $aprendizFindById['empresa_patrocinadora'] ?>">
-                                                            Seleccionar Empresa...
-                                                        </option>
-                                                        <?php
-                                                        // CONSUMO DE DATOS DE LOS PROCESOS
-                                                        $list_empresas = $connection->prepare("SELECT * FROM empresas");
-                                                        $list_empresas->execute();
-                                                        $empresas = $list_empresas->fetchAll(PDO::FETCH_ASSOC);
-                                                        // Verificar si no hay datos
-                                                        if (empty($empresas)) {
-                                                            echo "<option value=''>No hay datos...</option>";
-                                                        } else {
-                                                            // Iterar sobre los estados
-                                                            foreach ($empresas as $empresa) {
-                                                                echo "<option value='{$empresa['id_empresa']}'>{$empresa['nombre_empresa']}</option>";
-                                                            }
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                            </div>
 
-                                        <?php
-                                        }
-                                        ?>
                                         <div class="mb-3 col-12 col-lg-6">
-                                            <label for="departamento" class="form-label">Departamento de Nacimiento</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="departamento-2" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <select class="form-select" name="departamentoNacimiento"
-                                                    id="idDepartamentoNacimiento" required>
-                                                    <option value=""></option>
-                                                    <?php
-                                                    // CONSUMO DE DATOS DE LOS PROCESOS
-                                                    $get_departamentos_residencia = $connection->prepare("SELECT * FROM departamentos");
-                                                    $get_departamentos_residencia->execute();
-                                                    $departamentos_residencia = $get_departamentos_residencia->fetchAll(PDO::FETCH_ASSOC);
-                                                    // Verificar si no hay datos
-                                                    if (empty($departamentos_residencia)) {
-                                                        echo "<option value=''>No hay datos...</option>";
-                                                    } else {
-                                                        // Iterar sobre los estados
-                                                        foreach ($departamentos_residencia as $departamento_residencia) {
-                                                            echo "<option value='{$departamento_residencia['id_departamento']}'>{$departamento_residencia['departamento']}</option>";
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 col-12 col-lg-6" id="containerCiudadNacimiento" style="display: none;">
-                                            <label for="ciudad" class="form-label">Ciudad de Nacimiento</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="ciudad-2" class="input-group-text"><i class="fas fa-user"></i></span>
-                                                <select class="form-select" name="ciudadNacimiento" required>
-                                                    <option value="">Seleccionar Ciudad...</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                const idDepartamentoNacimiento = document.getElementById(
-                                                    'idDepartamentoNacimiento');
-                                                const containerCiudadNacimiento = document.getElementById(
-                                                    'containerCiudadNacimiento');
-                                                const selectCiudad = document.querySelector(
-                                                    '#containerCiudadNacimiento select');
-                                                idDepartamentoNacimiento.addEventListener('change', function() {
-                                                    const selectedValue = this.value;
-                                                    if (selectedValue === '') {
-                                                        selectCiudad.innerHTML =
-                                                            '<option value="">Seleccionar Ciudad...</option>';
-                                                        containerCiudadNacimiento.style.display = 'none';
-                                                        return;
-                                                    }
-                                                    // Realizar una solicitud AJAX para obtener las ciudades del departamento seleccionado
-                                                    fetch(
-                                                            `get_ciudades_nacimiento.php?id_departamento_nacimiento=${selectedValue}`
-                                                        )
-                                                        .then(response => response.json())
-                                                        .then(data => {
-                                                            console.log(data);
-                                                            // Limpiar las opciones del select de ciudades
-                                                            selectCiudad.innerHTML =
-                                                                '<option value="">Seleccionar Ciudad...</option>';
-
-                                                            // Añadir nuevas opciones basadas en los datos recibidos
-                                                            data.forEach(ciudad => {
-                                                                const option = document.createElement(
-                                                                    'option');
-                                                                option.value = ciudad.id_municipio;
-                                                                option.textContent = ciudad
-                                                                    .nombre_municipio;
-                                                                selectCiudad.appendChild(option);
-                                                            });
-
-                                                            // Mostrar el select de ciudades
-                                                            containerCiudadNacimiento.style.display = 'block';
-                                                        })
-                                                        .catch(error => {
-                                                            console.error(
-                                                                'Error al obtener las ciudades del departamento:',
-                                                                error);
-                                                        });
-                                                });
-                                            });
-                                        </script>
-                                        <!-- tipo de covivencia -->
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label for="tipo_convivencia" class="form-label">Tipo de convivencia</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="tipo_convivencia-2" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <select class="form-select" name="tipo_convivencia" required>
-                                                    <option value="<?php echo $aprendizFindById['tipo_convivencia'] ?>">
-                                                        <?php echo $aprendizFindById['tipo_convivencia'] ?></option>
-                                                    <option value="interno">Interno</option>
-                                                    <option value="externo">Externo</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!-- sexo del aprendiz -->
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label for="tipo_sexo" class="form-label">Orientacion Sexual</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="tipo_sexo-2" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <select class="form-select" name="sexo" id="tipo_sexo" required>
-                                                    <option value="<?php echo $aprendizFindById['sexo'] ?>">Sexo:
-                                                        <?php echo $aprendizFindById['sexo'] ?>
-                                                    </option>
-                                                    <option value="F">F</option>
-                                                    <option value="M">M</option>
-                                                    <option value="Otro">Otro</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label for="estadoAprendiz" class="form-label">Estado Aprendiz</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="estadoAprendiz-2" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <select class="form-select" name="estadoAprendiz" required>
-                                                    <option value="<?php echo $aprendizFindById['id_estado'] ?>">
-                                                        <?php echo $aprendizFindById['estado_aprendiz'] ?>
-                                                    </option>
-                                                    <?php
-                                                    // CONSUMO DE DATOS DE LOS PROCESOS
-                                                    $estados_sena = $connection->prepare("SELECT * FROM estados");
-                                                    $estados_sena->execute();
-                                                    $estados_se = $estados_sena->fetchAll(PDO::FETCH_ASSOC);
-                                                    // Verificar si no hay datos
-                                                    if (empty($estados_se)) {
-                                                        echo "<option value=''>No hay datos...</option>";
-                                                    } else {
-                                                        // Iterar sobre los estados
-                                                        foreach ($estados_se as $estado_se) {
-                                                            echo "<option value='{$estado_se['id_estado']}'>{$estado_se['estado']}</option>";
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label for="estadoSenaEmpresa" class="form-label">Estado Sena Empresa</label>
+                                            <label for="estadoSenaEmpresa" class="form-label">Estado Usuario</label>
                                             <div class="input-group input-group-merge">
                                                 <span id="estadoSenaEmpresa-2" class="input-group-text"><i
                                                         class="fas fa-user"></i></span>
                                                 <select class="form-select" name="estadoSenaEmpresa" required>
-                                                    <option value="<?php echo $aprendizFindById['id_estado_se'] ?>">
-                                                        <?php echo $aprendizFindById['nombre_estado_se'] ?>
+                                                    <option value="<?php echo $employeeGetId['id_estado'] ?>">
+                                                        <?php echo $employeeGetId['estado'] ?>
                                                     </option>
                                                     <?php
                                                     // CONSUMO DE DATOS DE LOS PROCESOS
@@ -392,6 +126,76 @@ if (isNotEmpty([$_GET['id_aprendiz-edit'], $_GET['ruta']])) {
                                                     }
                                                     ?>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <!-- password -->
+                                        <div class="mb-3 col-12 col-lg-6">
+                                            <label class="form-label" for="password">Contraseña</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="nombre_area-span" class="input-group-text"><i
+                                                        class="fas fa-user"></i></span>
+                                                <input type="text" required minlength="5" value="<?php echo $password  ?>"
+                                                    maxlength="100" class="form-control" name="password" id="password"
+                                                    placeholder="Ingresar contraseña" />
+                                            </div>
+                                        </div>
+                                        <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS DEL FAMILIAR</h6>
+                                        <!-- nombre_familiar -->
+                                        <div class="mb-3 col-12 col-lg-6">
+                                            <label class="form-label" for="nombre_familiar">Nombre Familiar</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="nombre_familiar_span" class="input-group-text"><i
+                                                        class="fas fa-user"></i></span>
+                                                <input type="text" required minlength="2"
+                                                    value="<?php echo $employeeGetId['nombre_familiar'] ?>" maxlength="100"
+                                                    class="form-control" name="nombre_familiar" id="nombre_familiar"
+                                                    placeholder="Ingresar nombre del familiar" />
+                                            </div>
+                                        </div>
+                                        <!-- celular_familiar -->
+                                        <div class="mb-3 col-12 col-lg-6">
+                                            <label class="form-label" for="celular_familiar">Celular Familiar</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="celular_familiar_span" class="input-group-text"><i
+                                                        class="fas fa-user"></i></span>
+                                                <input type="text" required minlength="2"
+                                                    value="<?php echo $employeeGetId['celular_familiar'] ?>"
+                                                    onkeypress="return(multiplenumber(event));" minlength="10" maxlength="10"
+                                                    class="form-control" name="celular_familiar" id="celular_familiar"
+                                                    placeholder="Ingresar celular del familiar" />
+                                            </div>
+                                        </div>
+                                        <!-- parentezco_familiar -->
+                                        <div class="mb-3 col-12 col-lg-6">
+                                            <label class="form-label" for="parentezco_familiar">Parentezco Familiar</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="parentezco_familiar_span" class="input-group-text"><i
+                                                        class="fas fa-user"></i></span>
+                                                <input type="text" required minlength="2"
+                                                    value="<?php echo $employeeGetId['parentezco_familiar'] ?>" maxlength="100"
+                                                    class="form-control" name="parentezco_familiar" id="parentezco_familiar"
+                                                    placeholder="Ingresar celular del familiar" />
+                                            </div>
+                                        </div>
+                                        <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS LABORALES</h6>
+                                        <!-- eps -->
+                                        <div class="mb-3 col-12 col-lg-6">
+                                            <label class="form-label" for="eps">EPS</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="eps_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input type="text" required minlength="2"
+                                                    value="<?php echo $employeeGetId['eps'] ?>" maxlength="100"
+                                                    class="form-control" name="eps" id="eps" placeholder="Ingresar eps" />
+                                            </div>
+                                        </div>
+                                        <!-- arl -->
+                                        <div class="mb-3 col-12 col-lg-6">
+                                            <label class="form-label" for="arl">ARL</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="arl_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input type="text" required minlength="2"
+                                                    value="<?php echo $employeeGetId['arl'] ?>" maxlength="100"
+                                                    class="form-control" name="arl" id="arl" placeholder="Ingresar arl" />
                                             </div>
                                         </div>
                                         <div class="mt-4">

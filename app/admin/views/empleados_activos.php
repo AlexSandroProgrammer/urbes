@@ -22,7 +22,7 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col-xl-3 col-lg-4">
                         <!-- Button trigger modal -->
                         <a class="btn btn-primary" href="registrar_empleado.php">
-                            <i class="fas fa-layer-group"></i> Registrar Empleado
+                            <i class="fas fa-user"></i> Registrar Empleado
                         </a>
                     </div>
                     <div class="col-xl-3 col-lg-4">
@@ -56,6 +56,7 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Celular</th>
+                                    <th>Contraseña</th>
                                     <th>EPS</th>
                                     <th>ARL</th>
                                     <th>Nombre Familiar</th>
@@ -69,45 +70,49 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                             </thead>
                             <tbody>
                                 <?php foreach ($empleados as $empleado) {
+
+                                    // desencriptacion de contraseña
+                                    $password = bcrypt_password($empleado['password']);
                                 ?>
-                                <tr>
-                                    <td>
-                                        <form method="GET" action="">
-                                            <input type="hidden" name="id_employee-delete"
-                                                value="<?= $empleado['documento'] ?>">
-                                            <input type="hidden" name="ruta" value="empleados_activos.php">
-                                            <button class="btn btn-danger mt-2"
-                                                onclick="return confirm('¿Desea eliminar el registro seleccionado?');"
-                                                type="submit">
-                                                <i class="bx bx-trash" title="Eliminar"></i>
-                                            </button>
-                                        </form>
-                                        <form method="GET" class="mt-2" action="editar-empleado.php">
-                                            <input type="hidden" name="id_employee-edit"
-                                                value="<?= $empleado['documento'] ?>">
-                                            <input type="hidden" name="ruta" value="empleados_activos.php">
-                                            <button class="btn btn-success"
-                                                onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                type="submit">
-                                                <i class="bx bx-refresh" title="Actualizar"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <td><?php echo $empleado['tipo_documento'] ?></td>
-                                    <td><?php echo $empleado['documento'] ?></td>
-                                    <td><?php echo $empleado['nombres'] ?></td>
-                                    <td><?php echo $empleado['apellidos'] ?></td>
-                                    <td><?php echo $empleado['celular'] ?></td>
-                                    <td><?php echo $empleado['eps'] ?></td>
-                                    <td><?php echo $empleado['arl'] ?></td>
-                                    <td><?php echo $empleado['nombre_familiar'] ?></td>
-                                    <td><?php echo $empleado['celular_familiar'] ?></td>
-                                    <td><?php echo $empleado['parentezco_familiar'] ?></td>
-                                    <td><?php echo $empleado['tipo_usuario'] ?></td>
-                                    <td><?php echo $empleado['estado'] ?></td>
-                                    <td><?php echo $empleado['fecha_registro'] ?></td>
-                                    <td><?php echo $empleado['fecha_actualizacion'] ?></td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <form method="GET" action="">
+                                                <input type="hidden" name="id_employee-delete"
+                                                    value="<?= $empleado['documento'] ?>">
+                                                <input type="hidden" name="ruta" value="empleados_activos.php">
+                                                <button class="btn btn-danger mt-2"
+                                                    onclick="return confirm('¿Desea eliminar el registro seleccionado?');"
+                                                    type="submit">
+                                                    <i class="bx bx-trash" title="Eliminar"></i>
+                                                </button>
+                                            </form>
+                                            <form method="GET" class="mt-2" action="editar_empleado.php">
+                                                <input type="hidden" name="id_employee-edit"
+                                                    value="<?= $empleado['documento'] ?>">
+                                                <input type="hidden" name="ruta" value="empleados_activos.php">
+                                                <button class="btn btn-success"
+                                                    onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                    type="submit">
+                                                    <i class="bx bx-refresh" title="Actualizar"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td><?php echo $empleado['tipo_documento'] ?></td>
+                                        <td><?php echo $empleado['documento'] ?></td>
+                                        <td><?php echo $empleado['nombres'] ?></td>
+                                        <td><?php echo $empleado['apellidos'] ?></td>
+                                        <td><?php echo $empleado['celular'] ?></td>
+                                        <td><?php echo $password ?></td>
+                                        <td><?php echo $empleado['eps'] ?></td>
+                                        <td><?php echo $empleado['arl'] ?></td>
+                                        <td><?php echo $empleado['nombre_familiar'] ?></td>
+                                        <td><?php echo $empleado['celular_familiar'] ?></td>
+                                        <td><?php echo $empleado['parentezco_familiar'] ?></td>
+                                        <td><?php echo $empleado['tipo_usuario'] ?></td>
+                                        <td><?php echo $empleado['estado'] ?></td>
+                                        <td><?php echo $empleado['fecha_registro'] ?></td>
+                                        <td><?php echo $empleado['fecha_actualizacion'] ?></td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>

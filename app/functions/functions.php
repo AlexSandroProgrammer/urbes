@@ -133,7 +133,32 @@ function cardStadicts($item, $table, $route, $nameTitle)
     }
 }
 
-// FUNCION 
+// FUNCION PARA ENCRIPTAR CONTRASEÑAS
+function encrypt_password($password_usuario)
+{
+    // creamos una lleva unica
+    $key = 'M*1240??Cla!!SecretaEs//esta??Nad!e2301';
+    // Generamos un IV aleatorio
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    // Ciframos la contraseña usando AES-256-CBC
+    $password_cifrada = openssl_encrypt($password_usuario, 'aes-256-cbc', $key, 0, $iv);
+    // Codificamos la contraseña cifrada y el IV juntos en base64 para almacenarlos
+    return base64_encode($password_cifrada . '::' . $iv);
+}
+
+// FUNCION PARA DESENCRIPTAR CONTRASEÑAS
+function bcrypt_password($password_cifrada)
+{
+    $key = 'M*1240??Cla!!SecretaEs//esta??Nad!e2301';
+    // Decodificamos la contraseña cifrada que incluye el IV
+    list($encrypted_data, $iv) = explode('::', base64_decode($password_cifrada), 2);
+
+    // Desciframos la contraseña utilizando AES-256-CBC
+    return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
+}
+
+
+// FUNCION PARA REALIZAR CONTEO DE USUARIOS DE ACUERDO AL ESTADO
 function countStatesUsers($item, $table, $title, $description, $id_estado, $state, $id_tipo_usuario)
 {
     require_once("../../../database/connection.php");
