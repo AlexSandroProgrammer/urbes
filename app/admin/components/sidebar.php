@@ -136,8 +136,18 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="socios.php" class="menu-link">
-                                    <div data-i18n="Error">Lista de Socios</div>
+                                <a href="socios_activos.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Socios Activos</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="socios_bloqueados.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Socios Bloqueados</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="socios_eliminados.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Socios Eliminados</div>
                                 </a>
                             </li>
                         </ul>
