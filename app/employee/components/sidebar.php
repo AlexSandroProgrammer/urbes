@@ -68,3 +68,43 @@
         exit();
     }
     ?>
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <!-- / Navbar -->
+        <!-- Content wrapper -->
+        <div class="content-wrapper ">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 p-3 ">
+                <nav
+                    class="navbar d navbar-example navbar-expand-lg bg-light align-items-center justify-content-center">
+                    <div class="container-fluid">
+                        <div class="app-brand">
+                            <a href="index.php" class=" align-items-center justify-content-center text-center">
+                                <span class="demo">
+                                    <img src="../../assets/images/urbes.svg" width="80" height="80" alt="">
+                                </span>
+                            </a>
+
+                        </div>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbar-ex-3">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbar-ex-3">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            </ul>
+                            <div class="d-flex" onsubmit="return false">
+                                <a href="index.php" class="btn btn-primary mr-2"><i class="bx bx-home"></i> Regresar</a>
+
+                                <a href="index.php?logout" class="btn btn-danger"><i class="bx bx-log-out-circle"></i>
+                                    Cerrar Sesion</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!--/ Supported content -->
+        </div>
+        <!-- / Layout page -->
+    </div>

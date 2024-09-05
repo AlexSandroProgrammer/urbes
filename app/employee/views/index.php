@@ -13,14 +13,9 @@ if ($documentoSession) {
             <div class="row g-4">
                 <div class="col-lg-12 order-0">
                     <div class="card">
-                        <div class="d-flex align-items-end row">
+                        <div class="d-flex align-items-center justify-content-center row">
                             <div class="col-sm-7">
                                 <div class="card-body">
-                                    <div class="mb-4">
-                                        <a href="index.php?logout" class="btn btn-sm btn-danger"> <i
-                                                class="bx bx-log-out-circle"></i>
-                                            Cerrar Sesion</a>
-                                    </div>
                                     <h5 class="card-title text-primary">Bienvenido(a) Empleado
                                         <?php echo $documentoSession['nombres'] ?> -
                                         <?php echo $documentoSession['apellidos'] ?> !🎉</h5>
@@ -31,7 +26,7 @@ if ($documentoSession) {
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
-                                <div class="pt-2 pb-4 px-md-4">
+                                <div class="py-3">
                                     <img src="../../assets/images/employee.webp " height="160" alt="View Badge User" />
                                 </div>
                             </div>
@@ -46,11 +41,12 @@ if ($documentoSession) {
                                 alt="Card image cap" />
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">1. Formulario Mecanica Vehiculo Compactador</h5>
+                            <h5 class="card-title">1. Formulario Vehiculo Compactador</h5>
                             <p class="card-text">
                                 Presiona clic para ingresar en el formulario
                             </p>
-                            <a href="" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i> Ingresar</a>
+                            <a href="vehiculo_compactador.php" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i>
+                                Ingresar</a>
                         </div>
                     </div>
                 </div>
