@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
-    data-template="vertical-menu-template-free">
+    data-template="urbes-admin-template">
 
 <head>
     <meta charset="utf-8" />

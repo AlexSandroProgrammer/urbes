@@ -67,16 +67,6 @@ require_once("../components/sidebar.php");
                                             placeholder="Ingresar apellidos completos" />
                                     </div>
                                 </div>
-                                <!-- correo electronico -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="email">Correo Electronico</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="email_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="email" required minlength="2" maxlength="100" class="form-control"
-                                            name="email" id="email" placeholder="Ingresar corrreo electronico" />
-                                    </div>
-                                </div>
                                 <!-- numero de celular -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="celular">Numero de Celular</label>
@@ -111,6 +101,18 @@ require_once("../components/sidebar.php");
                                             }
                                             ?>
                                         </select>
+                                    </div>
+                                </div>
+                                <!-- password -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="password">Contraseña</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="password" required minlength="5" maxlength="30"
+                                            class="form-control" name="password" id="password"
+                                            placeholder="Ingresar por favor la contraseña" />
+
                                     </div>
                                 </div>
                                 <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS DEL FAMILIAR</h6>
