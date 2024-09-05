@@ -90,11 +90,11 @@ require_once("../components/sidebar.php");
                         <ul class="p-0 m-0">
                             <?php
                             countStatesUsers("conteoSociosActivos", "usuarios", "Activos", "Socios Activos", "1", "success", "2");
-                            countStatesUsers("conteoSociosBloqueados", "usuarios", "Bloqueados", "Socios Bloqueados", "1", "warning", "2");
-                            countStatesUsers("conteoSociosEliminados", "usuarios", "Eliminados", "Socios Eliminados", "1", "danger", "2");
+                            countStatesUsers("conteoSociosBloqueados", "usuarios", "Bloqueados", "Socios Bloqueados", "2", "warning", "2");
+                            countStatesUsers("conteoSociosEliminados", "usuarios", "Eliminados", "Socios Eliminados", "3", "danger", "2");
                             ?>
                         </ul>
-                        <div class="text-center"><a href="socios.php" class="btn btn-outline-primary">Ver
+                        <div class="text-center"><a href="socios_activos.php" class="btn btn-outline-primary">Ver
                                 Socios</a>
                         </div>
                     </div>
@@ -102,7 +102,7 @@ require_once("../components/sidebar.php");
             </div>
             <?php
             // card para mostrar cantidad de estados
-            cardStadicts("conteoTiposUsuarios", "tipo_usuario", "tipo_usuario.php", "Tipos Usuarios");
+            // cardStadicts("conteoTiposUsuarios", "tipo_usuario", "tipo_usuario.php", "Tipos Usuarios");
             cardStadicts("conteo", "estados", "estados.php", "Estados");
             // card para mostrar cantidad de unidades
 

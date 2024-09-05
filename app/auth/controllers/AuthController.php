@@ -17,7 +17,11 @@ if (isset($_POST["iniciarSesion"])) {
     $authValidation->bindParam(':documento', $documento);
     $authValidation->execute();
     $authSession = $authValidation->fetch(PDO::FETCH_ASSOC);
-    if ($authSession && password_verify($password, $authSession['password'])) {
+    // desencriptacion de la contraseña
+    $password_bcrypt = bcrypt_password($authSession['password']);
+
+    echo $password_bcrypt;
+    if ($authSession and $password == $password_bcrypt) {
         // Si la autenticación es exitosa
         $_SESSION['id_rol'] = $authSession['id_tipo_usuario'];
         $_SESSION['rol'] = $authSession['tipo_usuario'];
@@ -27,7 +31,9 @@ if (isset($_POST["iniciarSesion"])) {
         if ($_SESSION['id_rol'] == 1) {
             header("Location:../../admin");
         } else if ($_SESSION['id_rol'] == 2) {
-            header("Location:../../empleados");
+            header("Location:../../partner");
+        } else if ($_SESSION['id_rol'] == 3) {
+            header("Location:../../employee");
         } else {
             showErrorOrSuccessAndRedirect(
                 "error",

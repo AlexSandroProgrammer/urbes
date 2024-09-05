@@ -1,5 +1,5 @@
 <?php
-$titlePage = "Registro de Socio";
+$titlePage = "Registro de Empleado";
 require_once("../components/sidebar.php");
 ?>
 <!-- Content wrapper -->
@@ -11,12 +11,12 @@ require_once("../components/sidebar.php");
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header justify-content-between align-items-center text-center">
-                        <h3 class="fw-bold pb-1">Registro de Socio</h3>
+                        <h3 class="fw-bold pb-1">Registro de Empleado</h3>
                         <h6 class="mb-0">Ingresa por favor los siguientes datos.</h6>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formRegisterPartner">
+                            name="formRegisterEmployee">
                             <div class="row">
                                 <h6 class="mb-3 fw-bold"> <i class="bx bx-user"></i> DATOS PERSONALES</h6>
                                 <!-- tipo de documento -->
@@ -115,13 +115,68 @@ require_once("../components/sidebar.php");
 
                                     </div>
                                 </div>
+                                <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS DEL FAMILIAR</h6>
+
+                                <!-- numero de celular -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="celular_familiar">Numer de Celular Familiar</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="celular_familiar_span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="text" required type="text"
+                                            onkeypress="return(multiplenumber(event));" minlength="10" maxlength="10"
+                                            class="form-control" name="celular_familiar" id="celular_familiar"
+                                            placeholder="Ingresar numero de celular del acudiente" />
+                                    </div>
+                                </div>
+                                <!-- nombre de familiar -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="nombre_familiar">Nombre Familiar</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombresfamiliar_span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
+                                            name="nombre_familiar" id="nombre_familiar"
+                                            placeholder="Ingresar nombres completos" />
+                                    </div>
+                                </div>
+                                <!-- parentezco de familiar -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="parentezco_familiar">Parentezco Familiar</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="parentezco_span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
+                                            name="parentezco_familiar" id="parentezco_familiar"
+                                            placeholder="Ingresar parentezco del familiar" />
+                                    </div>
+                                </div>
+                                <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS LABORALES</h6>
+                                <!-- nombre de la eps -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="eps">Nombre Eps</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="eps_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
+                                            name="eps" id="eps" placeholder="Ingresar nombre de la EPS" />
+                                    </div>
+                                </div>
+                                <!-- nombre de la arl -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="arl">Nombre Arl</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="arl_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
+                                            name="arl" id="arl" placeholder="Ingresar nombre de la ARL" />
+                                    </div>
+                                </div>
                                 <div class="mt-4">
-                                    <a href="socios_activos.php" class="btn btn-danger">
+                                    <a href="empleados_activos.php" class="btn btn-danger">
                                         Cancelar
                                     </a>
                                     <input type="submit" class="btn btn-primary" value="Registrar"></input>
-                                    <input type="hidden" class="btn btn-info" value="formRegisterPartner"
-                                        name="MM_formRegisterPartner"></input>
+                                    <input type="hidden" class="btn btn-info" value="formRegisterEmployee"
+                                        name="MM_formRegisterEmployee"></input>
                                 </div>
                             </div>
                         </form>

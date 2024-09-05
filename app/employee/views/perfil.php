@@ -3,7 +3,6 @@ $titlePage = "Mis Datos";
 require_once("../components/sidebar.php");
 
 if ($documentoSession) {
-    $password_global = bcrypt_password($documentoSession['password']);
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -93,8 +92,7 @@ if ($documentoSession) {
                                             <span id="password-2" class="input-group-text"><i
                                                     class="fas fa-user"></i></span>
                                             <input class="form-control" type="password" min="5" max="50"
-                                                placeholder="Ingresa tu nueva contraseña"
-                                                value="<?php echo $password_global ?>" minlength="5" maxlength="50"
+                                                placeholder="Ingresa tu nueva contraseña" minlength="5" maxlength="50"
                                                 id="firstName" name="password" />
                                         </div>
                                     </div>

@@ -193,7 +193,7 @@
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="index.php?logout" target="_blank" class="menu-link">
+                        <a href="index.php?logout" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-power-off"></i>
                             <div data-i18n="Documentation">Cerrar Sesion</div>
                         </a>
