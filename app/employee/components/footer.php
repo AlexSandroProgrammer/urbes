@@ -4,7 +4,7 @@
         <hr class="container-m-nx border-light my-5" />
         <!-- Footer with components -->
         <section id="component-footer">
-            <footer class="footer bg-light">
+            <footer class="footer bg-dark">
                 <div
                     class="container-fluid d-flex flex-lg-row flex-column justify-content-between align-items-md-center gap-1 container-p-x py-3">
                     <div class="mb-2 mb-md-0">
@@ -13,7 +13,7 @@
                         document.write(new Date().getFullYear());
                         </script>
                         , Todos los derechos reservados, diseñado y desarrollado por
-                        <a href="#" target="_blank" class="footer-link fw-bolder">Alejandro Muñoz - Juan Lopez</a>
+                        <a href="#" class="footer-link fw-bolder">Alejandro Muñoz - Juan Lopez</a>
                     </div>
                     <div>
                         <a href="index.php?logout" class="btn btn-sm btn-outline-danger"><i

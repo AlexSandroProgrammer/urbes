@@ -77,12 +77,12 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 p-3 ">
                 <nav
-                    class="navbar d navbar-example navbar-expand-lg bg-light align-items-center justify-content-center">
+                    class="navbar d-flex navbar-example navbar-expand-lg bg-dark align-items-center justify-content-center">
                     <div class="container-fluid">
                         <div class="app-brand">
-                            <a href="index.php" class=" align-items-center justify-content-center text-center">
+                            <a href="index.php" class=" mb-2 align-items-center justify-content-center text-center">
                                 <span class="demo">
-                                    <img src="../../assets/images/urbes.svg" width="80" height="80" alt="">
+                                    <img src="../../assets/images/urbes.svg" width="100" height="100" alt="">
                                 </span>
                             </a>
 
