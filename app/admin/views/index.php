@@ -57,7 +57,7 @@ require_once("../components/sidebar.php");
                                 "usuarios",
                                 "Bloqueados",
                                 "Empleados Bloqueados",
-                                "1",
+                                "2",
                                 "warning",
                                 "3"
                             );
@@ -66,13 +66,13 @@ require_once("../components/sidebar.php");
                                 "usuarios",
                                 "Eliminados",
                                 "Empleados Eliminados",
-                                "1",
+                                "3",
                                 "danger",
                                 "3"
                             );
                             ?>
                         </ul>
-                        <div class="text-center"><a href="empleados.php" class="btn btn-outline-primary">Ver
+                        <div class="text-center"><a href="empleados_activos.php" class="btn btn-outline-primary">Ver
                                 Empleados</a>
                         </div>
                     </div>

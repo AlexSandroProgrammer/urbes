@@ -104,39 +104,38 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
 }
 
 // * metodo actuaizar datos de empleados
-
-//* editar datos de aprendices
 if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"] == "formUpdateEmployee")) {
     // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE AREA
+    $tipo_documento = $_POST['tipo_documento'];
     $documento = $_POST['documento'];
     $nombres = $_POST['nombres'];
     $apellidos = $_POST['apellidos'];
-    $email = $_POST['email'];
     $celular = $_POST['celular'];
-    $ficha = $_POST['ficha_formacion'];
-    $tipo_convivencia = $_POST['tipo_convivencia'];
-    $patrocinio = $_POST['patrocinio'];
-    $empresa = $_POST['empresa'];
-    $estadoAprendiz = $_POST['estadoAprendiz'];
-    $estadoSenaEmpresa = $_POST['estadoSenaEmpresa'];
-    $sexo = $_POST['sexo'];
-    $rutaDireccion = $_POST['ruta'];
+    $estado = $_POST['estado'];
+    $password = $_POST['password'];
+    $ruta = $_POST['ruta'];
+    $nombre_familiar = $_POST['nombre_familiar'];
+    $celular_familiar = $_POST['celular_familiar'];
+    $parentezco_familiar = $_POST['parentezco_familiar'];
+    $eps = $_POST['eps'];
+    $arl = $_POST['arl'];
     // Validamos que no hayamos recibido ningún dato vacío
     if (isEmpty([
+        $tipo_documento,
         $documento,
         $nombres,
         $apellidos,
-        $email,
         $celular,
-        $ficha,
-        $tipo_convivencia,
-        $patrocinio,
-        $estadoAprendiz,
-        $estadoSenaEmpresa,
-        $sexo,
-        $rutaDireccion
+        $estado,
+        $password,
+        $ruta,
+        $nombre_familiar,
+        $celular_familiar,
+        $parentezco_familiar,
+        $eps,
+        $arl
     ])) {
-        showErrorFieldsEmpty("editar-aprendiz.php?id_aprendiz-edit=" . $documento . "&ruta=" . $rutaDireccion);
+        showErrorFieldsEmpty("empleados_activos.php");
         exit();
     }
 
@@ -144,60 +143,60 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
     if (containsSpecialCharacters([
         $nombres,
         $apellidos,
-        $tipo_convivencia,
-        $patrocinio,
-        $sexo
+        $nombre_familiar,
+        $parentezco_familiar
     ])) {
         showErrorOrSuccessAndRedirect(
             "error",
             "Error de digitacion",
             "Por favor verifica que en ningun campo existan caracteres especiales, los campos como el nombre, apellido, no deben tener letras como la ñ o caracteres especiales.",
-            "editar-aprendiz.php?id_aprendiz-edit=" . $documento . "&ruta=" . $rutaDireccion
+            "editar_empleado.php?id_employee-edit=" . $documento . "&ruta=" . $ruta
         );
         exit();
     }
-    // ID DEL APRENDIZ
-    $id_aprendiz = 2;
-    $userValidation = $connection->prepare("SELECT * FROM usuarios WHERE (email = :email OR celular = :celular) AND documento <> :documento AND id_tipo_usuario = :id_tipo_usuario");
+    // ID DEL EMPLEADO
+    $id_empleado = 3;
+    $userValidation = $connection->prepare("SELECT * FROM usuarios WHERE (celular = :celular) AND documento <> :documento");
     $userValidation->bindParam(':documento', $documento);
-    $userValidation->bindParam(':email', $email);
     $userValidation->bindParam(':celular', $celular);
-    $userValidation->bindParam(':id_tipo_usuario', $id_aprendiz);
     $userValidation->execute();
     $resultValidation = $userValidation->fetchAll();
     // Condicionales dependiendo del resultado de la consulta
     if ($resultValidation) {
         // Si ya existe una area con ese nombre entonces cancelamos el registro y le indicamos al usuario
-        showErrorOrSuccessAndRedirect("error", "Error de registro", "Por favor revisa los datos ingresados, porque ya estan registrados.", "editar-aprendiz.php?id_aprendiz-edit=" . $documento . "&ruta=" . $rutaDireccion);
+        showErrorOrSuccessAndRedirect("error", "Error de registro", "Por favor revisa los datos ingresados, porque los datos registrados ya pertenecen a otro usuario.", "editar_empleado.php?id_employee-edit=" . $documento . "&ruta=" . $ruta);
         exit();
     } else {
-        $fecha_actualizacion = date('Y-m-d H:i:s'); // O cualquier otro valor que necesites
-        // Inserción de los datos en la base de datos, incluyendo la edad
-        $editarDatosAprendiz = $connection->prepare("UPDATE usuarios 
-        SET nombres = :nombres, apellidos = :apellidos, 
-        celular = :celular, sexo = :sexo, email = :email, id_ficha = :id_ficha,
-        tipo_convivencia = :tipo_convivencia, patrocinio = :patrocinio, fecha_actualizacion = :fecha_actualizacion, 
-        empresa_patrocinadora = :empresa, id_estado = :id_estado, id_estado_se = :id_estado_se WHERE documento = :documento");
-        // Vincular los parámetros
-        $editarDatosAprendiz->bindParam(':nombres', $nombres);
-        $editarDatosAprendiz->bindParam(':apellidos', $apellidos);
-        $editarDatosAprendiz->bindParam(':celular', $celular);
-        $editarDatosAprendiz->bindParam(':sexo', $sexo);
-        $editarDatosAprendiz->bindParam(':email', $email);
-        $editarDatosAprendiz->bindParam(':id_ficha', $ficha);
-        $editarDatosAprendiz->bindParam(':tipo_convivencia', $tipo_convivencia);
-        $editarDatosAprendiz->bindParam(':patrocinio', $patrocinio);
-        $editarDatosAprendiz->bindParam(':fecha_actualizacion', $fecha_actualizacion);
-        $editarDatosAprendiz->bindParam(':empresa', $empresa);
-        $editarDatosAprendiz->bindParam(':id_estado', $estadoAprendiz);
-        $editarDatosAprendiz->bindParam(':id_estado_se', $estadoSenaEmpresa);
-        $editarDatosAprendiz->bindParam(':documento', $documento);
-        $editarDatosAprendiz->execute();
-        if ($editarDatosAprendiz) {
-            showErrorOrSuccessAndRedirect("success", "¡Perfecto!", "Los datos se han actualizado correctamente", $rutaDireccion);
-            exit();
-        } else {
-            showErrorOrSuccessAndRedirect("error", "Error de registro", "Error al momento de registrar los datos", "editar-aprendiz.php?id_aprendiz-edit=" . $documento . "&ruta=" . $rutaDireccion);
+        try {
+            // fecha actual
+            $fecha_actualizacion = date('Y-m-d H:i:s');
+            // encriptacion de contraseña
+            $password_hash = encrypt_password($password);
+            // Inserción de los datos en la base de datos, incluyendo la edad
+            $editarDatosEmpleado = $connection->prepare("UPDATE usuarios  SET nombres = :nombres, apellidos = :apellidos, celular = :celular, id_estado = :estado, password = :password, nombre_familiar = :nombre_familiar, celular_familiar = :celular_familiar, parentezco_familiar = :parentezco_familiar, eps = :eps, arl = :arl, tipo_documento = :tipo_documento, fecha_actualizacion = :fecha_actualizacion WHERE documento = :documento");
+            // Vincular los parámetros
+            $editarDatosEmpleado->bindParam(':nombres', $nombres);
+            $editarDatosEmpleado->bindParam(':apellidos', $apellidos);
+            $editarDatosEmpleado->bindParam(':celular', $celular);
+            $editarDatosEmpleado->bindParam(':fecha_actualizacion', $fecha_actualizacion);
+            $editarDatosEmpleado->bindParam(':estado', $estado);
+            $editarDatosEmpleado->bindParam(':password', $password_hash);
+            $editarDatosEmpleado->bindParam(':nombre_familiar', $nombre_familiar);
+            $editarDatosEmpleado->bindParam(':celular_familiar', $celular_familiar);
+            $editarDatosEmpleado->bindParam(':parentezco_familiar', $parentezco_familiar);
+            $editarDatosEmpleado->bindParam(':eps', $eps);
+            $editarDatosEmpleado->bindParam(':arl', $arl);
+            $editarDatosEmpleado->bindParam(':tipo_documento', $tipo_documento);
+            $editarDatosEmpleado->bindParam(':fecha_actualizacion', $fecha_actualizacion);
+            $editarDatosEmpleado->bindParam(':documento', $documento);
+            $editarDatosEmpleado->execute();
+            if ($editarDatosEmpleado) {
+                showErrorOrSuccessAndRedirect("success", "¡Perfecto!", "Los datos se han actualizado correctamente", $ruta);
+                exit();
+            }
+        } catch (\Throwable $th) {
+            // En caso de error, mostramos un mensaje y redirigimos
+            showErrorOrSuccessAndRedirect("error", "Error de actualización", "Error al momento de actualizar los datos.", "empleados_activos.php");
             exit();
         }
     }
@@ -211,12 +210,12 @@ if (isset($_GET['id_employee-delete'])) {
         showErrorOrSuccessAndRedirect("error", "Error de datos", "El parametro enviado se encuentra vacio.", $ruta);
         exit();
     } else {
-        $deleteAprendiz = $connection->prepare("SELECT * FROM usuarios WHERE documento = :id_employee");
-        $deleteAprendiz->bindParam(":id_employee", $id_employee);
-        $deleteAprendiz->execute();
-        $deleteAprendizSelect = $deleteAprendiz->fetch(PDO::FETCH_ASSOC);
-        if ($deleteAprendizSelect) {
-            // Borramos el registro del aprendiz de la base de datos
+        $deleteEmpleado = $connection->prepare("SELECT * FROM usuarios WHERE documento = :id_employee");
+        $deleteEmpleado->bindParam(":id_employee", $id_employee);
+        $deleteEmpleado->execute();
+        $deleteEmpleadoSelect = $deleteEmpleado->fetch(PDO::FETCH_ASSOC);
+        if ($deleteEmpleadoSelect) {
+            // Borramos el registro del empleado de la base de datos
             $delete = $connection->prepare("DELETE FROM usuarios WHERE documento = :id_employee");
             $delete->bindParam(':id_employee', $id_employee);
             $delete->execute();
