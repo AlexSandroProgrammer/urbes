@@ -17,10 +17,14 @@ if (isset($_POST["iniciarSesion"])) {
     $authValidation->bindParam(':documento', $documento);
     $authValidation->execute();
     $authSession = $authValidation->fetch(PDO::FETCH_ASSOC);
-    // desencriptacion de la contraseña
+    if (!$authSession) {
+        showErrorOrSuccessAndRedirect('error', 'Error de credenciales', 'El documento o la contraseña son incorrectas', 'index.php');
+        exit();
+        // desencriptacion de la contraseña
+    }
     $password_bcrypt = bcrypt_password($authSession['password']);
 
-    echo $password_bcrypt;
+
     if ($authSession and $password == $password_bcrypt) {
         // Si la autenticación es exitosa
         $_SESSION['id_rol'] = $authSession['id_tipo_usuario'];
@@ -99,12 +103,11 @@ if (isset($_POST["iniciarSesion"])) {
                 }
             }
         }
-        showErrorOrSuccessAndRedirect(
-            'error',
-            'Error Inicio de Sesion',
-            'Error al momento de iniciar sesion, revisa por favor tus credenciales',
-            'index.php'
-        );
-        exit();
+        // showErrorOrSuccessAndRedirect(
+        //     'error',
+        //     'Error Inicio de Sesion',
+        //     'Error al momento de iniciar sesion, revisa por favor tus credenciales',
+        //     ''
+        // );
     }
 }
