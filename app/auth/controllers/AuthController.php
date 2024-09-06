@@ -48,9 +48,11 @@ if (isset($_POST["iniciarSesion"])) {
             exit();
         }
     } else {
+        $id_tipo_usuario = 1;
         // llamamos los datos del usuario que esta intentando autenticarse
-        $selectDocument = $connection->prepare("SELECT * FROM usuarios WHERE documento = :documento");
+        $selectDocument = $connection->prepare("SELECT * FROM usuarios WHERE documento = :documento AND id_tipo_usuario <> :id_tipo_usuario");
         $selectDocument->bindParam(':documento', $documento);
+        $selectDocument->bindParam(':id_tipo_usuario', $id_tipo_usuario);
         $selectDocument->execute();
         $selectDocumentSession = $selectDocument->fetch(PDO::FETCH_ASSOC);
         if ($selectDocumentSession) {
@@ -103,11 +105,11 @@ if (isset($_POST["iniciarSesion"])) {
                 }
             }
         }
-        // showErrorOrSuccessAndRedirect(
-        //     'error',
-        //     'Error Inicio de Sesion',
-        //     'Error al momento de iniciar sesion, revisa por favor tus credenciales',
-        //     ''
-        // );
+        showErrorOrSuccessAndRedirect(
+            'error',
+            'Error Inicio de Sesion',
+            'Error al momento de iniciar sesion, revisa por favor tus credenciales',
+            ''
+        );
     }
 }
