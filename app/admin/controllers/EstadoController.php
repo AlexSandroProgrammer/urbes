@@ -1,7 +1,7 @@
 <?php
-//  REGISTRO DE AREA
+//  REGISTRO DE ESTADO
 if ((isset($_POST["MM_formRegisterState"])) && ($_POST["MM_formRegisterState"] == "formRegisterState")) {
-    // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE AREA
+    // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE ESTADO
     $estado = $_POST['estado'];
 
     // validamos que no hayamos recibido ningun dato vacio
@@ -9,7 +9,7 @@ if ((isset($_POST["MM_formRegisterState"])) && ($_POST["MM_formRegisterState"] =
         showErrorFieldsEmpty("estados.php");
         exit();
     }
-    // validamos que no se repitan los datos del nombre del area
+    // validamos que no se repitan los datos del nombre del eSTADO
     // CONSULTA SQL PARA VERIFICAR SI EL REGISTRO YA EXISTE EN LA BASE DE DATOS
     $estadoQueryFetch = $connection->prepare("SELECT * FROM estados WHERE estado = :estado");
     $estadoQueryFetch->bindParam(':estado', $estado);
@@ -17,7 +17,7 @@ if ((isset($_POST["MM_formRegisterState"])) && ($_POST["MM_formRegisterState"] =
     $queryFetch = $estadoQueryFetch->fetchAll();
     // CONDICIONALES DEPENDIENDO EL RESULTADO DE LA CONSULTA
     if ($queryFetch) {
-        // Si ya existe una area con ese nombre entonces cancelamos el registro y le indicamos al usuario
+        // Si ya existe una eSTADO con ese nombre entonces cancelamos el registro y le indicamos al usuario
         showErrorOrSuccessAndRedirect("error", "Error de registro", "Los datos ingresados ya estan registrados", "estados.php");
         exit();
     } else {

@@ -69,40 +69,40 @@ $socios = $listaSocios->fetchAll(PDO::FETCH_ASSOC);
                                     // desencriptacion de contraseña
                                     $password = bcrypt_password($socio['password']);
                                 ?>
-                                <tr>
-                                    <td>
-                                        <form method="GET" action="">
-                                            <input type="hidden" name="id_partner-delete"
-                                                value="<?= $socio['documento'] ?>">
-                                            <input type="hidden" name="ruta" value="socios_activos.php">
-                                            <button class="btn btn-danger mt-2"
-                                                onclick="return confirm('¿Desea eliminar el registro seleccionado?');"
-                                                type="submit">
-                                                <i class="bx bx-trash" title="Eliminar"></i>
-                                            </button>
-                                        </form>
-                                        <form method="GET" class="mt-2" action="editar_socio.php">
-                                            <input type="hidden" name="id_partner-edit"
-                                                value="<?= $socio['documento'] ?>">
-                                            <input type="hidden" name="ruta" value="socios_activos.php">
-                                            <button class="btn btn-success"
-                                                onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                type="submit">
-                                                <i class="bx bx-refresh" title="Actualizar"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <td><?php echo $socio['tipo_documento'] ?></td>
-                                    <td><?php echo $socio['documento'] ?></td>
-                                    <td><?php echo $socio['nombres'] ?></td>
-                                    <td><?php echo $socio['apellidos'] ?></td>
-                                    <td><?php echo $socio['celular'] ?></td>
-                                    <td><?php echo $password ?></td>
-                                    <td><?php echo $socio['tipo_usuario'] ?></td>
-                                    <td><?php echo $socio['estado'] ?></td>
-                                    <td><?php echo $socio['fecha_registro'] ?></td>
-                                    <td><?php echo $socio['fecha_actualizacion'] ?></td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <form method="GET" action="">
+                                                <input type="hidden" name="id_partner-delete"
+                                                    value="<?= $socio['documento'] ?>">
+                                                <input type="hidden" name="ruta" value="socios_activos.php">
+                                                <button class="btn btn-danger mt-2"
+                                                    onclick="return confirm('¿Desea eliminar el registro seleccionado?');"
+                                                    type="submit">
+                                                    <i class="bx bx-trash" title="Eliminar"></i>
+                                                </button>
+                                            </form>
+                                            <form method="GET" class="mt-2" action="editar_socio.php">
+                                                <input type="hidden" name="id_partner-edit"
+                                                    value="<?= $socio['documento'] ?>">
+                                                <input type="hidden" name="ruta" value="socios_activos.php">
+                                                <button class="btn btn-success"
+                                                    onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                    type="submit">
+                                                    <i class="bx bx-refresh" title="Actualizar"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td><?php echo $socio['tipo_documento'] ?></td>
+                                        <td><?php echo $socio['documento'] ?></td>
+                                        <td><?php echo $socio['nombres'] ?></td>
+                                        <td><?php echo $socio['apellidos'] ?></td>
+                                        <td><?php echo $socio['celular'] ?></td>
+                                        <td><?php echo $password ?></td>
+                                        <td><?php echo $socio['tipo_usuario'] ?></td>
+                                        <td><?php echo $socio['estado'] ?></td>
+                                        <td><?php echo $socio['fecha_registro'] ?></td>
+                                        <td><?php echo $socio['fecha_actualizacion'] ?></td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>

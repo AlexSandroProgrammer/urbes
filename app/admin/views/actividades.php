@@ -1,9 +1,9 @@
 <?php
 $titlePage = "Lista de actividades";
 require_once("../components/sidebar.php");
-$getStates = $connection->prepare("SELECT * FROM actividades");
-$getStates->execute();
-$states = $getStates->fetchAll(PDO::FETCH_ASSOC);
+$getActivities = $connection->prepare("SELECT * FROM actividades");
+$getActivities->execute();
+$activities = $getActivities->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -56,6 +56,60 @@ $states = $getStates->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
                 </div>
+                <?php
+                if (!empty($_GET["id_activity"])) {
+                    $id_activity = $_GET["id_activity"];
+                    // CONSUMO DE DATOS DE LOS PROCESOS
+                    $queryActivities = $connection->prepare("SELECT * FROM actividades WHERE id_actividad = :id_activity");
+                    $queryActivities->bindParam(":id_activity", $id_activity);
+                    $queryActivities->execute();
+                    $selectActivity = $queryActivities->fetch(PDO::FETCH_ASSOC);
+                    if ($selectActivity) {
+                ?>
+                        <div class="row">
+                            <div class="col-xl">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Actualizacion datos Actividad
+                                            <?php echo $selectActivity['actividad'] ?>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="" method="POST" autocomplete="off" name="formUpdateActivity">
+                                            <div class=" mb-3">
+                                                <label class="form-label" for="actividad">Actividad</label>
+                                                <div class="input-group input-group-merge">
+                                                    <span id="nombre-area" class="input-group-text"><i
+                                                            class="fas fa-layer-group"></i></span>
+                                                    <input type="text" minlength="4" maxlength="70" autofocus
+                                                        class="form-control" required name="actividad" id="actividad"
+                                                        placeholder="Ingresa el nombre de la actividad"
+                                                        value="<?php echo $selectActivity['actividad']  ?>"
+                                                        aria-describedby="actividad-2" />
+                                                </div>
+                                            </div>
+                                            <input type="hidden" class="form-control" id="id_actividad" name="id_actividad"
+                                                value="<?php echo $selectActivity['id_actividad']  ?>" />
+                                            <div class="modal-footer">
+                                                <a class="btn btn-danger" href="actividades.php">
+                                                    Cancelar
+                                                </a>
+                                                <input type="submit" class="btn btn-primary" value="Actualizar"></input>
+                                                <input type="hidden" class="btn btn-info" value="formUpdateActivity"
+                                                    name="MM_formUpdateActivity"></input>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                <?php
+                    } else {
+                        showErrorOrSuccessAndRedirect("error", "Registro no encontrado", "El registro que buscas no esta registrado.", "actividades.php");
+                        exit();
+                    }
+                }
+                ?>
                 <div class="row">
                     <div class="col-lg-12 mt-3">
                         <div class="table-responsive">
@@ -64,18 +118,30 @@ $states = $getStates->fetchAll(PDO::FETCH_ASSOC);
                                 <thead>
                                     <tr>
                                         <th>Acciones</th>
-                                        <th>#</th>
                                         <th>Actividades</th>
+                                        <th>Fecha Registro</th>
+                                        <th>Fecha Actualizacion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($states as $state) {
+                                    foreach ($activities as $activity) {
                                     ?>
                                         <tr>
-                                            <td><?php echo $state['id_actividad'] ?></td>
-                                            <td><?php echo $state['id_actividad'] ?></td>
-                                            <td><?php echo $state['actividad'] ?></td>
+                                            <td>
+                                                <form method="GET" class="mt-2" action="actividades.php">
+                                                    <input type="hidden" name="id_activity"
+                                                        value="<?= $activity['id_actividad'] ?>">
+                                                    <button class="btn btn-success"
+                                                        onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                        type="submit">
+                                                        <i class="bx bx-refresh" title="Actualizar"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td><?php echo $activity['actividad'] ?></td>
+                                            <td><?php echo $activity['fecha_registro'] ?></td>
+                                            <td><?php echo $activity['fecha_actualizacion'] ?></td>
                                         </tr>
                                     <?php
                                     }

@@ -14,7 +14,7 @@ if (isset($_SESSION['rol']) || isset($_SESSION['username']) || isset($_SESSION['
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Urbes || Sistema Gestionar de Empleados</title>
+    <title>Urbes || Sistema Gestionador de Empleados</title>
     <meta name="description" content="" />
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/images/urbes.svg" />
