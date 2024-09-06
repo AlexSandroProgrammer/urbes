@@ -168,7 +168,7 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-star"></i>
-                            <div data-i18n="Misc">Actividades Empleados</div>
+                            <div data-i18n="Misc">Actividades</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
@@ -178,24 +178,6 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-star"></i>
-                            <div data-i18n="Misc">Tipos de Usuarios</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="registrar_tipo_usuario.php" class="menu-link">
-                                    <div data-i18n="Error">Registrar Tipo usuario</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="tipo_usuarios.php" class="menu-link">
-                                    <div data-i18n="Error">Lista de Tipos Usuarios</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li> -->
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Otros</span>
                     </li>

@@ -19,6 +19,19 @@
 CREATE DATABASE IF NOT EXISTS `urbes_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `urbes_db`;
 
+-- Volcando estructura para tabla urbes_db.actividades
+CREATE TABLE IF NOT EXISTS `actividades` (
+  `id_actividad` int NOT NULL AUTO_INCREMENT,
+  `actividad` varchar(100) NOT NULL,
+  `fecha_registro` datetime DEFAULT NULL,
+  `fecha_actualizacion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_actividad`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla urbes_db.actividades: ~1 rows (aproximadamente)
+INSERT INTO `actividades` (`id_actividad`, `actividad`, `fecha_registro`, `fecha_actualizacion`) VALUES
+	(2, 'Mecanica Vehiculo Compactador', '2024-09-06 00:33:53', '2024-09-06 00:38:58');
+
 -- Volcando estructura para tabla urbes_db.estados
 CREATE TABLE IF NOT EXISTS `estados` (
   `id_estado` int NOT NULL AUTO_INCREMENT,
@@ -38,18 +51,9 @@ CREATE TABLE IF NOT EXISTS `intentos_fallidos` (
   `documento` bigint NOT NULL,
   `fecha_intento` date NOT NULL,
   PRIMARY KEY (`id_intento`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla urbes_db.intentos_fallidos: ~1 rows (aproximadamente)
-INSERT INTO `intentos_fallidos` (`id_intento`, `documento`, `fecha_intento`) VALUES
-	(30, 1110460410, '2024-09-03'),
-	(31, 1110460240, '2024-09-04'),
-	(32, 1110460240, '2024-09-04'),
-	(33, 1110460410, '2024-09-05'),
-	(34, 1110460410, '2024-09-05'),
-	(35, 1110460410, '2024-09-05'),
-	(36, 1110460410, '2024-09-05'),
-	(37, 1110460410, '2024-09-05');
+-- Volcando datos para la tabla urbes_db.intentos_fallidos: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla urbes_db.tipo_usuario
 CREATE TABLE IF NOT EXISTS `tipo_usuario` (
@@ -84,12 +88,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla urbes_db.usuarios: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla urbes_db.usuarios: ~4 rows (aproximadamente)
 INSERT INTO `usuarios` (`documento`, `tipo_documento`, `nombres`, `apellidos`, `celular`, `celular_familiar`, `parentezco_familiar`, `nombre_familiar`, `password`, `id_tipo_usuario`, `id_estado`, `fecha_registro`, `fecha_actualizacion`, `eps`, `arl`) VALUES
 	(99464482, 'C.C.', 'Daniel', 'Alvarez', '3122402301', NULL, NULL, NULL, 'OEw1Y0hSa2N1UTk1TXlyNllVbzRwQT09Ojo0pjEqECeWwDBgsVntmGba', 2, 1, '2024-09-04 23:39:15', NULL, NULL, NULL),
 	(1008240120, 'C.C.', 'Antonio', 'Carvajal', '3201201340', '3124201390', 'Padre', 'Antonio Carvajal', 'UHZ2ZGNpNExtSmJraWR4MVVnUHlxQT09OjqR/DQFa3BvhG/POFjSyA04', 3, 1, '2024-09-04 23:04:03', NULL, 'EPS', 'ARL'),
 	(1110460240, 'C.C.', 'Valentina', 'Castro', '3105853658', '3104502302', 'Tio', 'Albeiro', 'c2NHNXc3bkVTS3ZkUC92azJlemRodz09OjonnZxLuniKofAg2y6PfRRE', 3, 1, '2024-09-04 21:23:10', '2024-09-04 23:53:10', 'Nueva EPS', 'Nueva EPS'),
-	(1110460410, 'C.C.', 'Administrador', 'Urbes', '3105853668', NULL, NULL, NULL, 'aVYyc0ZQdUd2NHBMNW1nTXBvZFRQQT09Ojroxgu4MUw8xe170WPiVp1T', 1, 2, '2024-03-09 15:26:38', '2024-09-04 11:54:19', NULL, NULL);
+	(1110460410, 'C.C.', 'Administrador', 'Urbes', '3105853668', NULL, NULL, NULL, 'aVo0U0dNRGx4UEpURkZCRGwzaktCdz09Ojr5eAxR2rNIqxqkd5oagI2G', 1, 1, '2024-03-09 15:26:38', '2024-09-04 11:54:19', NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
