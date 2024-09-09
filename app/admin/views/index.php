@@ -108,6 +108,16 @@ require_once("../components/sidebar.php");
 
             ?>
 
+     
+        
+            <?php
+            // card para mostrar cantidad de ciudades
+            // cardStadicts("conteoTiposUsuarios", "tipo_usuario", "tipo_usuario.php", "Tipos Usuarios");
+            cardStadicts("conteo", "ciudades", "ciudades.php", "Ciudades");
+            // card para mostrar cantidad de unidades
+
+            ?>
+
         </div>
 
 
