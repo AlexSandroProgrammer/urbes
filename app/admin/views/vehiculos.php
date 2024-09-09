@@ -105,8 +105,8 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                                         <div class="input-group input-group-merge">
                                             <span class="input-group-text"><i class="fas fa-car"></i></span>
                                             <input type="text" minlength="4" maxlength="70" autofocus
-                                                class="form-control" required name="vehiculo"
-                                                id="vehiculo" placeholder="Ingresa el nombre del vehículo"
+                                                class="form-control" required name="vehiculo" id="vehiculo"
+                                                placeholder="Ingresa el nombre del vehículo"
                                                 value="<?php echo $selectCar['vehiculo'] ?>"
                                                 aria-describedby="nombre-vehiculo-help" />
                                         </div>
