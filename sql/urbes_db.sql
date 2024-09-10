@@ -70,12 +70,14 @@ CREATE TABLE IF NOT EXISTS `intentos_fallidos` (
 
 -- La exportación de datos fue deseleccionada.
 
--- Volcando estructura para tabla urbes_db.labor
-CREATE TABLE IF NOT EXISTS `labor` (
+-- Volcando estructura para tabla urbes_db.labores
+CREATE TABLE IF NOT EXISTS `labores` (
   `id_labor` int NOT NULL AUTO_INCREMENT,
   `labor` varchar(30) NOT NULL,
+  `fecha_registro` datetime DEFAULT NULL,
+  `fecha_actualizacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id_labor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -91,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `registro_actividades` (
   `horometro_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
   `horometro_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
   `id_actividad` int DEFAULT NULL,
-  `vehiculos` int DEFAULT NULL,
+  `id_vehiculos` int DEFAULT NULL,
   PRIMARY KEY (`id_registro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -136,6 +138,17 @@ CREATE TABLE IF NOT EXISTS `vehiculos` (
   `fecha_registro` datetime DEFAULT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL,
   PRIMARY KEY (`placa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla urbes_db.zonas
+CREATE TABLE IF NOT EXISTS `zonas` (
+  `id_zona` int NOT NULL AUTO_INCREMENT,
+  `zonas` varchar(30) NOT NULL,
+  `fecha_registro` datetime DEFAULT NULL,
+  `fecha_actualizacion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_zona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- La exportación de datos fue deseleccionada.
