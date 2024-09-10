@@ -30,7 +30,6 @@ require_once("../components/sidebar.php");
                                             <option value="">Seleccionar tipo de documento...</option>
                                             <option value="C.C.">C.C.</option>
                                             <option value="C.E.">C.E.</option>
-                                            <option value="T.I.">T.I.</option>
                                         </select>
                                     </div>
                                 </div>
@@ -87,9 +86,9 @@ require_once("../components/sidebar.php");
                                             <option value="">Seleccionar Estado...</option>
                                             <?php
                                             // CONSUMO DE DATOS DE LOS PROCESOS
-                                            $estados_sena = $connection->prepare("SELECT * FROM estados");
-                                            $estados_sena->execute();
-                                            $estados_se = $estados_sena->fetchAll(PDO::FETCH_ASSOC);
+                                            $estados_query = $connection->prepare("SELECT * FROM estados");
+                                            $estados_query->execute();
+                                            $estados_se = $estados_query->fetchAll(PDO::FETCH_ASSOC);
                                             // Verificar si no hay datos
                                             if (empty($estados_se)) {
                                                 echo "<option value=''>No hay datos...</option>";
@@ -97,6 +96,31 @@ require_once("../components/sidebar.php");
                                                 // Iterar sobre los estados
                                                 foreach ($estados_se as $estado_se) {
                                                     echo "<option value='{$estado_se['id_estado']}'>{$estado_se['estado']}</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- ciudad -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label for="ciudad" class="form-label">Ciudad</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <select class="form-select" name="ciudad" required>
+                                            <option value="">Seleccionar Ciudad...</option>
+                                            <?php
+                                            // CONSUMO DE DATOS DE LOS PROCESOS
+                                            $ciudades_query = $connection->prepare("SELECT * FROM ciudades");
+                                            $ciudades_query->execute();
+                                            $ciudades = $ciudades_query->fetchAll(PDO::FETCH_ASSOC);
+                                            // Verificar si no hay datos
+                                            if (empty($ciudades)) {
+                                                echo "<option value=''>No hay datos...</option>";
+                                            } else {
+                                                // Iterar sobre los ciudads
+                                                foreach ($ciudades as $ciudad) {
+                                                    echo "<option value='{$ciudad['id_ciudad']}'>{$ciudad['ciudad']}</option>";
                                                 }
                                             }
                                             ?>
@@ -152,6 +176,26 @@ require_once("../components/sidebar.php");
                                     </div>
                                 </div>
                                 <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS LABORALES</h6>
+                                <!-- fecha de inicio-->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="fecha_inicio">Fecha Inicio Contrato</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="fecha_inicio_span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="date" required class="form-control" name="fecha_inicio"
+                                            id="fecha_inicio" />
+                                    </div>
+                                </div>
+                                <!-- fecha de inicio-->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="fecha_fin">Fecha Fin Contrato</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="fecha_fin_span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="date" required class="form-control" name="fecha_fin"
+                                            id="fecha_fin" />
+                                    </div>
+                                </div>
                                 <!-- nombre de la eps -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="eps">Nombre Eps</label>
@@ -168,6 +212,18 @@ require_once("../components/sidebar.php");
                                         <span id="arl_span" class="input-group-text"><i class="fas fa-user"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
                                             name="arl" id="arl" placeholder="Ingresar nombre de la ARL" />
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label for="conductor" class="form-label">Confirmacion Conductor</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="conductor-2" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <select class="form-select" name="conductor" required>
+                                            <option value="">Seleccionar Confirmacion...</option>
+                                            <option value="SI">SI</option>
+                                            <option value="NO">NO</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="mt-4">

@@ -14,12 +14,15 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
     $celular = $_POST['celular'];
     $celular_familiar = $_POST['celular_familiar'];
     $nombre_familiar = $_POST['nombre_familiar'];
+    $ciudad = $_POST['ciudad'];
     $parentezco_familiar = $_POST['parentezco_familiar'];
+    $fecha_inicio = $_POST['fecha_inicio'];
+    $fecha_fin = $_POST['fecha_fin'];
     $estado = $_POST['estado'];
     $eps = $_POST['eps'];
     $arl = $_POST['arl'];
+    $conductor = $_POST['conductor'];
     $password = $_POST['password'];
-
     // Validamos que no se haya recibido ningún dato vacío
     if (isEmpty([
         $tipo_documento,
@@ -33,7 +36,11 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
         $parentezco_familiar,
         $eps,
         $arl,
-        $password
+        $password,
+        $fecha_inicio,
+        $fecha_fin,
+        $ciudad,
+        $conductor
     ])) {
         showErrorFieldsEmpty("registrar_empleado.php");
         exit();
@@ -44,6 +51,7 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
         $nombres,
         $apellidos,
         $nombre_familiar,
+        $conductor
     ])) {
         showErrorOrSuccessAndRedirect("error", "Error de digitación", "Por favor verifica que en ningún campo existan caracteres especiales. Los campos como el nombre, apellido o nombre del familiar no deben tener letras como la ñ o caracteres especiales.", "registrar_empleado.php");
         exit();
@@ -69,8 +77,8 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
             // encriptamos la contraseña
             $password_hash = encrypt_password($password);
             // Insertamos los datos en la base de datos, incluyendo todos los campos requeridos
-            $registerEmployee = $connection->prepare("INSERT INTO usuarios(documento, tipo_documento, nombres, apellidos, celular, celular_familiar, parentezco_familiar, nombre_familiar, password, id_tipo_usuario, id_estado, fecha_registro, eps, arl) 
-            VALUES(:documento, :tipo_documento, :nombres, :apellidos, :celular, :celular_familiar, :parentezco_familiar, :nombre_familiar, :password, :id_tipo_usuario, :id_estado, :fecha_registro, :eps, :arl)");
+            $registerEmployee = $connection->prepare("INSERT INTO usuarios(documento, tipo_documento, nombres, apellidos, celular, celular_familiar, parentezco_familiar, nombre_familiar, password, id_tipo_usuario, id_estado, fecha_registro, eps, arl, id_ciudad, fecha_inicio, fecha_fin, confi_conductor ) 
+            VALUES(:documento, :tipo_documento, :nombres, :apellidos, :celular, :celular_familiar, :parentezco_familiar, :nombre_familiar, :password, :id_tipo_usuario, :id_estado, :fecha_registro, :eps, :arl, :ciudad, :fecha_inicio, :fecha_fin, :confi_conductor )");
             // Vinculamos los parámetros
             $registerEmployee->bindParam(':documento', $documento);
             $registerEmployee->bindParam(':tipo_documento', $tipo_documento);
@@ -86,6 +94,10 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
             $registerEmployee->bindParam(':fecha_registro', $fecha_registro);
             $registerEmployee->bindParam(':eps', $eps);
             $registerEmployee->bindParam(':arl', $arl);
+            $registerEmployee->bindParam(':ciudad', $ciudad);
+            $registerEmployee->bindParam(':fecha_inicio', $fecha_inicio);
+            $registerEmployee->bindParam(':fecha_fin', $fecha_fin);
+            $registerEmployee->bindParam(':confi_conductor', $conductor);
 
             // Ejecutamos la consulta
             $registerEmployee->execute();
@@ -119,6 +131,11 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
     $parentezco_familiar = $_POST['parentezco_familiar'];
     $eps = $_POST['eps'];
     $arl = $_POST['arl'];
+    $ciudad = $_POST['ciudad'];
+    $fecha_inicio = $_POST['fecha_inicio'];
+    $fecha_fin = $_POST['fecha_fin'];
+    $conductor = $_POST['conductor'];
+
     // Validamos que no hayamos recibido ningún dato vacío
     if (isEmpty([
         $tipo_documento,
@@ -133,7 +150,11 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
         $celular_familiar,
         $parentezco_familiar,
         $eps,
-        $arl
+        $arl,
+        $ciudad,
+        $fecha_inicio,
+        $fecha_fin,
+        $conductor
     ])) {
         showErrorFieldsEmpty("empleados_activos.php");
         exit();
@@ -144,7 +165,8 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
         $nombres,
         $apellidos,
         $nombre_familiar,
-        $parentezco_familiar
+        $parentezco_familiar,
+        $conductor
     ])) {
         showErrorOrSuccessAndRedirect(
             "error",
@@ -173,23 +195,27 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
             // encriptacion de contraseña
             $password_hash = encrypt_password($password);
             // Inserción de los datos en la base de datos, incluyendo la edad
-            $editarDatosEmpleado = $connection->prepare("UPDATE usuarios  SET nombres = :nombres, apellidos = :apellidos, celular = :celular, id_estado = :estado, password = :password, nombre_familiar = :nombre_familiar, celular_familiar = :celular_familiar, parentezco_familiar = :parentezco_familiar, eps = :eps, arl = :arl, tipo_documento = :tipo_documento, fecha_actualizacion = :fecha_actualizacion WHERE documento = :documento");
+            $editEmployeeData = $connection->prepare("UPDATE usuarios  SET nombres = :nombres, apellidos = :apellidos, celular = :celular, id_estado = :estado, password = :password, nombre_familiar = :nombre_familiar, celular_familiar = :celular_familiar, parentezco_familiar = :parentezco_familiar, eps = :eps, arl = :arl, tipo_documento = :tipo_documento, fecha_actualizacion = :fecha_actualizacion, id_ciudad = :id_ciudad, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, confi_conductor = :conductor  WHERE documento = :documento");
             // Vincular los parámetros
-            $editarDatosEmpleado->bindParam(':nombres', $nombres);
-            $editarDatosEmpleado->bindParam(':apellidos', $apellidos);
-            $editarDatosEmpleado->bindParam(':celular', $celular);
-            $editarDatosEmpleado->bindParam(':estado', $estado);
-            $editarDatosEmpleado->bindParam(':password', $password_hash);
-            $editarDatosEmpleado->bindParam(':nombre_familiar', $nombre_familiar);
-            $editarDatosEmpleado->bindParam(':celular_familiar', $celular_familiar);
-            $editarDatosEmpleado->bindParam(':parentezco_familiar', $parentezco_familiar);
-            $editarDatosEmpleado->bindParam(':eps', $eps);
-            $editarDatosEmpleado->bindParam(':arl', $arl);
-            $editarDatosEmpleado->bindParam(':tipo_documento', $tipo_documento);
-            $editarDatosEmpleado->bindParam(':fecha_actualizacion', $fecha_actualizacion);
-            $editarDatosEmpleado->bindParam(':documento', $documento);
-            $editarDatosEmpleado->execute();
-            if ($editarDatosEmpleado) {
+            $editEmployeeData->bindParam(':nombres', $nombres);
+            $editEmployeeData->bindParam(':apellidos', $apellidos);
+            $editEmployeeData->bindParam(':celular', $celular);
+            $editEmployeeData->bindParam(':estado', $estado);
+            $editEmployeeData->bindParam(':password', $password_hash);
+            $editEmployeeData->bindParam(':nombre_familiar', $nombre_familiar);
+            $editEmployeeData->bindParam(':celular_familiar', $celular_familiar);
+            $editEmployeeData->bindParam(':parentezco_familiar', $parentezco_familiar);
+            $editEmployeeData->bindParam(':eps', $eps);
+            $editEmployeeData->bindParam(':arl', $arl);
+            $editEmployeeData->bindParam(':tipo_documento', $tipo_documento);
+            $editEmployeeData->bindParam(':fecha_actualizacion', $fecha_actualizacion);
+            $editEmployeeData->bindParam(':id_ciudad', $ciudad);
+            $editEmployeeData->bindParam(':fecha_inicio', $fecha_inicio);
+            $editEmployeeData->bindParam(':fecha_fin', $fecha_fin);
+            $editEmployeeData->bindParam(':conductor', $conductor);
+            $editEmployeeData->bindParam(':documento', $documento);
+            $editEmployeeData->execute();
+            if ($editEmployeeData) {
                 showErrorOrSuccessAndRedirect("success", "¡Perfecto!", "Los datos se han actualizado correctamente", $ruta);
                 exit();
             }

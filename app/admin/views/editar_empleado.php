@@ -4,7 +4,7 @@ require_once("../components/sidebar.php");
 if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
     $id_employee = $_GET['id_employee-edit'];
     $ruta = $_GET['ruta'];
-    $getFindByIdEmployee = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario INNER JOIN estados ON usuarios.id_estado = estados.id_estado WHERE usuarios.documento = :documento");
+    $getFindByIdEmployee = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario INNER JOIN estados ON usuarios.id_estado = estados.id_estado INNER JOIN ciudades ON usuarios.id_ciudad = ciudades.id_ciudad WHERE usuarios.documento = :documento");
     $getFindByIdEmployee->bindParam(":documento", $id_employee);
     $getFindByIdEmployee->execute();
     $employeeGetId = $getFindByIdEmployee->fetch(PDO::FETCH_ASSOC);
@@ -124,6 +124,32 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                         </select>
                                     </div>
                                 </div>
+                                <!-- ciudad -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label for="ciudad" class="form-label">Ciudad</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <select class="form-select" name="ciudad" required>
+                                            <option value="<?php echo $employeeGetId['id_ciudad'] ?>">
+                                                <?php echo $employeeGetId['ciudad'] ?></option>
+                                            <?php
+                                                    // CONSUMO DE DATOS DE LOS PROCESOS
+                                                    $ciudades_query = $connection->prepare("SELECT * FROM ciudades");
+                                                    $ciudades_query->execute();
+                                                    $ciudades = $ciudades_query->fetchAll(PDO::FETCH_ASSOC);
+                                                    // Verificar si no hay datos
+                                                    if (empty($ciudades)) {
+                                                        echo "<option value=''>No hay datos...</option>";
+                                                    } else {
+                                                        // Iterar sobre los ciudads
+                                                        foreach ($ciudades as $ciudad) {
+                                                            echo "<option value='{$ciudad['id_ciudad']}'>{$ciudad['ciudad']}</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                        </select>
+                                    </div>
+                                </div>
                                 <!-- password -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="password">Contraseña</label>
@@ -194,6 +220,39 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                             value="<?php echo $employeeGetId['arl'] ?>" maxlength="100"
                                             class="form-control" name="arl" id="arl"
                                             placeholder="Ingresar nombre de la arl" />
+                                    </div>
+                                </div>
+                                <!-- fecha de inicio-->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="fecha_inicio">Fecha Inicio Contrato</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="fecha_inicio_span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="date" required value="<?php echo $employeeGetId['fecha_inicio'] ?>"
+                                            class="form-control" name="fecha_inicio" id="fecha_inicio" />
+                                    </div>
+                                </div>
+                                <!-- fecha de fin-->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="fecha_fin">Fecha Fin Contrato</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="fecha_fin_span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="date" required value="<?php echo $employeeGetId['fecha_fin'] ?>"
+                                            class="form-control" name="fecha_fin" id="fecha_fin" />
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label for="conductor" class="form-label">Confirmacion Conductor</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="conductor-2" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <select class="form-select" name="conductor" required>
+                                            <option value="<?php echo $employeeGetId['confi_conductor'] ?>">
+                                                <?php echo $employeeGetId['confi_conductor'] ?></option>
+                                            <option value="SI">SI</option>
+                                            <option value="NO">NO</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="mt-4">
