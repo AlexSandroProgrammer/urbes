@@ -7,3 +7,4 @@ require_once("../controllers/ActividadController.php");
 require_once("../controllers/CiudadController.php");
 require_once("../controllers/VehiculosController.php");
 require_once("../controllers/LaborController.php");
+require_once("../controllers/ZonasController.php");
