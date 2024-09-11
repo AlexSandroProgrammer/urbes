@@ -2,7 +2,6 @@
 $titlePage = "Bienvenido Usuario";
 require_once("../components/navbar.php");
 if ($documentoSession) {
-
     $documento = encrypt_password($documentoSession['documento']);
 ?>
 <!-- Content wrapper -->
@@ -43,8 +42,7 @@ if ($documentoSession) {
                         <p class="card-text">
                             Presiona clic para ingresar en el formulario
                         </p>
-                        <a href="vehiculo_compactador.php?query=<?= $documento ?>" class="btn btn-primary"><i
-                                class='bx bx-right-arrow-alt'></i>
+                        <a href="vehiculo_compactador.php" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i>
                             Ingresar</a>
                     </div>
                 </div>

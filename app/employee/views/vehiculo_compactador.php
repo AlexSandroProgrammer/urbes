@@ -1,17 +1,17 @@
 <?php
-$titlePage = "Registro Vehiculo Compactadot";
+$titlePage = "Registro Vehiculo Compactador";
 require_once("../components/navbar.php");
-if (isNotEmpty([$_GET['query']])) {
-    // asignamos la query a una variable
-    $query = $_GET['query'];
-    $documento = bcrypt_password($query);
-    // Preparamos la consulta para buscar el usuario
-    $queryUser = $connection->prepare("SELECT * FROM usuarios WHERE documento = :documento");
-    $queryUser->bindParam(":documento", $documento);
-    $queryUser->execute();
-    $user = $queryUser->fetch(PDO::FETCH_ASSOC);
 
-    $nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
+// asignamos la query a una variable
+$documento = $_SESSION['documento'];
+
+// Preparamos la consulta para buscar el usuario
+$queryUser = $connection->prepare("SELECT * FROM usuarios WHERE documento = :documento");
+$queryUser->bindParam(":documento", $documento);
+$queryUser->execute();
+$user = $queryUser->fetch(PDO::FETCH_ASSOC);
+// nombre completo
+$nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -23,7 +23,6 @@ if (isNotEmpty([$_GET['query']])) {
                 <div class="card mb-4">
                     <div class="card-header mt-3 justify-content-between align-items-center text-center">
                         <h3 class="fw-bold">REGISTRO DE VEHICULO COMPACTADOR</h3>
-
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
@@ -40,7 +39,7 @@ if (isNotEmpty([$_GET['query']])) {
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
                                         <input type="date" required class="form-control" name="fecha_inicio"
-                                            id="fecha_inicio" placeholder="Ingresar por favor la contraseña" />
+                                            id="fecha_inicio" />
 
                                     </div>
                                 </div>
@@ -96,20 +95,20 @@ if (isNotEmpty([$_GET['query']])) {
                                         <select class="form-select" name="estado" required>
                                             <option value="">Seleccionar Estado...</option>
                                             <?php
-                                                // CONSUMO DE DATOS DE LOS PROCESOS
-                                                $estados_sena = $connection->prepare("SELECT * FROM estados");
-                                                $estados_sena->execute();
-                                                $estados_se = $estados_sena->fetchAll(PDO::FETCH_ASSOC);
-                                                // Verificar si no hay datos
-                                                if (empty($estados_se)) {
-                                                    echo "<option value=''>No hay datos...</option>";
-                                                } else {
-                                                    // Iterar sobre los estados
-                                                    foreach ($estados_se as $estado_se) {
-                                                        echo "<option value='{$estado_se['id_estado']}'>{$estado_se['estado']}</option>";
-                                                    }
+                                            // CONSUMO DE DATOS DE LOS PROCESOS
+                                            $estados_sena = $connection->prepare("SELECT * FROM estados");
+                                            $estados_sena->execute();
+                                            $estados_se = $estados_sena->fetchAll(PDO::FETCH_ASSOC);
+                                            // Verificar si no hay datos
+                                            if (empty($estados_se)) {
+                                                echo "<option value=''>No hay datos...</option>";
+                                            } else {
+                                                // Iterar sobre los estados
+                                                foreach ($estados_se as $estado_se) {
+                                                    echo "<option value='{$estado_se['id_estado']}'>{$estado_se['estado']}</option>";
                                                 }
-                                                ?>
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -198,7 +197,5 @@ if (isNotEmpty([$_GET['query']])) {
     </div>
     <?php
     require_once("../components/footer.php");
-} else {
-    showErrorOrSuccessAndRedirect('error', "Error de ruta", "Error al momento de acceder al formulario", "index.php");
-}
+
     ?>
