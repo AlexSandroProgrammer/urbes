@@ -26,11 +26,14 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   `fecha_registro` datetime DEFAULT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id_actividad`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.actividades: ~0 rows (aproximadamente)
 INSERT INTO `actividades` (`id_actividad`, `actividad`, `fecha_registro`, `fecha_actualizacion`) VALUES
-	(2, 'Mecánica Vehículo Compactador', '2024-09-06 00:33:53', '2024-09-07 15:16:44');
+	(2, 'Mecánica Vehículo Compactador', '2024-09-06 00:33:53', '2024-09-07 15:16:44'),
+	(3, 'Areas Publicas', '2024-09-11 00:09:15', NULL),
+	(4, 'Vehiculo Compactador', '2024-09-11 00:10:11', NULL),
+	(5, 'Carro Barrido', '2024-09-11 00:10:25', NULL);
 
 -- Volcando estructura para tabla urbes_db.ciudades
 CREATE TABLE IF NOT EXISTS `ciudades` (
@@ -72,18 +75,17 @@ CREATE TABLE IF NOT EXISTS `intentos_fallidos` (
 -- Volcando estructura para tabla urbes_db.labores
 CREATE TABLE IF NOT EXISTS `labores` (
   `id_labor` int NOT NULL AUTO_INCREMENT,
-  `labor` varchar(30) NOT NULL,
+  `labor` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `fecha_registro` datetime DEFAULT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL,
   `id_actividad` int NOT NULL,
   PRIMARY KEY (`id_labor`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.labores: ~3 rows (aproximadamente)
 INSERT INTO `labores` (`id_labor`, `labor`, `fecha_registro`, `fecha_actualizacion`, `id_actividad`) VALUES
-	(1, 'lavadoras', '2024-09-09 13:41:23', '2024-09-09 13:42:29', 0),
-	(2, 'Barrido', '2024-09-09 13:42:07', '2024-09-09 14:36:03', 0),
-	(3, 'Conductor', '2024-09-09 13:42:12', '2024-09-09 14:34:35', 0);
+	(4, 'Recoleccion', '2024-09-10 19:27:32', '2024-09-11 00:13:00', 4),
+	(5, 'Recoleccion Disposicion al relleno', '2024-09-11 00:11:37', '2024-09-11 00:21:02', 4);
 
 -- Volcando estructura para tabla urbes_db.registro_actividades
 CREATE TABLE IF NOT EXISTS `registro_actividades` (
@@ -137,14 +139,16 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
   `confi_conductor` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `rh` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla urbes_db.usuarios: ~3 rows (aproximadamente)
-INSERT INTO `usuarios` (`documento`, `tipo_documento`, `nombres`, `apellidos`, `celular`, `celular_familiar`, `parentezco_familiar`, `nombre_familiar`, `password`, `id_tipo_usuario`, `id_estado`, `fecha_registro`, `fecha_actualizacion`, `eps`, `arl`, `id_ciudad`, `fecha_inicio`, `fecha_fin`, `confi_conductor`) VALUES
-	(79464482, 'C.C.', 'Valentina ', 'Lopez', '3212402301', '3122402340', 'Tio', 'Albeiro Mejia', 'QWEybktYbmFTalpJb0xRS3RWaXdrZz09OjpmZQakYJo2jczWSYtM//rc', 3, 1, '2024-09-10 13:46:06', '2024-09-10 16:10:43', 'Nueva EPS', 'Nueva ARL', 1, '2024-09-14', '2024-10-31', 'NO'),
-	(99464482, 'C.C.', 'Daniel', 'Alvarez', '3122402301', NULL, NULL, NULL, 'OEw1Y0hSa2N1UTk1TXlyNllVbzRwQT09Ojo0pjEqECeWwDBgsVntmGba', 2, 1, '2024-09-04 23:39:15', NULL, NULL, NULL, 1, NULL, NULL, NULL),
-	(1110460410, 'C.C.', 'Administrador', 'Urbes', '3105853668', NULL, NULL, NULL, 'aVo0U0dNRGx4UEpURkZCRGwzaktCdz09Ojr5eAxR2rNIqxqkd5oagI2G', 1, 1, '2024-03-09 15:26:38', '2024-09-04 11:54:19', NULL, NULL, 1, NULL, NULL, NULL);
+INSERT INTO `usuarios` (`documento`, `tipo_documento`, `nombres`, `apellidos`, `celular`, `celular_familiar`, `parentezco_familiar`, `nombre_familiar`, `password`, `id_tipo_usuario`, `id_estado`, `fecha_registro`, `fecha_actualizacion`, `eps`, `arl`, `id_ciudad`, `fecha_inicio`, `fecha_fin`, `confi_conductor`, `rh`) VALUES
+	(79464482, 'C.C.', 'Valentina ', 'Lopez', '3212402301', '3122402340', 'Tio', 'Albeiro Mejia', 'QWEybktYbmFTalpJb0xRS3RWaXdrZz09OjpmZQakYJo2jczWSYtM//rc', 3, 1, '2024-09-10 13:46:06', '2024-09-10 16:10:43', 'Nueva EPS', 'Nueva ARL', 1, '2024-09-14', '2024-10-31', 'NO', 'O+'),
+	(99464482, 'C.C.', 'Daniel', 'Alvarez', '3122402301', NULL, NULL, NULL, 'OEw1Y0hSa2N1UTk1TXlyNllVbzRwQT09Ojo0pjEqECeWwDBgsVntmGba', 3, 1, '2024-09-04 23:39:15', NULL, NULL, NULL, 1, NULL, NULL, 'NO', NULL),
+	(1110460410, 'C.C.', 'Administrador', 'Urbes', '3105853668', NULL, NULL, NULL, 'd29nSzdrL2RrM29WSzdrZ2lqbmVDUT09Ojo1SYdh7gWu86U1PrAi4Ey9', 1, 1, '2024-03-09 15:26:38', '2024-09-04 11:54:19', NULL, NULL, 1, NULL, NULL, NULL, NULL),
+	(1112024023, 'C.C.', 'Amparo', 'Garcia', '3234501650', '3129978120', 'Mamam', 'Alexandra Coro', 'Z2lOMGJoUERyeitDYmtPbzhwVDdSUT09OjrcQH+siKNKyJwStz5D8Xgp', 3, 1, '2024-09-10 19:36:53', '2024-09-10 19:51:18', 'Salud Total', 'Salud ARL', 1, '2024-09-21', '2024-09-27', 'NO', 'O+');
 
 -- Volcando estructura para tabla urbes_db.vehiculos
 CREATE TABLE IF NOT EXISTS `vehiculos` (
