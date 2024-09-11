@@ -60,6 +60,7 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                     <th>Ciudad</th>
                                     <th>EPS</th>
                                     <th>ARL</th>
+                                    <th>RH</th>
                                     <th>Fecha Inicio Contrato</th>
                                     <th>Fecha Fin Contrato</th>
                                     <th>Conductor</th>
@@ -112,6 +113,7 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                     <td><?php echo $empleado['ciudad'] ?></td>
                                     <td><?php echo $empleado['eps'] ?></td>
                                     <td><?php echo $empleado['arl'] ?></td>
+                                    <td><?php echo $empleado['rh'] ?></td>
                                     <td><?php echo $fecha_inicio ?></td>
                                     <td><?php echo $fecha_fin ?></td>
                                     <td><?php echo $empleado['confi_conductor'] ?></td>

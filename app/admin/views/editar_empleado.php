@@ -124,6 +124,16 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                         </select>
                                     </div>
                                 </div>
+                                <!-- nombre de la rh -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="rh">RH</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="rh_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100"
+                                            value="<?php echo $employeeGetId['rh']  ?>" class="form-control" name="rh"
+                                            id="rh" placeholder="Ingresar RH del empleado" />
+                                    </div>
+                                </div>
                                 <!-- ciudad -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="ciudad" class="form-label">Ciudad</label>

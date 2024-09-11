@@ -77,6 +77,15 @@ require_once("../components/sidebar.php");
                                             name="celular" id="celular" placeholder="Ingresar numero de celular" />
                                     </div>
                                 </div>
+                                <!-- nombre de la rh -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="rh">RH</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="rh_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
+                                            name="rh" id="rh" placeholder="Ingresar RH del empleado" />
+                                    </div>
+                                </div>
                                 <!-- estado -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="estado" class="form-label">Estado Inicial</label>

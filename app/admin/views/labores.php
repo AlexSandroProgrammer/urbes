@@ -42,31 +42,29 @@ $labors = $getLabors->fetchAll(PDO::FETCH_ASSOC);
                                                     placeholder="Ingresa el nombre de la labor" />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-body">
                                         <div class="mb-3">
                                             <label class="form-label" for="actividad">Elija la actividad a la que
                                                 pertenece</label>
                                             <div class="input-group input-group-merge">
                                                 <span id="estado-2" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
+                                                        class="fas fa-layer-group"></i></span>
                                                 <select class="form-select" name="actividad" required>
                                                     <option value="">Seleccionar la actividad</option>
                                                     <?php
-                                            // CONSUMO DE DATOS DE LOS PROCESOS
-                                            $actividades = $connection->prepare("SELECT * FROM actividades");
-                                            $actividades->execute();
-                                            $actividades_a = $actividades->fetchAll(PDO::FETCH_ASSOC);
-                                            // Verificar si no hay datos
-                                            if (empty($actividades_a)) {
-                                                echo "<option value=''>No hay datos...</option>";
-                                            } else {
-                                                // Iterar sobre los estados
-                                                foreach ($actividades_a as $activi) {
-                                                    echo "<option value='{$activi['id_actividad']}'>{$activi['actividad']}</option>";
-                                                }
-                                            }
-                                            ?>
+                                                    // CONSUMO DE DATOS DE LOS PROCESOS
+                                                    $actividades = $connection->prepare("SELECT * FROM actividades");
+                                                    $actividades->execute();
+                                                    $actividades_a = $actividades->fetchAll(PDO::FETCH_ASSOC);
+                                                    // Verificar si no hay datos
+                                                    if (empty($actividades_a)) {
+                                                        echo "<option value=''>No hay datos...</option>";
+                                                    } else {
+                                                        // Iterar sobre los estados
+                                                        foreach ($actividades_a as $activi) {
+                                                            echo "<option value='{$activi['id_actividad']}'>{$activi['actividad']}</option>";
+                                                        }
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -117,102 +115,102 @@ $labors = $getLabors->fetchAll(PDO::FETCH_ASSOC);
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                            <label class="form-label" for="actividad">Elija la actividad a la que
-                                                pertenece</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="estado-2" class="input-group-text"><i
-                                                        class="fas fa-user"></i></span>
-                                                <select class="form-select" name="actividad" required>
-                                                    <option value="<?php echo $selectLabors['id_actividad'] ?>">
-                                                        <?php echo $selectLabors['actividad'] ?>
-                                                    </option>
-                                                    <?php
-                                            // CONSUMO DE DATOS DE LOS PROCESOS
-                                            $actividades = $connection->prepare("SELECT * FROM actividades");
-                                            $actividades->execute();
-                                            $actividades_a = $actividades->fetchAll(PDO::FETCH_ASSOC);
-                                            // Verificar si no hay datos
-                                            if (empty($actividades_a)) {
-                                                echo "<option value=''>No hay datos...</option>";
-                                            } else {
-                                                // Iterar sobre los estados
-                                                foreach ($actividades_a as $activi) {
-                                                    echo "<option value='{$activi['id_actividad']}'>{$activi['actividad']}</option>";
-                                                }
-                                            }
-                                            ?>
-                                                </select>
-                                            </div>
+                                        <label class="form-label" for="actividad">Elija la actividad a la que
+                                            pertenece</label>
+                                        <div class="input-group input-group-merge">
+                                            <span id="estado-2" class="input-group-text"><i
+                                                    class="fas fa-user"></i></span>
+                                            <select class="form-select" name="actividad" required>
+                                                <option value="<?php echo $selectLabors['id_actividad'] ?>">
+                                                    <?php echo $selectLabors['actividad'] ?>
+                                                </option>
+                                                <?php
+                                                        // CONSUMO DE DATOS DE LOS PROCESOS
+                                                        $actividades = $connection->prepare("SELECT * FROM actividades");
+                                                        $actividades->execute();
+                                                        $actividades_a = $actividades->fetchAll(PDO::FETCH_ASSOC);
+                                                        // Verificar si no hay datos
+                                                        if (empty($actividades_a)) {
+                                                            echo "<option value=''>No hay datos...</option>";
+                                                        } else {
+                                                            // Iterar sobre los estados
+                                                            foreach ($actividades_a as $activi) {
+                                                                echo "<option value='{$activi['id_actividad']}'>{$activi['actividad']}</option>";
+                                                            }
+                                                        }
+                                                        ?>
+                                            </select>
                                         </div>
                                     </div>
-                                    <input type="hidden" class="form-control" id="id_labor" name="id_labor"
-                                        value="<?php echo $selectLabors['id_labor']  ?>" />
-                                    <div class="modal-footer">
-                                        <a class="btn btn-danger" href="labores.php">
-                                            Cancelar
-                                        </a>
-                                        <input type="submit" class="btn btn-primary" value="Actualizar"></input>
-                                        <input type="hidden" class="btn btn-info" value="formUpdateLabors"
-                                            name="MM_formUpdateLabors"></input>
-                                    </div>
-                                </form>
                             </div>
+                            <input type="hidden" class="form-control" id="id_labor" name="id_labor"
+                                value="<?php echo $selectLabors['id_labor']  ?>" />
+                            <div class="modal-footer">
+                                <a class="btn btn-danger" href="labores.php">
+                                    Cancelar
+                                </a>
+                                <input type="submit" class="btn btn-primary" value="Actualizar"></input>
+                                <input type="hidden" class="btn btn-info" value="formUpdateLabors"
+                                    name="MM_formUpdateLabors"></input>
+                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <?php
+            </div>
+            <?php
                     } else {
                         showErrorOrSuccessAndRedirect("error", "Registro no encontrado", "El registro que buscas no esta registrado.", "labores.php");
                         exit();
                     }
                 }
-                ?>
-                <div class="row">
-                    <div class="col-lg-12 mt-3">
-                        <div class="table-responsive">
-                            <table id="example" class="table table-striped table-bordered top-table" cellspacing="0"
-                                width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Acciones</th>
-                                        <th>Labores</th>
-                                        <th>Actividad</th>
-                                        <th>Fecha Registro</th>
-                                        <th>Fecha Actualizacion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    foreach ($labors as $work) {
-                                    ?>
-                                    <tr>
-                                        <td>
-                                            <form method="GET" class="mt-2" action="labores.php">
-                                                <input type="hidden" name="id_labor" value="<?= $work['id_labor'] ?>">
-                                                <button class="btn btn-success"
-                                                    onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                    type="submit">
-                                                    <i class="bx bx-refresh" title="Actualizar"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td><?php echo $work['labor'] ?></td>
-                                        <td><?php echo $work['actividad'] ?></td>
-                                        <td><?php echo $work['fecha_registro'] ?></td>
-                                        <td><?php echo $work['fecha_actualizacion'] ?></td>
-                                        
-                                    </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+    ?>
+            <div class="row">
+                <div class="col-lg-12 mt-3">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered top-table" cellspacing="0"
+                            width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Labores</th>
+                                    <th>Actividad</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Fecha Actualizacion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                        foreach ($labors as $work) {
+                        ?>
+                                <tr>
+                                    <td>
+                                        <form method="GET" class="mt-2" action="labores.php">
+                                            <input type="hidden" name="id_labor" value="<?= $work['id_labor'] ?>">
+                                            <button class="btn btn-success"
+                                                onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                type="submit">
+                                                <i class="bx bx-refresh" title="Actualizar"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td><?php echo $work['labor'] ?></td>
+                                    <td><?php echo $work['actividad'] ?></td>
+                                    <td><?php echo $work['fecha_registro'] ?></td>
+                                    <td><?php echo $work['fecha_actualizacion'] ?></td>
+
+                                </tr>
+                                <?php
+                        }
+                        ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <?php
-    require_once("../components/footer.php")
-    ?>
+</div>
+<?php
+require_once("../components/footer.php")
+?>
