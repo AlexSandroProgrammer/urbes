@@ -18,7 +18,7 @@ if ((isset($_POST["MM_formRegisterActivity"])) && ($_POST["MM_formRegisterActivi
     // CONDICIONALES DEPENDIENDO EL RESULTADO DE LA CONSULTA
     if ($queryFetch) {
         // Si ya existe una actividad con ese nombre entonces cancelamos el registro y le indicamos al usuario
-        showErrorOrSuccessAndRedirect("error", "Error de registro", "Los datos ingresados ya estan registrados", "actividad.php");
+        showErrorOrSuccessAndRedirect("error", "Error de registro", "Los datos ingresados ya estan registrados", "actividades.php");
         exit();
     } else {
         // cargamos la fecha y hora actual del registro

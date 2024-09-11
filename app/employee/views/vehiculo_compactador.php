@@ -1,10 +1,8 @@
 <?php
 $titlePage = "Registro Vehiculo Compactador";
 require_once("../components/navbar.php");
-
 // asignamos la query a una variable
 $documento = $_SESSION['documento'];
-
 // Preparamos la consulta para buscar el usuario
 $queryUser = $connection->prepare("SELECT * FROM usuarios WHERE documento = :documento");
 $queryUser->bindParam(":documento", $documento);
@@ -12,6 +10,9 @@ $queryUser->execute();
 $user = $queryUser->fetch(PDO::FETCH_ASSOC);
 // nombre completo
 $nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
+
+// fecha inicio
+$fecha_inicio = date('Y-m-d');
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -33,155 +34,269 @@ $nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
                                     formulario, te
                                     invitamos a rellenar la siguiente informacion </h5>
                                 <!-- fecha_inicio -->
-                                <div class="mb-3 col-12 col-lg-6">
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="date" required class="form-control" name="fecha_inicio"
-                                            id="fecha_inicio" />
-
-                                    </div>
-                                </div>
-                                <!-- numero de documento -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="documento">Numero de Documento</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this);"
-                                            onkeypress="return(multiplenumber(event));" class="form-control" required
-                                            id="documento" name="documento" placeholder="Ingresa tu numero de documento"
-                                            autofocus />
-                                    </div>
-                                </div>
-                                <!-- nombres -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="nombres">Nombres</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="nombres_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="nombres" id="nombres" placeholder="Ingresar nombres completos" />
-                                    </div>
-                                </div>
-                                <!-- apellidos -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="apellidos">Apellidos</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="apellidos" id="apellidos"
-                                            placeholder="Ingresar apellidos completos" />
-                                    </div>
-                                </div>
-                                <!-- numero de celular -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="celular">Numero de Celular</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="celular_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="text" required type="text" minlength="10" maxlength="10"
-                                            onkeypress="return(multiplenumber(event));" class="form-control"
-                                            name="celular" id="celular" placeholder="Ingresar numero de celular" />
+                                        <input type="date" required readonly class="form-control"
+                                            value="<?= $fecha_inicio ?>" name="fecha_inicio" id="fecha_inicio" />
                                     </div>
                                 </div>
                                 <!-- estado -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label for="estado" class="form-label">Estado Inicial</label>
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label for="estado" class="form-label">Equipo de Transporte</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-user"></i></span>
-                                        <select class="form-select" name="estado" required>
-                                            <option value="">Seleccionar Estado...</option>
+                                        <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                        <select class="form-select" name="estado" autofocus required>
+                                            <option value="">Seleccionar Equipo de Transporte...</option>
                                             <?php
                                             // CONSUMO DE DATOS DE LOS PROCESOS
-                                            $estados_sena = $connection->prepare("SELECT * FROM estados");
-                                            $estados_sena->execute();
-                                            $estados_se = $estados_sena->fetchAll(PDO::FETCH_ASSOC);
+                                            $driversGet = $connection->prepare("SELECT * FROM vehiculos");
+                                            $driversGet->execute();
+                                            $equipos = $driversGet->fetchAll(PDO::FETCH_ASSOC);
                                             // Verificar si no hay datos
-                                            if (empty($estados_se)) {
+                                            if (empty($equipos)) {
                                                 echo "<option value=''>No hay datos...</option>";
                                             } else {
                                                 // Iterar sobre los estados
-                                                foreach ($estados_se as $estado_se) {
-                                                    echo "<option value='{$estado_se['id_estado']}'>{$estado_se['estado']}</option>";
+                                                foreach ($equipos as $equipo) {
+                                                    echo "<option value='{$equipo['placa']}'>{$equipo['vehiculo']} - {$equipo['placa']}</option>";
                                                 }
                                             }
                                             ?>
                                         </select>
                                     </div>
                                 </div>
-                                <!-- password -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="password">Contraseña</label>
+                                <?php
+                                if ($user['confi_conductor'] == 'SI') {
+                                ?>
+                                    <!-- numero de documento -->
+                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                        <label class="form-label" for="documento">CONDUCTOR</label>
+                                        <div class="input-group input-group-merge">
+                                            <span id="documento-icon" class="input-group-text"><i
+                                                    class="fas fa-truck"></i></span>
+                                            <input type="text" minlength="6" maxlength="10" readonly
+                                                value="<?= $documento ?> - <?= $nombre_completo ?>" class="form-control"
+                                                required id="documento" name="documento"
+                                                placeholder="Ingresa tu numero de documento" />
+                                        </div>
+                                    </div>
+                                <?php
+                                } else {
+                                ?>
+                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                        <label for="estado" class="form-label">Conductor Asignado</label>
+                                        <div class="input-group input-group-merge">
+                                            <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                            <select class="form-select" name="documento" required>
+                                                <option value="">Seleccionar Equipo de Transporte...</option>
+                                                <?php
+
+                                                $confirmacion = 'SI';
+                                                // CONSUMO DE DATOS DE LOS PROCESOS
+                                                $driversGet = $connection->prepare("SELECT * FROM usuarios WHERE confi_conductor = :confirmacion");
+                                                $driversGet->bindParam(':confirmacion', $confirmacion);
+                                                $driversGet->execute();
+                                                $drivers = $driversGet->fetchAll(PDO::FETCH_ASSOC);
+                                                // Verificar si no hay datos
+                                                if (empty($drivers)) {
+                                                    echo "<option value=''>No hay datos...</option>";
+                                                } else {
+                                                    // Iterar sobre los documentos de los usuarios
+                                                    foreach ($drivers as $driver) {
+                                                        echo "<option value='{$driver['documento']}'>{$driver['documento']} - {$driver['nombres']} {$driver['apellidos']}</option>";
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label for="estado" class="form-label">Tipo de Labor en camion recolector</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                        <select class="form-select" name="documento" required>
+                                            <option value="">Seleccionar Tipo de Labor...</option>
+                                            <?php
+
+                                            $id_veh_compact = 4;
+                                            // CONSUMO DE DATOS DE LOS PROCESOS
+                                            $labores_query = $connection->prepare("SELECT * FROM labores WHERE id_actividad = :id_veh_compact");
+                                            $labores_query->bindParam(':id_veh_compact', $id_veh_compact);
+                                            $labores_query->execute();
+                                            $labores = $labores_query->fetchAll(PDO::FETCH_ASSOC);
+                                            // Verificar si no hay datos
+                                            if (empty($labores)) {
+                                                echo "<option value=''>No hay datos...</option>";
+                                            } else {
+                                                // Iterar sobre los documentos de los usuarios
+                                                foreach ($labores as $labor) {
+                                                    echo "<option value='{$labor['id_labor']}'> {$labor['labor']}</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- hora_inicio -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="hora_inicio">Hora Inicio de Recolección</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="hora_inicio_span" class="input-group-text">
+                                            <i class="fas fa-truck"></i>
+                                        </span>
+                                        <input type="time" readonly required class="form-control" name="hora_inicio"
+                                            id="hora_inicio" />
+                                    </div>
+                                </div>
+                                <script>
+                                    // Función para actualizar la hora en el campo de hora_inicio
+                                    function actualizarHora() {
+                                        // Obtener la hora actual
+                                        const ahora = new Date();
+                                        // Formatear la hora en formato HH:MM (24 horas)
+                                        const horas = String(ahora.getHours()).padStart(2, '0');
+                                        const minutos = String(ahora.getMinutes()).padStart(2, '0');
+
+                                        // Actualizar el valor del input con la hora formateada
+                                        document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
+                                    }
+                                    // Actualizar la hora cada segundo
+                                    setInterval(actualizarHora, 1000);
+                                    // Llamar a la función inmediatamente para establecer la hora inicial
+                                    actualizarHora();
+                                </script>
+
+                                <!-- foto_kilometraje -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="foto_kilometraje">Foto del Kilometraje
+                                        Inicial</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="password" required minlength="5" maxlength="30"
-                                            class="form-control" name="password" id="password"
-                                            placeholder="Ingresar por favor la contraseña" />
+                                                class="fas fa-truck"></i></span>
+                                        <input type="file" accept="/" required class="form-control"
+                                            name="foto_kilometraje" id="foto_kilometraje" />
+                                    </div>
+                                </div>
+                                <!-- kilometraje -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="kilometraje">Kilometraje Inicial</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="kilometraje_span" class="input-group-text"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input type="text" minlength="1" maxlength="10" required
+                                            onkeypress="return(multiplenumber(event));" class="form-control"
+                                            name="kilometraje" id="kilometraje" placeholder="Ingresar kilometraje" />
+                                    </div>
+                                </div>
+                                <!-- horometro -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="horometro">Horometro</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="horometro_span" class="input-group-text"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input type="text" minlength="1" maxlength="10" required
+                                            onkeypress="return(multiplenumber(event));" class="form-control"
+                                            name="horometro" id="horometro" placeholder="Ingresar horometro" />
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label for="ciudad" class="form-label">Ciudad de Recoleccion</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                        <select class="form-select" name="ciudad" id="ciudad" required>
+                                            <option value="">Seleccionar Ciudad de Recoleccion...</option>
+                                            <?php
+                                            // CONSUMO DE DATOS DE LAS CIUDADES
+                                            $ciudades_query = $connection->prepare("SELECT * FROM ciudades");
+                                            $ciudades_query->execute();
+                                            $ciudades = $ciudades_query->fetchAll(PDO::FETCH_ASSOC);
+                                            if (empty($ciudades)) {
+                                                echo "<option value=''>No hay datos...</option>";
+                                            } else {
+                                                foreach ($ciudades as $ciudad) {
+                                                    echo "<option value='{$ciudad['id_ciudad']}'>{$ciudad['ciudad']}</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
 
+                                <!-- Contenedor de los empleados -->
+                                <div class="row mb-3 col-12" id="empleados" style="display: none;">
+                                    <div class="col-12 mb-3">
+                                        <h5 class="text-center">Selecciona los Empleados</h5>
+                                    </div>
+                                    <div class="row" id="empleado-list">
+                                        <!-- Checkboxes de empleados aparecerán aquí -->
                                     </div>
                                 </div>
-                                <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS DEL FAMILIAR</h6>
 
-                                <!-- numero de celular -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="celular_familiar">Numer de Celular
-                                        Familiar</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="celular_familiar_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="text" required type="text"
-                                            onkeypress="return(multiplenumber(event));" minlength="10" maxlength="10"
-                                            class="form-control" name="celular_familiar" id="celular_familiar"
-                                            placeholder="Ingresar numero de celular del acudiente" />
-                                    </div>
-                                </div>
-                                <!-- nombre de familiar -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="nombre_familiar">Nombre Familiar</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="nombresfamiliar_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="nombre_familiar" id="nombre_familiar"
-                                            placeholder="Ingresar nombres completos" />
-                                    </div>
-                                </div>
-                                <!-- parentezco de familiar -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="parentezco_familiar">Parentezco Familiar</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="parentezco_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="parentezco_familiar" id="parentezco_familiar"
-                                            placeholder="Ingresar parentezco del familiar" />
-                                    </div>
-                                </div>
-                                <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS LABORALES</h6>
-                                <!-- nombre de la eps -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="eps">Nombre Eps</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="eps_span" class="input-group-text"><i class="fas fa-user"></i></span>
-                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="eps" id="eps" placeholder="Ingresar nombre de la EPS" />
-                                    </div>
-                                </div>
-                                <!-- nombre de la arl -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="arl">Nombre Arl</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="arl_span" class="input-group-text"><i class="fas fa-user"></i></span>
-                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="arl" id="arl" placeholder="Ingresar nombre de la ARL" />
-                                    </div>
-                                </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const ciudad = document.getElementById('ciudad');
+                                        const empleados = document.getElementById('empleados');
+                                        const empleadoList = document.getElementById('empleado-list');
+
+                                        ciudad.addEventListener('change', function() {
+                                            const selectedValue = this.value;
+
+                                            // Ocultamos la lista de empleados si no se selecciona una ciudad
+                                            if (selectedValue === '') {
+                                                empleados.style.display = 'none';
+                                                empleadoList.innerHTML =
+                                                    ''; // Limpiamos el contenido previo
+                                                return;
+                                            }
+
+                                            // Realizamos la solicitud AJAX
+                                            fetch(`get_empleados_ciudad.php?id_ciudad=${selectedValue}`)
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    // Limpiamos las opciones previas de empleados
+                                                    empleadoList.innerHTML = '';
+                                                    if (data.error) {
+                                                        console.error(data.error);
+                                                        empleados.style.display = 'none';
+                                                        return;
+                                                    }
+                                                    // Generamos los checkboxes para cada empleado
+                                                    data.forEach(empleado => {
+                                                        const empleadoDiv = document
+                                                            .createElement('div');
+                                                        // Usamos col-lg-3 para dispositivos grandes (4 opciones), col-md-4 (3 opciones), col-sm-6 (2 opciones) y col-12 (1 opción)
+                                                        empleadoDiv.className =
+                                                            'col-lg-3 col-md-4 col-sm-6 col-12 mb-3';
+
+                                                        empleadoDiv.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <h6 class="mb-0 me-2">${empleado.nombres} ${empleado.apellidos}</h6>
+                            <div class="form-check form-switch ms-auto">
+                                <input class="form-check-input empleado-checkbox" type="checkbox" data-empleado-id="${empleado.documento}" data-empleado-nombre="${empleado.nombres} ${empleado.apellidos}" />
+                            </div>
+                        </div>
+                    `;
+                                                        empleadoList.appendChild(empleadoDiv);
+                                                    });
+
+                                                    // Mostramos el select de empleados
+                                                    empleados.style.display = 'block';
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error al obtener los empleados',
+                                                        error);
+                                                });
+                                        });
+                                    });
+                                </script>
                                 <div class="mt-4">
-                                    <a href="empleados_activos.php" class="btn btn-danger">
+                                    <a href="index.php" class="btn btn-danger">
                                         Cancelar
                                     </a>
                                     <input type="submit" class="btn btn-primary" value="Registrar"></input>

@@ -12,7 +12,7 @@ if ((isset($_POST["MM_formRegisterLabors"])) && ($_POST["MM_formRegisterLabors"]
     }
     // validamos que no se repitan los datos del nombre del actividad
     // CONSULTA SQL PARA VERIFICAR SI EL REGISTRO YA EXISTE EN LA BASE DE DATOS
-    $estadoQueryFetch = $connection->prepare("SELECT * FROM labores WHERE labor = :labor  ");
+    $estadoQueryFetch = $connection->prepare("SELECT * FROM labores WHERE labor = :labor");
     $estadoQueryFetch->bindParam(':labor', $labor);
     $estadoQueryFetch->execute();
     $queryFetch = $estadoQueryFetch->fetchAll();
@@ -26,7 +26,7 @@ if ((isset($_POST["MM_formRegisterLabors"])) && ($_POST["MM_formRegisterLabors"]
         $fecha_registro = date('Y-m-d H:i:s');
         // Inserta los datos en la base de datos
         $registerLabors = $connection->prepare("INSERT INTO labores(labor, fecha_registro,id_actividad) VALUES(:labor, :fecha_registro,:id_actividad)");
-        $registerLabors ->bindParam(':labor', $labor);
+        $registerLabors->bindParam(':labor', $labor);
         $registerLabors->bindParam(':fecha_registro', $fecha_registro);
         $registerLabors->bindParam(':id_actividad', $actividad);
         $registerLabors->execute();
@@ -40,7 +40,7 @@ if ((isset($_POST["MM_formRegisterLabors"])) && ($_POST["MM_formRegisterLabors"]
     }
 }
 
-//  EDITAR ACTIVIDAD
+//  EDITAR LABOR
 if ((isset($_POST["MM_formUpdateLabors"])) && ($_POST["MM_formUpdateLabors"] == "formUpdateLabors")) {
     // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE ACTIVIDAD
     $labor = $_POST['labor'];
@@ -69,9 +69,8 @@ if ((isset($_POST["MM_formUpdateLabors"])) && ($_POST["MM_formUpdateLabors"] == 
         $updateLabors = $connection->prepare("UPDATE labores SET labor = :labor, fecha_actualizacion = :fecha_actualizacion, id_actividad = :id_actividad WHERE id_labor = :id_labor");
         $updateLabors->bindParam(':labor', $labor);
         $updateLabors->bindParam(':fecha_actualizacion', $fecha_actualizacion);
-        $updateLabors->bindParam(':id_labor', $id_labor);
         $updateLabors->bindParam(':id_actividad', $actividad);
-
+        $updateLabors->bindParam(':id_labor', $id_labor);
         $updateLabors->execute();
         if ($updateLabors) {
             showErrorOrSuccessAndRedirect("success", "Actualizacion Exitosa", "Los datos se han actualizado correctamente", "labores.php");
