@@ -61,8 +61,15 @@
     $documentoUserSession = $connection->prepare("SELECT * FROM usuarios WHERE documento = '$documento'");
     $documentoUserSession->execute();
     $documentoSession = $documentoUserSession->fetch(PDO::FETCH_ASSOC);
-
     if (isset($_GET['logout'])) {
+        session_destroy();
+        header("Location:../../");
+        exit();
+    }
+
+    // validamos que el usuario sea administrador para ver la pagina
+    if ($documentoSession['id_tipo_usuario'] !== 1) {
+        // redireccionamos al login si el usuario no es administrador
         session_destroy();
         header("Location:../../");
         exit();

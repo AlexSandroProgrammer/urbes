@@ -61,23 +61,21 @@
     $documentoUserSession = $connection->prepare("SELECT * FROM usuarios WHERE documento = '$documento'");
     $documentoUserSession->execute();
     $documentoSession = $documentoUserSession->fetch(PDO::FETCH_ASSOC);
-
     if (isset($_GET['logout'])) {
         session_destroy();
         header("Location:../../");
         exit();
     }
     ?>
-
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <!-- / Navbar -->
         <!-- Content wrapper -->
         <div class="content-wrapper ">
             <!-- Content -->
-            <div class="container-xxl flex-grow-1 p-3 ">
+            <div class="container-xxl flex-grow-1 p-3">
                 <nav
-                    class="navbar d-flex navbar-example navbar-expand-lg bg-dark align-items-center justify-content-center">
+                    class="navbar d-flex navbar-example navbar-expand-lg bg-light align-items-center justify-content-center">
                     <div class="container-fluid">
                         <div class="app-brand">
                             <a href="index.php" class=" mb-2 align-items-center justify-content-center text-center">
@@ -85,7 +83,6 @@
                                     <img src="../../assets/images/urbes.svg" width="100" height="100" alt="">
                                 </span>
                             </a>
-
                         </div>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbar-ex-3">

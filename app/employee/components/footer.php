@@ -4,7 +4,7 @@
         <hr class="container-m-nx border-light my-5" />
         <!-- Footer with components -->
         <section id="component-footer">
-            <footer class="footer bg-dark">
+            <footer class="footer bg-light">
                 <div
                     class="container-fluid d-flex flex-lg-row flex-column justify-content-between align-items-md-center gap-1 container-p-x py-3">
                     <div class="mb-2 mb-md-0">
