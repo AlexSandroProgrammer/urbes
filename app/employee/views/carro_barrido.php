@@ -151,13 +151,8 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                         <?php endif; ?>
                                     </div>
                                 </div>
-
-
-
-
-
                                 <div class="mt-4">
-                                    <a href="empleados_activos.php" class="btn btn-danger">
+                                    <a href="index.php" class="btn btn-danger">
                                         Cancelar
                                     </a>
                                     <input type="submit" class="btn btn-primary" value="Registrar"></input>

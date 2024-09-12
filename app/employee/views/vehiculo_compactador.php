@@ -43,7 +43,7 @@ $fecha_inicio = date('Y-m-d');
                                             value="<?= $fecha_inicio ?>" name="fecha_inicio" id="fecha_inicio" />
                                     </div>
                                 </div>
-                                <!-- estado -->
+                                <!-- equipo de transporte -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label for="estado" class="form-label">Equipo de Transporte</label>
                                     <div class="input-group input-group-merge">
@@ -73,14 +73,13 @@ $fecha_inicio = date('Y-m-d');
                                 ?>
                                 <!-- numero de documento -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label class="form-label" for="documento">CONDUCTOR</label>
+                                    <label class="form-label" for="documento">CONDUCTOR ENCARGADO DE REGISTRO</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
                                         <input type="text" minlength="6" maxlength="10" readonly
-                                            value="<?= $documento ?> - <?= $nombre_completo ?>" class="form-control"
-                                            required id="documento" name="documento"
-                                            placeholder="Ingresa tu numero de documento" />
+                                            value="<?= $documento ?>" class="form-control" required id="documento"
+                                            name="documento" placeholder="Ingresa tu numero de documento" />
                                     </div>
                                 </div>
                                 <?php
@@ -93,7 +92,6 @@ $fecha_inicio = date('Y-m-d');
                                         <select class="form-select" name="documento" required>
                                             <option value="">Seleccionar Equipo de Transporte...</option>
                                             <?php
-
                                                 $confirmacion = 'SI';
                                                 // CONSUMO DE DATOS DE LOS PROCESOS
                                                 $driversGet = $connection->prepare("SELECT * FROM usuarios WHERE confi_conductor = :confirmacion");
@@ -113,6 +111,17 @@ $fecha_inicio = date('Y-m-d');
                                         </select>
                                     </div>
                                 </div>
+                                <!-- numero de documento -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="documento">PERSONA ENCARGADA DE REGISTRO</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="documento-icon" class="input-group-text"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input type="text" minlength="6" maxlength="10" readonly
+                                            value="<?= $documento ?>" class="form-control" required id="documento"
+                                            name="documento" placeholder="Ingresa tu numero de documento" />
+                                    </div>
+                                </div>
                                 <?php
                                 }
                                 ?>
@@ -123,7 +132,6 @@ $fecha_inicio = date('Y-m-d');
                                         <select class="form-select" name="documento" required>
                                             <option value="">Seleccionar Tipo de Labor...</option>
                                             <?php
-
                                             $id_veh_compact = 4;
                                             // CONSUMO DE DATOS DE LOS PROCESOS
                                             $labores_query = $connection->prepare("SELECT * FROM labores WHERE id_actividad = :id_veh_compact");
@@ -226,7 +234,6 @@ $fecha_inicio = date('Y-m-d');
                                         </select>
                                     </div>
                                 </div>
-
                                 <!-- Contenedor de los empleados -->
                                 <div class="row mb-3 col-12" id="empleados" style="display: none;">
                                     <div class="col-12 mb-3">
@@ -236,17 +243,30 @@ $fecha_inicio = date('Y-m-d');
                                         <!-- Checkboxes de empleados aparecerán aquí -->
                                     </div>
                                 </div>
-
                                 <div class="mt-4">
-                                    <a href="index.php" class="btn btn-danger">
+                                    <!-- Botón de Cancelar -->
+                                    <a href="index.php" class="btn btn-danger" id="cancelarBtn">
                                         Cancelar
                                     </a>
-                                    <input type="submit" class="btn btn-primary" value="Registrar"></input>
-                                    <input type="hidden" class="btn btn-info" value="formRegisterEmployee"
-                                        name="MM_formRegisterEmployee"></input>
+                                    <button type="submit" class="btn btn-primary"
+                                        onclick="transferirDatos(event)">Registrar</button>
                                 </div>
                             </div>
                         </form>
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const cancelarBtn = document.getElementById('cancelarBtn');
+                            // Escucha el evento click en el botón Cancelar
+                            cancelarBtn.addEventListener('click', function(event) {
+                                // Elimina la propiedad que desees del localStorage
+                                localStorage.removeItem(
+                                    'empleados'
+                                ); // Ajusta según el nombre de la propiedad a eliminar
+
+                                window.location.href(" index.php");
+                            });
+                        });
+                        </script>
                     </div>
                 </div>
             </div>
