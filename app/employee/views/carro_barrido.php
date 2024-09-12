@@ -1,0 +1,179 @@
+<?php
+$titlePage = "Registro Vehiculo Compactador";
+require_once("../components/navbar.php");
+$today = date('Y-m-d');
+
+// asignamos la query a una variable
+$documento = $_SESSION['documento'];
+
+// Preparamos la consulta para buscar el usuario
+$queryUser = $connection->prepare("SELECT * FROM usuarios INNER JOIN ciudades ON usuarios.id_ciudad = ciudades.id_ciudad WHERE documento = :documento");
+$queryUser->bindParam(":documento", $documento);
+$queryUser->execute();
+$user = $queryUser->fetch(PDO::FETCH_ASSOC);
+// nombre completo
+$nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
+$id_city = $user['id_ciudad'];
+
+$queryZona = $connection->prepare("SELECT * FROM zonas INNER JOIN ciudades ON zonas.id_ciudad = ciudades.id_ciudad WHERE zonas.id_ciudad  = :id_ciudad");
+$queryZona->bindParam(":id_ciudad", $id_city);
+$queryZona->execute();
+$zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
+?>
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Basic Layout -->
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <div class="card-header mt-3 justify-content-between align-items-center text-center">
+                        <h3 class="fw-bold">REGISTRO DE CARRO DE BARRIDO</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
+                            name="formRegisterEmployee">
+                            <div class="row">
+                                <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
+                                    <?= $nombre_completo ?> al registro del
+                                    formulario, te
+                                    invitamos a rellenar la siguiente informacion </h5>
+                                <!-- fecha_inicio -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-calendar"></i></span>
+                                        <input type="date" required class="form-control" name="fecha_inicio"
+                                            id="fecha_inicio" min="<?php echo $today; ?>" max="<?php echo $today; ?>"
+                                            value="<?php echo $today; ?>" />
+                                    </div>
+                                </div>
+
+                                <!-- hora_inicio -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="hora_inicio">Hora Inicio de Recolección</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="hora_inicio_span" class="input-group-text">
+                                            <i class="fas fa-truck"></i>
+                                        </span>
+                                        <input type="time" readonly required class="form-control" name="hora_inicio"
+                                            id="hora_inicio" />
+                                    </div>
+                                </div>
+                                <script>
+                                // Función para actualizar la hora en el campo de hora_inicio
+                                function actualizarHora() {
+                                    // Obtener la hora actual
+                                    const ahora = new Date();
+                                    // Formatear la hora en formato HH:MM (24 horas)
+                                    const horas = String(ahora.getHours()).padStart(2, '0');
+                                    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+
+                                    // Actualizar el valor del input con la hora formateada
+                                    document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
+                                }
+                                // Actualizar la hora cada segundo
+                                setInterval(actualizarHora, 1000);
+                                // Llamar a la función inmediatamente para establecer la hora inicial
+                                actualizarHora();
+                                </script>
+
+
+                                <!-- numero de documento -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="documento">Número de Documento</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="documento-icon" class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this)"
+                                            onkeypress="return multiplenumber(event);" class="form-control " disabled
+                                            required id="documento" value="<?php echo ($documento); ?>" name="documento"
+                                            placeholder="Ingresa tu número de documento" autofocus />
+                                    </div>
+                                </div>
+
+                                <!-- nombres -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="nombres">Nombre Completo</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombres_span" class="input-group-text"><i
+                                                class="fas fa-user"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
+                                            name="nombres" id="nombres" disabled
+                                            value="<?php echo ($nombre_completo); ?>"
+                                            placeholder="Ingresar nombres completos" />
+                                    </div>
+                                </div>
+
+                                <!-- ciudad -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="nombres">Ciudad de barrido</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombres_span" class="input-group-text"><i
+                                                class="fas fa-city"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
+                                            name="nombres" id="ciudad" disabled value="<?php echo $user['ciudad']; ?>"
+                                            placeholder="Ingresa la ciudad" />
+                                        <input type="hidden" name="id_ciudad" id="id_ciudad"
+                                            value="<?php echo [$id_city]; ?>" placeholder="Ingresa la ciudad" />
+                                    </div>
+
+
+                                </div>
+                                <!-- rutas -->
+                                <div class="mb-3 col-12">
+                                    <label class="form-label">Selecciona las Rutas:</label>
+                                    <div class="row">
+                                        <?php if (!empty($zonas)): ?>
+                                        <?php foreach ($zonas as $index => $zona): ?>
+                                        <!-- Columna con un ancho específico (puedes ajustar el tamaño según sea necesario) -->
+                                        <div class="col-md-6 col-lg-4 mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="rutas[]"
+                                                        id="zona<?= $zona['id_zona'] ?>"
+                                                        value="<?= $zona['id_zona'] ?>">
+                                                    <label class="form-check-label ms-2"
+                                                        for="zona<?= $zona['id_zona'] ?>">
+                                                        <?= htmlspecialchars($zona['zona']) ?>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php endforeach; ?>
+                                        <?php else: ?>
+                                        <div class="alert alert-info" role="alert">
+                                            No hay zonas disponibles para esta ciudad.
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="mt-4">
+                                    <a href="empleados_activos.php" class="btn btn-danger">
+                                        Cancelar
+                                    </a>
+                                    <input type="submit" class="btn btn-primary" value="Registrar"></input>
+                                    <input type="hidden" class="btn btn-info" value="formRegisterEmployee"
+                                        name="MM_formRegisterEmployee"></input>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <?php
+    require_once("../components/footer.php");
+
+    ?>

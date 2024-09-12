@@ -74,7 +74,7 @@ if ($documentoSession) {
                         <p class="card-text">
                             Presiona clic para ingresar en el formulario
                         </p>
-                        <a href="?query=<?= $documento ?>" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i>
+                        <a href="carro_barrido.php" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i>
                             Ingresar</a>
                     </div>
                 </div>
