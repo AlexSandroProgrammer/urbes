@@ -10,7 +10,6 @@ $documento = $_SESSION['documento'];
 if (isset($_GET['id_ciudad'])) {
     $id_ciudad = $_GET['id_ciudad'];
     $confi_conductor = "NO";
-
     try {
         // Ajustamos la consulta para filtrar empleados por ciudad
         $query = "SELECT documento, nombres, apellidos FROM usuarios WHERE documento <> :documento AND id_ciudad = :id_ciudad AND confi_conductor = :confi_conductor";
