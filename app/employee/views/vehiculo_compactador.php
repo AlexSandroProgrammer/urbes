@@ -71,28 +71,28 @@ $fecha_inicio = date('Y-m-d');
                                 <?php
                                 if ($user['confi_conductor'] == 'SI') {
                                 ?>
-                                    <!-- numero de documento -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="documento">CONDUCTOR</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="documento-icon" class="input-group-text"><i
-                                                    class="fas fa-truck"></i></span>
-                                            <input type="text" minlength="6" maxlength="10" readonly
-                                                value="<?= $documento ?> - <?= $nombre_completo ?>" class="form-control"
-                                                required id="documento" name="documento"
-                                                placeholder="Ingresa tu numero de documento" />
-                                        </div>
+                                <!-- numero de documento -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="documento">CONDUCTOR</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="documento-icon" class="input-group-text"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input type="text" minlength="6" maxlength="10" readonly
+                                            value="<?= $documento ?> - <?= $nombre_completo ?>" class="form-control"
+                                            required id="documento" name="documento"
+                                            placeholder="Ingresa tu numero de documento" />
                                     </div>
+                                </div>
                                 <?php
                                 } else {
                                 ?>
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label for="estado" class="form-label">Conductor Asignado</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
-                                            <select class="form-select" name="documento" required>
-                                                <option value="">Seleccionar Equipo de Transporte...</option>
-                                                <?php
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label for="estado" class="form-label">Conductor Asignado</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                        <select class="form-select" name="documento" required>
+                                            <option value="">Seleccionar Equipo de Transporte...</option>
+                                            <?php
 
                                                 $confirmacion = 'SI';
                                                 // CONSUMO DE DATOS DE LOS PROCESOS
@@ -110,9 +110,9 @@ $fecha_inicio = date('Y-m-d');
                                                     }
                                                 }
                                                 ?>
-                                            </select>
-                                        </div>
+                                        </select>
                                     </div>
+                                </div>
                                 <?php
                                 }
                                 ?>
@@ -155,21 +155,20 @@ $fecha_inicio = date('Y-m-d');
                                     </div>
                                 </div>
                                 <script>
-                                    // Función para actualizar la hora en el campo de hora_inicio
-                                    function actualizarHora() {
-                                        // Obtener la hora actual
-                                        const ahora = new Date();
-                                        // Formatear la hora en formato HH:MM (24 horas)
-                                        const horas = String(ahora.getHours()).padStart(2, '0');
-                                        const minutos = String(ahora.getMinutes()).padStart(2, '0');
-
-                                        // Actualizar el valor del input con la hora formateada
-                                        document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
-                                    }
-                                    // Actualizar la hora cada segundo
-                                    setInterval(actualizarHora, 1000);
-                                    // Llamar a la función inmediatamente para establecer la hora inicial
-                                    actualizarHora();
+                                // Función para actualizar la hora en el campo de hora_inicio
+                                function actualizarHora() {
+                                    // Obtener la hora actual
+                                    const ahora = new Date();
+                                    // Formatear la hora en formato HH:MM (24 horas)
+                                    const horas = String(ahora.getHours()).padStart(2, '0');
+                                    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+                                    // Actualizar el valor del input con la hora formateada
+                                    document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
+                                }
+                                // Actualizar la hora cada segundo
+                                setInterval(actualizarHora, 1000);
+                                // Llamar a la función inmediatamente para establecer la hora inicial
+                                actualizarHora();
                                 </script>
 
                                 <!-- foto_kilometraje -->

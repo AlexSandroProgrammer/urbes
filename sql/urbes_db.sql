@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   PRIMARY KEY (`id_actividad`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla urbes_db.actividades: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla urbes_db.actividades: ~3 rows (aproximadamente)
 INSERT INTO `actividades` (`id_actividad`, `actividad`, `fecha_registro`, `fecha_actualizacion`) VALUES
 	(2, 'Mecánica Vehículo Compactador', '2024-09-06 00:33:53', '2024-09-07 15:16:44'),
 	(3, 'Areas Publicas', '2024-09-11 00:09:15', NULL),
@@ -143,12 +143,13 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla urbes_db.usuarios: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla urbes_db.usuarios: ~4 rows (aproximadamente)
 INSERT INTO `usuarios` (`documento`, `tipo_documento`, `nombres`, `apellidos`, `celular`, `celular_familiar`, `parentezco_familiar`, `nombre_familiar`, `password`, `id_tipo_usuario`, `id_estado`, `fecha_registro`, `fecha_actualizacion`, `eps`, `arl`, `id_ciudad`, `fecha_inicio`, `fecha_fin`, `confi_conductor`, `rh`) VALUES
+	(7834501, 'C.C.', 'Juan', 'Lopez', '3201290000', '3151020790', '3123503400', 'Albeiro Mejia', 'NVpRL2tUbEp6dHVveWxqT2JoQUlXUT09Ojqa+qIP/OI172IJ+801YY/M', 3, 1, '2024-09-12 09:09:09', NULL, 'Salud Total S.A.', 'Nueva ARL', 1, '2024-09-28', '2027-12-25', 'SI', 'A-'),
 	(79464482, 'C.C.', 'Valentina ', 'Lopez', '3212402301', '3122402340', 'Tio', 'Albeiro Mejia', 'QWEybktYbmFTalpJb0xRS3RWaXdrZz09OjpmZQakYJo2jczWSYtM//rc', 3, 1, '2024-09-10 13:46:06', '2024-09-10 16:10:43', 'Nueva EPS', 'Nueva ARL', 1, '2024-09-14', '2024-10-31', 'NO', 'O+'),
-	(99464482, 'C.C.', 'Daniel', 'Alvarez', '3122402301', NULL, NULL, NULL, 'OEw1Y0hSa2N1UTk1TXlyNllVbzRwQT09Ojo0pjEqECeWwDBgsVntmGba', 3, 1, '2024-09-04 23:39:15', NULL, NULL, NULL, 1, NULL, NULL, 'NO', NULL),
-	(1110460410, 'C.C.', 'Administrador', 'Urbes', '3105853668', NULL, NULL, NULL, 'd29nSzdrL2RrM29WSzdrZ2lqbmVDUT09Ojo1SYdh7gWu86U1PrAi4Ey9', 1, 1, '2024-03-09 15:26:38', '2024-09-04 11:54:19', NULL, NULL, 1, NULL, NULL, NULL, NULL),
-	(1112024023, 'C.C.', 'Amparo', 'Garcia', '3234501650', '3129978120', 'Mamam', 'Alexandra Coro', 'Z2lOMGJoUERyeitDYmtPbzhwVDdSUT09OjrcQH+siKNKyJwStz5D8Xgp', 3, 1, '2024-09-10 19:36:53', '2024-09-10 19:51:18', 'Salud Total', 'Salud ARL', 1, '2024-09-21', '2024-09-27', 'NO', 'O+');
+	(1023210978, 'C.C.', 'Mariana', 'Castro', '3110034010', '3402301230', 'Papa', 'Armando Castro', 'dWJLeHg4VjRiLzcwRktyY1p1cU5JZz09Ojpbh309eR+TT/JWnnt0AmzW', 3, 1, '2024-09-12 08:55:21', NULL, 'Salud Total', 'ARL Nueva', 1, '2024-09-13', '2027-04-10', 'SI', 'B+'),
+	(1108123450, 'C.C.', 'Jaime', 'Orduz', '3153402301', '3051202301', 'Mama', 'Magdalena Orduz', 'OW5sMHZ1UFZuLytHdnR0QUNUUXdPQT09Ojqk4E5eKND9vAc4UPerWiHE', 3, 1, '2024-09-12 08:51:44', NULL, 'Nueva EPS', 'Nueva EPS', 1, '2024-09-13', '2026-07-18', 'SI', 'O+'),
+	(1110460410, 'C.C.', 'Administrador', 'Urbes', '3105853668', NULL, NULL, NULL, 'd29nSzdrL2RrM29WSzdrZ2lqbmVDUT09Ojo1SYdh7gWu86U1PrAi4Ey9', 1, 1, '2024-03-09 15:26:38', '2024-09-04 11:54:19', NULL, NULL, 1, '2024-09-12', '2025-02-12', NULL, NULL);
 
 -- Volcando estructura para tabla urbes_db.vehiculos
 CREATE TABLE IF NOT EXISTS `vehiculos` (
@@ -167,15 +168,16 @@ INSERT INTO `vehiculos` (`placa`, `vehiculo`, `fecha_registro`, `fecha_actualiza
 CREATE TABLE IF NOT EXISTS `zonas` (
   `id_zona` int NOT NULL AUTO_INCREMENT,
   `zona` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `id_ciudad` int NOT NULL,
   `fecha_registro` datetime DEFAULT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id_zona`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.zonas: ~2 rows (aproximadamente)
-INSERT INTO `zonas` (`id_zona`, `zona`, `fecha_registro`, `fecha_actualizacion`) VALUES
-	(1, '102', '2024-09-09 23:11:07', '2024-09-09 23:12:56'),
-	(2, '101', '2024-09-09 23:13:13', '2024-09-09 23:13:21');
+INSERT INTO `zonas` (`id_zona`, `zona`, `id_ciudad`, `fecha_registro`, `fecha_actualizacion`) VALUES
+	(1, '102', 1, '2024-09-09 23:11:07', '2024-09-09 23:12:56'),
+	(2, '101', 1, '2024-09-09 23:13:13', '2024-09-09 23:13:21');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
