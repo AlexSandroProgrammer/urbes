@@ -11,7 +11,6 @@ error_log('Documento en sesión: ' . $documento);  // Verificar que el documento
 if (isset($_GET['id_ciudad'])) {
     $id_ciudad = $_GET['id_ciudad'];
     error_log('ID ciudad: ' . $id_ciudad);  // Verificar el ID de ciudad
-
     $confi_conductor = "NO";
     try {
         $query = "SELECT documento, nombres, apellidos FROM usuarios WHERE documento <> :documento AND id_ciudad = :id_ciudad AND confi_conductor = :confi_conductor";
@@ -28,7 +27,6 @@ if (isset($_GET['id_ciudad'])) {
         } else {
             error_log('Empleados encontrados: ' . print_r($empleados, true));
         }
-
         echo json_encode($empleados);
         exit();
     } catch (PDOException $e) {

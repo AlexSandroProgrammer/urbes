@@ -119,11 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 empleado => empleado.id !== empleadoId
             );
         }
-
         // Guardar el nuevo arreglo de empleados seleccionados en localStorage
         saveEmpleadoToLocalStorage(empleadosSeleccionados);
     }
-
     // Función para cargar los checkboxes seleccionados al recargar la página
     function loadSelectedCheckboxes() {
         const empleadosSeleccionados = getEmpleadosFromLocalStorage();
@@ -135,7 +133,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
     ciudad.addEventListener('change', function() {
         const selectedValue = this.value;
 
@@ -146,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 ''; // Limpiamos el contenido previo
             return;
         }
-
         // Realizamos la solicitud AJAX
         fetch(`get_empleados_ciudad.php?id_ciudad=${selectedValue}`)
             .then(response => response.json())
@@ -158,9 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     empleados.style.display = 'none';
                     return;
                 }
-
-                console.log(data);
-
                 // Generamos los checkboxes para cada empleado
                 data.forEach(empleado => {
                     const empleadoDiv = document

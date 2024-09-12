@@ -29,7 +29,7 @@ $fecha_inicio = date('Y-m-d');
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formRegisterEmployee">
+                            name="formRegisterVehicleCompacter" onsubmit="return validarEmpleados()">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
@@ -50,10 +50,10 @@ $fecha_inicio = date('Y-m-d');
                                     <label for="estado" class="form-label">Equipo de Transporte</label>
                                     <div class="input-group input-group-merge">
                                         <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
-                                        <select class="form-select" name="estado" autofocus required>
+                                        <select class="form-select" name="vehiculo" autofocus required>
                                             <option value="">Seleccionar Equipo de Transporte...</option>
                                             <?php
-                                            // CONSUMO DE DATOS DE LOS PROCESOS
+                                            // CONSUMO DE DATOS DE LOS vehiculos
                                             $driversGet = $connection->prepare("SELECT * FROM vehiculos");
                                             $driversGet->execute();
                                             $equipos = $driversGet->fetchAll(PDO::FETCH_ASSOC);
@@ -61,7 +61,7 @@ $fecha_inicio = date('Y-m-d');
                                             if (empty($equipos)) {
                                                 echo "<option value=''>No hay datos...</option>";
                                             } else {
-                                                // Iterar sobre los estados
+                                                // Iterar sobre los vehiculos
                                                 foreach ($equipos as $equipo) {
                                                     echo "<option value='{$equipo['placa']}'>{$equipo['vehiculo']} - {$equipo['placa']}</option>";
                                                 }
@@ -91,8 +91,8 @@ $fecha_inicio = date('Y-m-d');
                                     <label for="estado" class="form-label">Conductor Asignado</label>
                                     <div class="input-group input-group-merge">
                                         <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
-                                        <select class="form-select" name="documento" required>
-                                            <option value="">Seleccionar Equipo de Transporte...</option>
+                                        <select class="form-select" name="conductor" required>
+                                            <option value="">Seleccionar Conductor...</option>
                                             <?php
                                                 $confirmacion = 'SI';
                                                 // CONSUMO DE DATOS DE LOS PROCESOS
@@ -104,7 +104,7 @@ $fecha_inicio = date('Y-m-d');
                                                 if (empty($drivers)) {
                                                     echo "<option value=''>No hay datos...</option>";
                                                 } else {
-                                                    // Iterar sobre los documentos de los usuarios
+                                                    // Iterar sobre los documentos de los conductores
                                                     foreach ($drivers as $driver) {
                                                         echo "<option value='{$driver['documento']}'>{$driver['documento']} - {$driver['nombres']} {$driver['apellidos']}</option>";
                                                     }
@@ -131,7 +131,7 @@ $fecha_inicio = date('Y-m-d');
                                     <label for="estado" class="form-label">Tipo de Labor en camion recolector</label>
                                     <div class="input-group input-group-merge">
                                         <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
-                                        <select class="form-select" name="documento" required>
+                                        <select class="form-select" name="labor" required>
                                             <option value="">Seleccionar Tipo de Labor...</option>
                                             <?php
                                             $id_veh_compact = 4;
@@ -144,7 +144,7 @@ $fecha_inicio = date('Y-m-d');
                                             if (empty($labores)) {
                                                 echo "<option value=''>No hay datos...</option>";
                                             } else {
-                                                // Iterar sobre los documentos de los usuarios
+                                                // Iterar sobre los labors de los usuarios
                                                 foreach ($labores as $labor) {
                                                     echo "<option value='{$labor['id_labor']}'> {$labor['labor']}</option>";
                                                 }
@@ -180,7 +180,6 @@ $fecha_inicio = date('Y-m-d');
                                 // Llamar a la función inmediatamente para establecer la hora inicial
                                 actualizarHora();
                                 </script>
-
                                 <!-- foto_kilometraje -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label class="form-label" for="foto_kilometraje">Foto del Kilometraje
@@ -188,10 +187,48 @@ $fecha_inicio = date('Y-m-d');
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="file" accept="/" required class="form-control"
-                                            name="foto_kilometraje" id="foto_kilometraje" />
+                                        <input type="file" accept="image/*" required class="form-control"
+                                            name="foto_kilometraje" id="foto_kilometraje" onchange="validarImagen()" />
+
                                     </div>
                                 </div>
+                                <script>
+                                function validarImagen() {
+                                    const inputFile = document.getElementById('foto_kilometraje');
+                                    const file = inputFile.files[0];
+
+                                    if (file) {
+                                        const fileType = file.type;
+                                        const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
+                                        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                                        const maxSize = 5; // Tamaño máximo en MB
+
+                                        // Validar el tipo de archivo
+                                        if (!validImageTypes.includes(fileType)) {
+                                            swal.fire({
+                                                title: 'Error',
+                                                text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
+                                                icon: 'error',
+                                                confirmButtonText: 'Aceptar'
+                                            });
+                                            inputFile.value = ''; // Limpiar el input si el archivo no es válido
+                                            return;
+                                        }
+
+                                        // Validar el tamaño del archivo
+                                        if (fileSize > maxSize) {
+                                            swal.fire({
+                                                title: 'Error',
+                                                text: 'El tamaño de la imagen no debe exceder los 5 MB.',
+                                                icon: 'error',
+                                                confirmButtonText: 'Aceptar'
+                                            });
+                                            inputFile.value = ''; // Limpiar el input si el archivo es muy grande
+                                            return;
+                                        }
+                                    }
+                                }
+                                </script>
                                 <!-- kilometraje -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label class="form-label" for="kilometraje">Kilometraje Inicial</label>
@@ -250,12 +287,34 @@ $fecha_inicio = date('Y-m-d');
                                     <a href="index.php" class="btn btn-danger" id="cancelarBtn">
                                         Cancelar
                                     </a>
-                                    <button type="submit" class="btn btn-primary"
-                                        onclick="transferirDatos(event)">Registrar</button>
+                                    <input type="submit" class="btn btn-primary" value="Registrar"></input>
+                                    <input type="hidden" class="btn btn-info" value="formRegisterVehicleCompacter"
+                                        name="MM_formRegisterVehicleCompacter"></input>
                                 </div>
                             </div>
                         </form>
                         <script>
+                        //* FUNCION PARA VALIDAR EMPLEADOS EN EL LOCAL STORAGE
+                        function validarEmpleados() {
+                            // Obtenemos los datos de empleados registrados en el localStorage
+                            const empleados = JSON.parse(localStorage.getItem("empleados"));
+
+                            // Validamos que existan datos en el localStorage
+                            if (!empleados || empleados.length === 0) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Debes seleccionar empleados en tu tripulación',
+                                });
+
+                                // Prevenir el envío del formulario
+                                return false;
+                            }
+
+                            // Si la validación pasa, permitimos el envío del formulario
+                            return true;
+                        }
+
                         document.addEventListener('DOMContentLoaded', function() {
                             const cancelarBtn = document.getElementById('cancelarBtn');
                             // Escucha el evento click en el botón Cancelar
@@ -265,7 +324,7 @@ $fecha_inicio = date('Y-m-d');
                                     'empleados'
                                 ); // Ajusta según el nombre de la propiedad a eliminar
 
-                                window.location.href(" index.php");
+                                window.location.href("index.php");
                             });
                         });
                         </script>
