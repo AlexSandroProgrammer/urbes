@@ -20,8 +20,8 @@ if (isset($_GET['id_ciudad'])) {
         $queryData->execute();
         $empleados = $queryData->fetchAll(PDO::FETCH_ASSOC);
 
-        // Devolvemos los empleados en formato JSON
-        echo json_encode($empleados);
+        $_SESSION['empleados'] = $empleados;
+        echo json_encode($_SESSION['empleados']);
         exit();
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Error al conectarse a la base de datos', 'detalle' => $e->getMessage()]);
