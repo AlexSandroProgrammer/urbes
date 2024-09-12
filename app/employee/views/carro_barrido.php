@@ -94,7 +94,6 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                             placeholder="Ingresa tu número de documento" autofocus />
                                     </div>
                                 </div>
-
                                 <!-- nombres -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="nombres">Nombre Completo</label>

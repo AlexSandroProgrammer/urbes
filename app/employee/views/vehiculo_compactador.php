@@ -13,6 +13,8 @@ $nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
 
 // fecha inicio
 $fecha_inicio = date('Y-m-d');
+
+
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
