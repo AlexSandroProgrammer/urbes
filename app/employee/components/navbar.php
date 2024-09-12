@@ -62,8 +62,13 @@
     $documentoUserSession->execute();
     $documentoSession = $documentoUserSession->fetch(PDO::FETCH_ASSOC);
     if (isset($_GET['logout'])) {
+    ?>
+        <script>
+            localStorage.removeItem('empleados'); // Elimina los empleados del localStorage
+            window.location.href = "../../"; // Redirige después de eliminar
+        </script>
+    <?php
         session_destroy();
-        header("Location:../../");
         exit();
     }
     ?>
@@ -93,7 +98,6 @@
                             </ul>
                             <div class="d-flex" onsubmit="return false">
                                 <a href="index.php" class="btn btn-primary mr-2"><i class="bx bx-home"></i> Regresar</a>
-
                                 <a href="index.php?logout" class="btn btn-danger"><i class="bx bx-log-out-circle"></i>
                                     Cerrar Sesion</a>
                             </div>

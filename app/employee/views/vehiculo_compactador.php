@@ -238,63 +238,6 @@ $fecha_inicio = date('Y-m-d');
                                     </div>
                                 </div>
 
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const ciudad = document.getElementById('ciudad');
-                                        const empleados = document.getElementById('empleados');
-                                        const empleadoList = document.getElementById('empleado-list');
-
-                                        ciudad.addEventListener('change', function() {
-                                            const selectedValue = this.value;
-
-                                            // Ocultamos la lista de empleados si no se selecciona una ciudad
-                                            if (selectedValue === '') {
-                                                empleados.style.display = 'none';
-                                                empleadoList.innerHTML =
-                                                    ''; // Limpiamos el contenido previo
-                                                return;
-                                            }
-
-                                            // Realizamos la solicitud AJAX
-                                            fetch(`get_empleados_ciudad.php?id_ciudad=${selectedValue}`)
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    // Limpiamos las opciones previas de empleados
-                                                    empleadoList.innerHTML = '';
-                                                    if (data.error) {
-                                                        console.error(data.error);
-                                                        empleados.style.display = 'none';
-                                                        return;
-                                                    }
-                                                    // Generamos los checkboxes para cada empleado
-                                                    data.forEach(empleado => {
-                                                        const empleadoDiv = document
-                                                            .createElement('div');
-                                                        // Usamos col-lg-3 para dispositivos grandes (4 opciones), col-md-4 (3 opciones), col-sm-6 (2 opciones) y col-12 (1 opción)
-                                                        empleadoDiv.className =
-                                                            'col-lg-3 col-md-4 col-sm-6 col-12 mb-3';
-
-                                                        empleadoDiv.innerHTML = `
-                        <div class="d-flex align-items-center">
-                            <h6 class="mb-0 me-2">${empleado.nombres} ${empleado.apellidos}</h6>
-                            <div class="form-check form-switch ms-auto">
-                                <input class="form-check-input empleado-checkbox" type="checkbox" data-empleado-id="${empleado.documento}" data-empleado-nombre="${empleado.nombres} ${empleado.apellidos}" />
-                            </div>
-                        </div>
-                    `;
-                                                        empleadoList.appendChild(empleadoDiv);
-                                                    });
-
-                                                    // Mostramos el select de empleados
-                                                    empleados.style.display = 'block';
-                                                })
-                                                .catch(error => {
-                                                    console.error('Error al obtener los empleados',
-                                                        error);
-                                                });
-                                        });
-                                    });
-                                </script>
                                 <div class="mt-4">
                                     <a href="index.php" class="btn btn-danger">
                                         Cancelar
