@@ -12,8 +12,7 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
     $horometro = $_POST['horometro'];
     $ciudad = $_POST['ciudad'];
     $empleados = json_decode($_POST['empleados'], true);
-    echo json_decode($empleados);
-    $pendiente = 4;
+
     // Validamos que no se haya recibido ningún dato vacío
     if (isEmpty([
         $fecha_inicio,

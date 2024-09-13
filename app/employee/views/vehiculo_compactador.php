@@ -282,7 +282,7 @@ $fecha_inicio = date('Y-m-d');
                                         <!-- Checkboxes de empleados aparecerán aquí -->
                                     </div>
                                 </div>
-                                <input type="hidden" id="empleados" name="empleados">
+                                <input type="text" id="empleadosInput" name="empleados">
                                 <div class="mt-4">
                                     <!-- Botón de Cancelar -->
                                     <a href="index.php" class="btn btn-danger" id="cancelarBtn">
@@ -310,7 +310,7 @@ $fecha_inicio = date('Y-m-d');
                                 return false;
                             }
                             // Si existen empleados, los colocamos en el campo oculto para enviarlos a PHP
-                            const campoOculto = document.getElementById('empleados');
+                            const campoOculto = document.getElementById('empleadosInput');
                             campoOculto.value = JSON.stringify(empleados);
                             // Verificamos que los empleados se hayan pasado correctamente al campo oculto
                             if (campoOculto.value === JSON.stringify(empleados)) {

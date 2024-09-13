@@ -51,26 +51,41 @@ INSERT INTO `ciudades` (`id_ciudad`, `ciudad`, `fecha_registro`, `fecha_actualiz
 
 -- Volcando estructura para tabla urbes_db.detalle_tripulacion
 CREATE TABLE IF NOT EXISTS `detalle_tripulacion` (
-  `id_detalle` bigint NOT NULL,
+  `id_detalle` bigint NOT NULL AUTO_INCREMENT,
   `documento` bigint NOT NULL,
   `id_registro` bigint NOT NULL,
   PRIMARY KEY (`id_detalle`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.detalle_tripulacion: ~0 rows (aproximadamente)
+INSERT INTO `detalle_tripulacion` (`id_detalle`, `documento`, `id_registro`) VALUES
+	(1, 7834501, 8),
+	(2, 1004230111, 8);
+
+-- Volcando estructura para tabla urbes_db.detalle_zonas
+CREATE TABLE IF NOT EXISTS `detalle_zonas` (
+  `id_detalle_zona` bigint NOT NULL AUTO_INCREMENT,
+  `id_registro` bigint NOT NULL,
+  `id_zona` int NOT NULL,
+  PRIMARY KEY (`id_detalle_zona`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla urbes_db.detalle_zonas: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla urbes_db.estados
 CREATE TABLE IF NOT EXISTS `estados` (
   `id_estado` int NOT NULL AUTO_INCREMENT,
   `estado` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_estado`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla urbes_db.estados: ~3 rows (aproximadamente)
 INSERT INTO `estados` (`id_estado`, `estado`) VALUES
 	(1, 'activo'),
 	(2, 'inactivo'),
-	(3, 'eliminado');
+	(3, 'eliminado'),
+	(4, 'Pendiente'),
+	(5, 'Finalizado');
 
 -- Volcando estructura para tabla urbes_db.intentos_fallidos
 CREATE TABLE IF NOT EXISTS `intentos_fallidos` (
@@ -106,31 +121,38 @@ CREATE TABLE IF NOT EXISTS `registro_actividades` (
   `hora_finalizacion` time DEFAULT NULL,
   `km_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `km_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `foto_kilometraje` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `foto_kilometraje_inicial` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `foto_kilometraje_final` varchar(300) DEFAULT NULL,
   `horometro_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `horometro_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `id_labor` int DEFAULT NULL,
-  `id_vehiculos` varchar(50) DEFAULT NULL,
+  `id_vehiculo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `documento` bigint DEFAULT NULL,
   `id_estado` int DEFAULT NULL,
   `fecha_registro` datetime DEFAULT NULL,
+  `observaciones` varchar(500) DEFAULT NULL,
+  `peso` varchar(50) DEFAULT NULL,
+  `mantenimiento` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id_registro`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.registro_actividades: ~0 rows (aproximadamente)
+INSERT INTO `registro_actividades` (`id_registro`, `fecha_inicio`, `fecha_fin`, `hora_inicio`, `hora_finalizacion`, `km_inicio`, `km_fin`, `foto_kilometraje_inicial`, `foto_kilometraje_final`, `horometro_inicio`, `horometro_fin`, `id_labor`, `id_vehiculo`, `documento`, `id_estado`, `fecha_registro`, `observaciones`, `peso`, `mantenimiento`) VALUES
+	(8, '2024-09-12', NULL, '20:06:00', NULL, '1200', NULL, 'LOGO WWS.png', NULL, '120', NULL, 4, 'HNT426', 79464482, NULL, '2024-09-12 20:07:01', NULL, NULL, NULL);
 
 -- Volcando estructura para tabla urbes_db.tipo_usuario
 CREATE TABLE IF NOT EXISTS `tipo_usuario` (
   `id_tipo_usuario` int NOT NULL AUTO_INCREMENT,
   `tipo_usuario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_tipo_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla urbes_db.tipo_usuario: ~3 rows (aproximadamente)
 INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `tipo_usuario`) VALUES
 	(1, 'admin'),
 	(2, 'socio'),
-	(3, 'empleado');
+	(3, 'empleado'),
+	(4, 'conductor');
 
 -- Volcando estructura para tabla urbes_db.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -152,19 +174,18 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_ciudad` int DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
-  `confi_conductor` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `rh` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla urbes_db.usuarios: ~4 rows (aproximadamente)
-INSERT INTO `usuarios` (`documento`, `tipo_documento`, `nombres`, `apellidos`, `celular`, `celular_familiar`, `parentezco_familiar`, `nombre_familiar`, `password`, `id_tipo_usuario`, `id_estado`, `fecha_registro`, `fecha_actualizacion`, `eps`, `arl`, `id_ciudad`, `fecha_inicio`, `fecha_fin`, `confi_conductor`, `rh`) VALUES
-	(7834501, 'C.C.', 'Juan', 'Lopez', '3201290000', '3151020790', '3123503400', 'Albeiro Mejia', 'NVpRL2tUbEp6dHVveWxqT2JoQUlXUT09Ojqa+qIP/OI172IJ+801YY/M', 3, 1, '2024-09-12 09:09:09', NULL, 'Salud Total S.A.', 'Nueva ARL', 1, '2024-09-28', '2027-12-25', 'NO', 'A-'),
-	(79464482, 'C.C.', 'Valentina ', 'Lopez', '3212402301', '3122402340', 'Tio', 'Albeiro Mejia', 'QWEybktYbmFTalpJb0xRS3RWaXdrZz09OjpmZQakYJo2jczWSYtM//rc', 3, 1, '2024-09-10 13:46:06', '2024-09-10 16:10:43', 'Nueva EPS', 'Nueva ARL', 1, '2024-09-14', '2024-10-31', 'NO', 'O+'),
-	(1004230111, 'C.C.', 'Martha', 'Flior', '3203401009', '3127890230', 'Castro', 'Jairo', 'QWJuMUxlaVlxcmdhWWJuUFFDWitRZz09OjohN3lYSKLu+G6Op17DpQGP', 3, 1, '2024-09-12 09:15:16', NULL, 'NuevaEPS', 'Nueva ARL', 1, '2024-09-14', '2024-08-24', 'NO', 'B+'),
-	(1023210978, 'C.C.', 'Mariana', 'Castro', '3110034010', '3402301230', 'Papa', 'Armando Castro', 'dWJLeHg4VjRiLzcwRktyY1p1cU5JZz09Ojpbh309eR+TT/JWnnt0AmzW', 3, 1, '2024-09-12 08:55:21', NULL, 'Salud Total', 'ARL Nueva', 1, '2024-09-13', '2027-04-10', 'SI', 'B+'),
-	(1108123450, 'C.C.', 'Jaime', 'Orduz', '3153402301', '3051202301', 'Mama', 'Magdalena Orduz', 'OW5sMHZ1UFZuLytHdnR0QUNUUXdPQT09Ojqk4E5eKND9vAc4UPerWiHE', 3, 1, '2024-09-12 08:51:44', NULL, 'Nueva EPS', 'Nueva EPS', 1, '2024-09-13', '2026-07-18', 'SI', 'O+'),
-	(1110460410, 'C.C.', 'Administrador', 'Urbes', '3105853668', NULL, NULL, NULL, 'd29nSzdrL2RrM29WSzdrZ2lqbmVDUT09Ojo1SYdh7gWu86U1PrAi4Ey9', 1, 1, '2024-03-09 15:26:38', '2024-09-04 11:54:19', NULL, NULL, 1, '2024-09-12', '2025-02-12', NULL, NULL);
+INSERT INTO `usuarios` (`documento`, `tipo_documento`, `nombres`, `apellidos`, `celular`, `celular_familiar`, `parentezco_familiar`, `nombre_familiar`, `password`, `id_tipo_usuario`, `id_estado`, `fecha_registro`, `fecha_actualizacion`, `eps`, `arl`, `id_ciudad`, `fecha_inicio`, `fecha_fin`, `rh`) VALUES
+	(7834501, 'C.C.', 'Juan', 'Lopez', '3201290000', '3151020790', '3123503400', 'Albeiro Mejia', 'NVpRL2tUbEp6dHVveWxqT2JoQUlXUT09Ojqa+qIP/OI172IJ+801YY/M', 3, 1, '2024-09-12 09:09:09', NULL, 'Salud Total S.A.', 'Nueva ARL', 1, '2024-09-28', '2027-12-25', 'A-'),
+	(79464482, 'C.C.', 'Valentina ', 'Lopez', '3212402301', '3122402340', 'Tio', 'Albeiro Mejia', 'QWEybktYbmFTalpJb0xRS3RWaXdrZz09OjpmZQakYJo2jczWSYtM//rc', 3, 1, '2024-09-10 13:46:06', '2024-09-10 16:10:43', 'Nueva EPS', 'Nueva ARL', 1, '2024-09-14', '2024-10-31', 'O+'),
+	(1004230111, 'C.C.', 'Martha', 'Flior', '3203401009', '3127890230', 'Castro', 'Jairo', 'QWJuMUxlaVlxcmdhWWJuUFFDWitRZz09OjohN3lYSKLu+G6Op17DpQGP', 3, 1, '2024-09-12 09:15:16', NULL, 'NuevaEPS', 'Nueva ARL', 1, '2024-09-14', '2024-08-24', 'B+'),
+	(1023210978, 'C.C.', 'Mariana', 'Castro', '3110034010', '3402301230', 'Papa', 'Armando Castro', 'dWJLeHg4VjRiLzcwRktyY1p1cU5JZz09Ojpbh309eR+TT/JWnnt0AmzW', 3, 1, '2024-09-12 08:55:21', NULL, 'Salud Total', 'ARL Nueva', 1, '2024-09-13', '2027-04-10', 'B+'),
+	(1108123450, 'C.C.', 'Jaime', 'Orduz', '3153402301', '3051202301', 'Mama', 'Magdalena Orduz', 'OW5sMHZ1UFZuLytHdnR0QUNUUXdPQT09Ojqk4E5eKND9vAc4UPerWiHE', 3, 1, '2024-09-12 08:51:44', NULL, 'Nueva EPS', 'Nueva EPS', 1, '2024-09-13', '2026-07-18', 'O+'),
+	(1110460410, 'C.C.', 'Administrador', 'Urbes', '3105853668', NULL, NULL, NULL, 'd29nSzdrL2RrM29WSzdrZ2lqbmVDUT09Ojo1SYdh7gWu86U1PrAi4Ey9', 1, 1, '2024-03-09 15:26:38', '2024-09-04 11:54:19', NULL, NULL, 1, '2024-09-12', '2025-02-12', NULL);
 
 -- Volcando estructura para tabla urbes_db.vehiculos
 CREATE TABLE IF NOT EXISTS `vehiculos` (
