@@ -1,37 +1,24 @@
 <?php
-$titlePage = "Registro Mecanica Vehiculo Compactador";
+$titlePage = "Registro De lavado de Areas Publicas";
 require_once("../components/navbar.php");
 $today = date('Y-m-d');
 
 // asignamos la query a una variable
 $documento = $_SESSION['documento'];
 
-
-
-
 // Preparamos la consulta para buscar el usuario
-$queryUser = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario WHERE documento = :documento");
+$queryUser = $connection->prepare("SELECT * FROM usuarios INNER JOIN ciudades ON usuarios.id_ciudad = ciudades.id_ciudad WHERE documento = :documento");
 $queryUser->bindParam(":documento", $documento);
 $queryUser->execute();
 $user = $queryUser->fetch(PDO::FETCH_ASSOC);
 // nombre completo
 $nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
-$tipo_usuario = $user['id_tipo_usuario'];
+$id_city = $user['id_ciudad'];
 
-
-if ($tipo_usuario != 4) {
-    // El usuario no es un conductor, redirige al index con un mensaje de error
-    showErrorOrSuccessAndRedirect("error", "Error de usuario", "No eres un condutor por lo tanto no puedes acceder a este formulario", "index.php");
-    exit();
-}
-
-
-
-
-$queryVehiculo = $connection->prepare("SELECT * FROM vehiculos");
-$queryVehiculo->bindParam(":id_ciudad", $id_city);
-$queryVehiculo->execute();
-$vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
+$queryZona = $connection->prepare("SELECT * FROM zonas INNER JOIN ciudades ON zonas.id_ciudad = ciudades.id_ciudad WHERE zonas.id_ciudad  = :id_ciudad");
+$queryZona->bindParam(":id_ciudad", $id_city);
+$queryZona->execute();
+$zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -42,7 +29,7 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header mt-3 justify-content-between align-items-center text-center">
-                        <h3 class="fw-bold">REGISTRO DE LAVA</h3>
+                        <h3 class="fw-bold">REGISTRO DE LAVADO DE AREAS PUBLICAS</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
@@ -66,7 +53,7 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
 
                                 <!-- hora_inicio -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label class="form-label" for="hora_inicio">Hora Inicio del Mantenimiento</label>
+                                    <label class="form-label" for="hora_inicio">Hora Inicio de Lavado</label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
                                             <i class="fas fa-truck"></i>
@@ -120,7 +107,21 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                 </div>
 
-                                
+                                <!-- ciudad -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="nombres">Ciudad</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombres_span" class="input-group-text"><i
+                                                class="fas fa-city"></i></span>
+                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
+                                            name="nombres" id="ciudad" disabled value="<?php echo $user['ciudad']; ?>"
+                                            placeholder="Ingresa la ciudad" />
+                                        <input type="hidden" name="id_ciudad" id="id_ciudad"
+                                            value="<?php echo [$id_city]; ?>" placeholder="Ingresa la ciudad" />
+                                    </div>
+
+
+                                </div>
 
 
 

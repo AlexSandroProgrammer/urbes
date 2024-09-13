@@ -57,7 +57,7 @@ if ($documentoSession) {
                         <p class="card-text">
                             Presiona clic para ingresar en el formulario
                         </p>
-                        <a href="mecanica.php?query=<?= $documento ?>" class="btn btn-primary"><i
+                        <a href="mecanica.php" class="btn btn-primary"><i
                                 class='bx bx-right-arrow-alt'></i>
                             Ingresar</a>
                     </div>
@@ -72,7 +72,7 @@ if ($documentoSession) {
                     <div class="card-body">
                         <h5 class="card-title">3. Formulario Carro de Barrido</h5>
                         <p class="card-text">
-                            Presiona clic para ingresar en el formulario
+                            Presiona click para ingresar en el formulario
                         </p>
                         <a href="carro_barrido.php" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i>
                             Ingresar</a>
@@ -80,21 +80,37 @@ if ($documentoSession) {
                 </div>
             </div>
             <div class="col-12 col-md-6">
-                <div class="card h-100 text-center align-items-center">
+                <div class="card h-100 text-center">
                     <div class="pt-2">
                         <img width="300" height="200" src="../../assets/images/vehiculo_compactador.png"
                             alt="Card image cap" />
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">4. Formulario Carro de Barrido</h5>
+                        <h5 class="card-title">4. Areas Publicas</h5>
                         <p class="card-text">
-                            Presiona clic para ingresar en el formulario
+                            Presiona click para ingresar en el formulario
                         </p>
-                        <a href="?query=<?= $documento ?>" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i>
-                            Ingresar</a>
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <a href="lavado.php" class="btn btn-primary w-50">
+                                    <i class='bx bx-right-arrow-alt'></i> Lavado A. Publicas
+                                </a>
+                            </div>
+                            <div class="col-12">
+                                <a href="cesped.php" class="btn btn-success w-50">
+                                    <i class='bx bx-right-arrow-alt'></i> Poda De Cesped
+                                </a>
+                            </div>
+                            <div class="col-12">
+                                <a href="poda.php" class="btn btn-info w-50">
+                                    <i class='bx bx-right-arrow-alt'></i> Poda De Arboles
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <?php
