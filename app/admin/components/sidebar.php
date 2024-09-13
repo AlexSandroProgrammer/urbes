@@ -134,6 +134,34 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-star"></i>
+                            <div data-i18n="Misc">Conductores</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="conductores_activos.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Conductores Activos</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="conductores_bloqueados.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Conductores Bloqueados</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="conductores_eliminados.php" class="menu-link">
+                                    <div data-i18n="Error">Lis. Conductores Eliminados</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="registrar_empleado.php" class="menu-link">
+                                    <div data-i18n="Error">Registrar Conductor</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-star"></i>
                             <div data-i18n="Misc">Socios</div>
                         </a>
                         <ul class="menu-sub">

@@ -223,7 +223,7 @@ require_once("../components/sidebar.php");
                                             name="arl" id="arl" placeholder="Ingresar nombre de la ARL" />
                                     </div>
                                 </div>
-                                <!-- estado -->
+                                <!-- tipo rol -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="estado" class="form-label">Tipo de rol</label>
                                     <div class="input-group input-group-merge">
