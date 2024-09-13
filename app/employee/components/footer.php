@@ -135,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     ciudad.addEventListener('change', function() {
         const selectedValue = this.value;
-
         // Ocultamos la lista de empleados si no se selecciona una ciudad
         if (selectedValue === '') {
             empleados.style.display = 'none';
@@ -154,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     empleados.style.display = 'none';
                     return;
                 }
+
                 // Generamos los checkboxes para cada empleado
                 data.forEach(empleado => {
                     const empleadoDiv = document

@@ -282,6 +282,7 @@ $fecha_inicio = date('Y-m-d');
                                         <!-- Checkboxes de empleados aparecerán aquí -->
                                     </div>
                                 </div>
+                                <input type="hidden" id="empleados" name="empleados">
                                 <div class="mt-4">
                                     <!-- Botón de Cancelar -->
                                     <a href="index.php" class="btn btn-danger" id="cancelarBtn">
@@ -294,7 +295,6 @@ $fecha_inicio = date('Y-m-d');
                             </div>
                         </form>
                         <script>
-                        //* FUNCION PARA VALIDAR EMPLEADOS EN EL LOCAL STORAGE
                         function validarEmpleados() {
                             // Obtenemos los datos de empleados registrados en el localStorage
                             const empleados = JSON.parse(localStorage.getItem("empleados"));
@@ -306,13 +306,25 @@ $fecha_inicio = date('Y-m-d');
                                     title: 'Oops...',
                                     text: 'Debes seleccionar empleados en tu tripulación',
                                 });
-
                                 // Prevenir el envío del formulario
                                 return false;
                             }
-
-                            // Si la validación pasa, permitimos el envío del formulario
-                            return true;
+                            // Si existen empleados, los colocamos en el campo oculto para enviarlos a PHP
+                            const campoOculto = document.getElementById('empleados');
+                            campoOculto.value = JSON.stringify(empleados);
+                            // Verificamos que los empleados se hayan pasado correctamente al campo oculto
+                            if (campoOculto.value === JSON.stringify(empleados)) {
+                                // Permitimos el envío del formulario si el campo oculto contiene los datos correctos
+                                return true;
+                            } else {
+                                // Si por alguna razón los datos no se transfirieron correctamente, mostramos un error
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Hubo un problema al registrar los empleados. Inténtalo de nuevo.',
+                                });
+                                return false;
+                            }
                         }
 
                         document.addEventListener('DOMContentLoaded', function() {

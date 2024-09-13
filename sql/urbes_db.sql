@@ -49,6 +49,16 @@ INSERT INTO `ciudades` (`id_ciudad`, `ciudad`, `fecha_registro`, `fecha_actualiz
 	(1, 'Mariquita', '2024-09-07 16:42:03', '2024-09-08 18:17:37'),
 	(2, 'Sevilla', '2024-09-08 18:19:04', '2024-09-08 19:43:52');
 
+-- Volcando estructura para tabla urbes_db.detalle_tripulacion
+CREATE TABLE IF NOT EXISTS `detalle_tripulacion` (
+  `id_detalle` bigint NOT NULL,
+  `documento` bigint NOT NULL,
+  `id_registro` bigint NOT NULL,
+  PRIMARY KEY (`id_detalle`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla urbes_db.detalle_tripulacion: ~0 rows (aproximadamente)
+
 -- Volcando estructura para tabla urbes_db.estados
 CREATE TABLE IF NOT EXISTS `estados` (
   `id_estado` int NOT NULL AUTO_INCREMENT,
@@ -89,19 +99,23 @@ INSERT INTO `labores` (`id_labor`, `labor`, `fecha_registro`, `fecha_actualizaci
 
 -- Volcando estructura para tabla urbes_db.registro_actividades
 CREATE TABLE IF NOT EXISTS `registro_actividades` (
-  `id_registro` int NOT NULL AUTO_INCREMENT,
+  `id_registro` bigint NOT NULL AUTO_INCREMENT,
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
   `hora_inicio` time DEFAULT NULL,
   `hora_finalizacion` time DEFAULT NULL,
-  `km_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
-  `km_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
-  `horometro_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
-  `horometro_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
-  `id_actividad` int DEFAULT NULL,
-  `id_vehiculos` int DEFAULT NULL,
+  `km_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `km_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `foto_kilometraje` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `horometro_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `horometro_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `id_labor` int DEFAULT NULL,
+  `id_vehiculos` varchar(50) DEFAULT NULL,
+  `documento` bigint DEFAULT NULL,
+  `id_estado` int DEFAULT NULL,
+  `fecha_registro` datetime DEFAULT NULL,
   PRIMARY KEY (`id_registro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.registro_actividades: ~0 rows (aproximadamente)
 
