@@ -21,9 +21,9 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
     $estado = $_POST['estado'];
     $eps = $_POST['eps'];
     $arl = $_POST['arl'];
-    $conductor = $_POST['conductor'];
     $password = $_POST['password'];
     $rh = $_POST['rh'];
+    $tipo_rol = $_POST['tipo_rol'];
     // Validamos que no se haya recibido ningún dato vacío
     if (isEmpty([
         $tipo_documento,
@@ -41,8 +41,8 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
         $fecha_inicio,
         $fecha_fin,
         $ciudad,
-        $conductor,
-        $rh
+        $rh,
+        $tipo_rol
     ])) {
         showErrorFieldsEmpty("registrar_empleado.php");
         exit();
@@ -52,35 +52,28 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
     if (containsSpecialCharacters([
         $nombres,
         $apellidos,
-        $nombre_familiar,
-        $conductor
+        $nombre_familiar
     ])) {
         showErrorOrSuccessAndRedirect("error", "Error de digitación", "Por favor verifica que en ningún campo existan caracteres especiales. Los campos como el nombre, apellido o nombre del familiar no deben tener letras como la ñ o caracteres especiales.", "registrar_empleado.php");
         exit();
     }
-
-    // ID DEL EMPLEADO
-    $id_employee = 3;
-
     // Preparamos una consulta para validar si ya existe un usuario con el mismo documento o celular
-    $userValidation = $connection->prepare("SELECT * FROM usuarios WHERE (documento = :documento OR celular = :celular) AND id_tipo_usuario = :id_tipo_usuario");
+    $userValidation = $connection->prepare("SELECT * FROM usuarios WHERE documento = :documento OR celular = :celular");
     $userValidation->bindParam(':documento', $documento);
     $userValidation->bindParam(':celular', $celular);
-    $userValidation->bindParam(':id_tipo_usuario', $id_employee);
     $userValidation->execute();
     $resultValidation = $userValidation->fetchAll();
 
     // Si la validación falla, mostramos un mensaje de error
     if ($resultValidation) {
-        showErrorOrSuccessAndRedirect("error", "Error de registro", "Los datos ingresados ya están registrados, por favor verifica el número de documento y celular", "registrar_empleado.php");
+        showErrorOrSuccessAndRedirect("error", "Error de registro", "Los datos ingresados ya están registrados, por favor verifica el número de documento y celular ingresados", "registrar_empleado.php");
         exit();
     } else {
         try {
             // encriptamos la contraseña
             $password_hash = encrypt_password($password);
             // Insertamos los datos en la base de datos, incluyendo todos los campos requeridos
-            $registerEmployee = $connection->prepare("INSERT INTO usuarios(documento, tipo_documento, nombres, apellidos, celular, celular_familiar, parentezco_familiar, nombre_familiar, password, id_tipo_usuario, id_estado, fecha_registro, eps, arl, id_ciudad, fecha_inicio, fecha_fin, confi_conductor, rh ) 
-            VALUES(:documento, :tipo_documento, :nombres, :apellidos, :celular, :celular_familiar, :parentezco_familiar, :nombre_familiar, :password, :id_tipo_usuario, :id_estado, :fecha_registro, :eps, :arl, :ciudad, :fecha_inicio, :fecha_fin, :confi_conductor, :rh )");
+            $registerEmployee = $connection->prepare("INSERT INTO usuarios(documento, tipo_documento, nombres, apellidos, celular, celular_familiar, parentezco_familiar, nombre_familiar, password, id_tipo_usuario, id_estado, fecha_registro, eps, arl, id_ciudad, fecha_inicio, fecha_fin, rh) VALUES(:documento, :tipo_documento, :nombres, :apellidos, :celular, :celular_familiar, :parentezco_familiar, :nombre_familiar, :password, :id_tipo_usuario, :id_estado, :fecha_registro, :eps, :arl, :ciudad, :fecha_inicio, :fecha_fin, :rh)");
             // Vinculamos los parámetros
             $registerEmployee->bindParam(':documento', $documento);
             $registerEmployee->bindParam(':tipo_documento', $tipo_documento);
@@ -91,7 +84,7 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
             $registerEmployee->bindParam(':parentezco_familiar', $parentezco_familiar);
             $registerEmployee->bindParam(':nombre_familiar', $nombre_familiar);
             $registerEmployee->bindParam(':password', $password_hash);
-            $registerEmployee->bindParam(':id_tipo_usuario', $id_employee);
+            $registerEmployee->bindParam(':id_tipo_usuario', $tipo_rol);
             $registerEmployee->bindParam(':id_estado', $estado);
             $registerEmployee->bindParam(':fecha_registro', $fecha_registro);
             $registerEmployee->bindParam(':eps', $eps);
@@ -99,7 +92,6 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
             $registerEmployee->bindParam(':ciudad', $ciudad);
             $registerEmployee->bindParam(':fecha_inicio', $fecha_inicio);
             $registerEmployee->bindParam(':fecha_fin', $fecha_fin);
-            $registerEmployee->bindParam(':confi_conductor', $conductor);
             $registerEmployee->bindParam(':rh', $rh);
             // Ejecutamos la consulta
             $registerEmployee->execute();
@@ -137,7 +129,7 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
     $fecha_fin = $_POST['fecha_fin'];
     $conductor = $_POST['conductor'];
     $rh = $_POST['rh'];
-
+    $tipo_rol = $_POST['tipo_rol'];
     // Validamos que no hayamos recibido ningún dato vacío
     if (isEmpty([
         $tipo_documento,
@@ -157,7 +149,8 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
         $fecha_inicio,
         $fecha_fin,
         $conductor,
-        $rh
+        $rh,
+        $tipo_rol
     ])) {
         showErrorFieldsEmpty("empleados_activos.php");
         exit();
@@ -179,8 +172,7 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
         );
         exit();
     }
-    // ID DEL EMPLEADO
-    $id_empleado = 3;
+
     $userValidation = $connection->prepare("SELECT * FROM usuarios WHERE (celular = :celular) AND documento <> :documento");
     $userValidation->bindParam(':documento', $documento);
     $userValidation->bindParam(':celular', $celular);
@@ -198,7 +190,7 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
             // encriptacion de contraseña
             $password_hash = encrypt_password($password);
             // Inserción de los datos en la base de datos, incluyendo la edad
-            $editEmployeeData = $connection->prepare("UPDATE usuarios  SET nombres = :nombres, apellidos = :apellidos, celular = :celular, id_estado = :estado, password = :password, nombre_familiar = :nombre_familiar, celular_familiar = :celular_familiar, parentezco_familiar = :parentezco_familiar, eps = :eps, arl = :arl, tipo_documento = :tipo_documento, fecha_actualizacion = :fecha_actualizacion, id_ciudad = :id_ciudad, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, confi_conductor = :conductor, rh = :rh  WHERE documento = :documento");
+            $editEmployeeData = $connection->prepare("UPDATE usuarios  SET nombres = :nombres, apellidos = :apellidos, celular = :celular, id_estado = :estado, password = :password, nombre_familiar = :nombre_familiar, celular_familiar = :celular_familiar, parentezco_familiar = :parentezco_familiar, eps = :eps, arl = :arl, tipo_documento = :tipo_documento, fecha_actualizacion = :fecha_actualizacion, id_ciudad = :id_ciudad, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin = :conductor, rh = :rh, id_tipo_usuario = :tipo_rol  WHERE documento = :documento");
             // Vincular los parámetros
             $editEmployeeData->bindParam(':nombres', $nombres);
             $editEmployeeData->bindParam(':apellidos', $apellidos);
@@ -217,6 +209,7 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
             $editEmployeeData->bindParam(':fecha_fin', $fecha_fin);
             $editEmployeeData->bindParam(':conductor', $conductor);
             $editEmployeeData->bindParam(':rh', $rh);
+            $editEmployeeData->bindParam(':tipo_rol', $tipo_rol);
             $editEmployeeData->bindParam(':documento', $documento);
             $editEmployeeData->execute();
             if ($editEmployeeData) {
@@ -230,7 +223,6 @@ if ((isset($_POST["MM_formUpdateEmployee"])) && ($_POST["MM_formUpdateEmployee"]
         }
     }
 }
-
 // *metodo para borrar el registro
 if (isset($_GET['id_employee-delete'])) {
     $id_employee = $_GET["id_employee-delete"];

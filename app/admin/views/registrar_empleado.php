@@ -223,15 +223,28 @@ require_once("../components/sidebar.php");
                                             name="arl" id="arl" placeholder="Ingresar nombre de la ARL" />
                                     </div>
                                 </div>
+                                <!-- estado -->
                                 <div class="mb-3 col-12 col-lg-6">
-                                    <label for="conductor" class="form-label">Confirmacion Conductor</label>
+                                    <label for="estado" class="form-label">Tipo de rol</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="conductor-2" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <select class="form-select" name="conductor" required>
-                                            <option value="">Seleccionar Confirmacion...</option>
-                                            <option value="SI">SI</option>
-                                            <option value="NO">NO</option>
+                                        <span id="estado-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <select class="form-select" name="tipo_rol" required>
+                                            <option value="">Seleccionar Tipo de Usuario...</option>
+                                            <?php
+                                            // CONSUMO DE DATOS DE LOS PROCESOS
+                                            $types_query = $connection->prepare("SELECT * FROM tipo_usuario");
+                                            $types_query->execute();
+                                            $types = $types_query->fetchAll(PDO::FETCH_ASSOC);
+                                            // Verificar si no hay datos
+                                            if (empty($types)) {
+                                                echo "<option value=''>No hay datos...</option>";
+                                            } else {
+                                                // Iterar sobre los types
+                                                foreach ($types as $type) {
+                                                    echo "<option value='{$type['id_tipo_usuario']}'>{$type['tipo_usuario']}</option>";
+                                                }
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>

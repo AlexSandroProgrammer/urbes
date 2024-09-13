@@ -63,7 +63,6 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                     <th>RH</th>
                                     <th>Fecha Inicio Contrato</th>
                                     <th>Fecha Fin Contrato</th>
-                                    <th>Conductor</th>
                                     <th>Nombre Familiar</th>
                                     <th>Celular Familiar</th>
                                     <th>Parentezco Familiar</th>
@@ -77,8 +76,12 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                 <?php foreach ($empleados as $empleado) {
                                     // desencriptacion de contraseña
                                     $password = bcrypt_password($empleado['password']);
-                                    $fecha_inicio = DateTime::createFromFormat('Y-m-d', $empleado['fecha_inicio'])->format('d/m/Y');
-                                    $fecha_fin = DateTime::createFromFormat('Y-m-d', $empleado['fecha_fin'])->format('d/m/Y');
+                                    $fecha_inicial = $empleado['fecha_inicio'];
+                                    $fecha_final = $empleado['fecha_fin'];
+                                    if (isNotEmpty([$fecha_inicial, $fecha_final])) {
+                                        $fecha_inicio = DateTime::createFromFormat('Y-m-d', $empleado['fecha_inicio'])->format('d/m/Y');
+                                        $fecha_fin = DateTime::createFromFormat('Y-m-d', $empleado['fecha_fin'])->format('d/m/Y');
+                                    }
                                 ?>
                                 <tr>
                                     <td>
@@ -115,7 +118,6 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                     <td><?php echo $empleado['rh'] ?></td>
                                     <td><?php echo $fecha_inicio ?></td>
                                     <td><?php echo $fecha_fin ?></td>
-                                    <td><?php echo $empleado['confi_conductor'] ?></td>
                                     <td><?php echo $empleado['nombre_familiar'] ?></td>
                                     <td><?php echo $empleado['celular_familiar'] ?></td>
                                     <td><?php echo $empleado['parentezco_familiar'] ?></td>

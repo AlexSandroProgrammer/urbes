@@ -32,14 +32,14 @@ function isNotEmpty($fields)
 
 function showErrorOrSuccessAndRedirect($icon, $title, $description, $location)
 {
-   
-          echo "<script>      // Mostrar advertencia con SweetAlert
+
+    echo "<script>      // Mostrar advertencia con SweetAlert
                 Swal.fire({
                     icon: '$icon',
                     title: '$title',
                     text: '$description',
                     confirmButtonText: 'Aceptar',
-                    timer: 2000, // Tiempo en milisegundos para mostrar la advertencia
+                    timer: 3000, // Tiempo en milisegundos para mostrar la advertencia
                     timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading();
@@ -49,11 +49,6 @@ function showErrorOrSuccessAndRedirect($icon, $title, $description, $location)
                     },
                 });</script>";
 }
-
-    
-    
-    
-  
 
 function isValidTime($time)
 {
@@ -69,6 +64,8 @@ function showErrorFieldsEmpty($location)
             icon: 'error',
             title: 'Oops...',
             text: 'Algunos datos estan vacios, debes ingresar todos los datos del formulario',
+            timer: 3000, // Tiempo en milisegundos para mostrar la advertencia
+            timerProgressBar: true,
         }).then(() => {
             window.location='$location'    
         });</script>";
