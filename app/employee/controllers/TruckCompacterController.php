@@ -50,12 +50,14 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
             if ($registroFoto) {
                 // OBTENEMOS LA FECHA ACTUAL 
                 $fecha_registro = date('Y-m-d H:i:s');
+                $pendiente = 4;
                 // Inserta los datos en la base de datos, incluyendo la edad
-                $registerTruckCompacter = $connection->prepare("INSERT INTO registro_actividades (fecha_inicio, hora_inicio, km_inicio, foto_kilometraje, horometro_inicio, id_vehiculos, id_labor, documento, id_estado, fecha_registro) VALUES(:fecha_inicio, :hora_inicio, :km_inicio, :foto_kilometraje, :horometro_inicio, :id_vehiculos, :id_labor, :documento, :id_estado, :fecha_registro)");
+                $registerTruckCompacter = $connection->prepare("INSERT INTO registro_actividades (fecha_inicio, hora_inicio, km_inicio,ciudad, foto_kilometraje, horometro_inicio, id_vehiculos, id_labor, documento, id_estado, fecha_registro) VALUES(:fecha_inicio, :hora_inicio, :km_inicio, :ciudad, :foto_kilometraje, :horometro_inicio, :id_vehiculos, :id_labor, :documento, :id_estado, :fecha_registro)");
                 // Vincular los parámetros
                 $registerTruckCompacter->bindParam(':fecha_inicio', $fecha_inicio);
                 $registerTruckCompacter->bindParam(':hora_inicio', $hora_inicio);
                 $registerTruckCompacter->bindParam(':km_inicio', $kilometraje);
+                $registerTruckCompacter->bindParam(':ciudad', $ciudad);
                 $registerTruckCompacter->bindParam(':foto_kilometraje', $nombreArchivo);
                 $registerTruckCompacter->bindParam(':horometro_inicio', $horometro);
                 $registerTruckCompacter->bindParam(':id_vehiculos', $vehiculo);

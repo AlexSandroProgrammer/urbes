@@ -32,20 +32,28 @@ function isNotEmpty($fields)
 
 function showErrorOrSuccessAndRedirect($icon, $title, $description, $location)
 {
-    echo "<script>
-        Swal.fire({
-            icon: '$icon',
-            title: '$title',
-            text: '$description',
-            confirmButtonText: 'Aceptar',
-            customClass: { 
-             confirmButton: 'btn btn-primary'
-            }
-            
-        }).then(() => {
-            window.location='$location'    
-        });</script>";
+   
+          echo "<script>      // Mostrar advertencia con SweetAlert
+                Swal.fire({
+                    icon: '$icon',
+                    title: '$title',
+                    text: '$description',
+                    confirmButtonText: 'Aceptar',
+                    timer: 2000, // Tiempo en milisegundos para mostrar la advertencia
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                    willClose: () => {
+                         window.location = '$location'
+                    },
+                });</script>";
 }
+
+    
+    
+    
+  
 
 function isValidTime($time)
 {
@@ -53,6 +61,7 @@ function isValidTime($time)
     $parsedTime = DateTime::createFromFormat($format, $time);
     return $parsedTime && $parsedTime->format($format) === $time;
 }
+
 function showErrorFieldsEmpty($location)
 {
     echo "<script>

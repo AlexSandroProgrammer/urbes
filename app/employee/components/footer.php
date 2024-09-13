@@ -78,8 +78,14 @@ function transferirDatos(event) {
         });
         return;
     }
-    window.location.href = 'saveDataDriver.php?details=' + JSON.stringify(employees);
+  
 }
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const ciudad = document.getElementById('ciudad');
     const empleados = document.getElementById('empleados');
