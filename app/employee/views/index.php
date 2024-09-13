@@ -2,7 +2,7 @@
 $titlePage = "Bienvenido Usuario";
 require_once("../components/navbar.php");
 if ($documentoSession) {
-    $documento = encrypt_password($documentoSession['documento']);
+    $documento = $documentoSession['documento'];
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -10,6 +10,44 @@ if ($documentoSession) {
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row g-4">
             <div class="col-lg-12 order-0">
+                <div class="row g-0 mb-4">
+                    <div class="col-12 ui-bg-overlay-container p-4">
+                        <div class="ui-bg-overlay bg-secondary opacity-75 rounded-end-bottom"></div>
+                        <h5 class="text-white fw-semibold mb-3">Panel de Formularios Pendientes</h5>
+                        <?php
+                            $drivers = "SELECT * FROM vehiculo_compactador WHERE documento <> :documento AND id_estado = :id_estado";
+                            $driversData = $connection->prepare($drivers);
+                            $driversData->bindParam(':documento', $documento, PDO::PARAM_INT);
+                            $driversData->bindParam(':id_estado', $id_estado, PDO::PARAM_INT);
+                            $driversData->execute();
+                            $drivers = $driversData->fetchAll(PDO::FETCH_ASSOC);
+                            // validamos si existen formularios por registrar
+                            if (count($drivers) == 0) {
+                            ?>
+                        <div class="toast-container w-100">
+                            <div class="bs-toast toast fade show bg-success w-100" role="alert" aria-live="assertive"
+                                aria-atomic="true">
+                                <div class="toast-header">
+                                    <i class="bx bx-success me-2"></i>
+                                    <div class="me-auto fw-semibold">No hay formularios pendientes</div>
+                                    <small>Excelente</small>
+                                </div>
+                                <div class="toast-body">
+                                    No tienes ningun formulario pendiente
+                                </div>
+                                <!-- <div class="toast-body">
+                                            <a href="" class="btn btn-primary"> <i class='bx bx-right-arrow-alt'></i>
+                                                Ingresar</a>
+                                        </div> -->
+                            </div>
+                        </div>
+
+                        <?php
+
+                            }
+                            ?>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="d-flex align-items-center justify-content-center row">
                         <div class="col-sm-7">
@@ -57,8 +95,7 @@ if ($documentoSession) {
                         <p class="card-text">
                             Presiona clic para ingresar en el formulario
                         </p>
-                        <a href="mecanica.php" class="btn btn-primary"><i
-                                class='bx bx-right-arrow-alt'></i>
+                        <a href="mecanica.php" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i>
                             Ingresar</a>
                     </div>
                 </div>
@@ -110,7 +147,6 @@ if ($documentoSession) {
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <?php
