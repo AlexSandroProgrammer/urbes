@@ -68,7 +68,7 @@ $fecha_inicio = date('Y-m-d');
                                     </div>
                                 </div>
                                 <?php
-                                if ($user['confi_conductor'] == 'SI') {
+                                if ($user['id_tipo_usuario'] == 4) {
                                 ?>
                                     <!-- numero de documento -->
                                     <div class="mb-3 col-12 col-lg-6 col-xl-4">
@@ -91,9 +91,10 @@ $fecha_inicio = date('Y-m-d');
                                             <select class="form-select" name="conductor" required>
                                                 <option value="">Seleccionar Conductor...</option>
                                                 <?php
-                                                $confirmacion = 'SI';
+                                                // tipo de usuario conductor
+                                                $confirmacion = 4;
                                                 // CONSUMO DE DATOS DE LOS PROCESOS
-                                                $driversGet = $connection->prepare("SELECT * FROM usuarios WHERE confi_conductor = :confirmacion");
+                                                $driversGet = $connection->prepare("SELECT * FROM usuarios WHERE id_tipo_usuario = :confirmacion");
                                                 $driversGet->bindParam(':confirmacion', $confirmacion);
                                                 $driversGet->execute();
                                                 $drivers = $driversGet->fetchAll(PDO::FETCH_ASSOC);
@@ -279,7 +280,7 @@ $fecha_inicio = date('Y-m-d');
                                         <!-- Checkboxes de empleados aparecerán aquí -->
                                     </div>
                                 </div>
-                                <input type="text" id="empleadosInput" name="empleados">
+                                <input type="hidden" id="empleadosInput" name="empleados">
                                 <div class="mt-4">
                                     <!-- Botón de Cancelar -->
                                     <a href="index.php" class="btn btn-danger" id="cancelarBtn">

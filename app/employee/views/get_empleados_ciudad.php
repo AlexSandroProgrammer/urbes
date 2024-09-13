@@ -11,13 +11,13 @@ error_log('Documento en sesión: ' . $documento);  // Verificar que el documento
 if (isset($_GET['id_ciudad'])) {
     $id_ciudad = $_GET['id_ciudad'];
     error_log('ID ciudad: ' . $id_ciudad);  // Verificar el ID de ciudad
-    $confi_conductor = "NO";
+    $id_tipo_usuario = 3;
     try {
-        $query = "SELECT documento, nombres, apellidos FROM usuarios WHERE documento <> :documento AND id_ciudad = :id_ciudad AND confi_conductor = :confi_conductor";
+        $query = "SELECT documento, nombres, apellidos FROM usuarios WHERE documento <> :documento AND id_ciudad = :id_ciudad AND id_tipo_usuario = :id_tipo_usuario";
         $queryData = $connection->prepare($query);
         $queryData->bindParam(':documento', $documento, PDO::PARAM_INT);
         $queryData->bindParam(':id_ciudad', $id_ciudad, PDO::PARAM_INT);
-        $queryData->bindParam(':confi_conductor', $confi_conductor, PDO::PARAM_STR);
+        $queryData->bindParam(':id_tipo_usuario', $id_tipo_usuario, PDO::PARAM_STR);
         $queryData->execute();
         $empleados = $queryData->fetchAll(PDO::FETCH_ASSOC);
 
