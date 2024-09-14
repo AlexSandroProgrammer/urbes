@@ -5,7 +5,7 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
     $fecha_inicio = $_POST['fecha_inicio'];
     $vehiculo = $_POST['vehiculo'];
     $documento = $_POST['documento'];
-    $labor = $_POST['labor'];
+    $labor = 4;
     $hora_inicio = $_POST['hora_inicio'];
     $foto_kilometraje = $_FILES['foto_kilometraje']['name'];
     $kilometraje = $_POST['kilometraje'];
@@ -96,7 +96,7 @@ if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRec
     $fecha_inicio = $_POST['fecha_inicio'];
     $vehiculo = $_POST['vehiculo'];
     $documento = $_POST['documento'];
-    $labor = $_POST['labor'];
+    $labor = 5;
     $hora_inicio = $_POST['hora_inicio'];
     $foto_kilometraje = $_FILES['foto_kilometraje']['name'];
     $kilometraje = $_POST['kilometraje'];
