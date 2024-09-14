@@ -5,6 +5,22 @@ $today = date('Y-m-d');
 
 // asignamos la query a una variable
 $documento = $_SESSION['documento'];
+// Preparamos la consulta para buscar el usuario
+$queryType= $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario WHERE documento = :documento");
+$queryType->bindParam(":documento", $documento);
+$queryType->execute();
+$type = $queryType->fetch(PDO::FETCH_ASSOC);
+// nombre completo
+
+$tipo_usuario = $type['id_tipo_usuario'];
+
+
+if ($tipo_usuario != 3) {
+    // El usuario no es un conductor, redirige al index con un mensaje de error
+    showErrorOrSuccessAndRedirect("error", "Error de usuario", "No eres un empleado por lo tanto no puedes ingresar a este formulario", "index.php");
+    exit();
+}
+
 
 // Preparamos la consulta para buscar el usuario
 $queryUser = $connection->prepare("SELECT * FROM usuarios INNER JOIN ciudades ON usuarios.id_ciudad = ciudades.id_ciudad WHERE documento = :documento");
@@ -33,7 +49,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formRegisterEmployee">
+                            name="formRegisterGrassPruning">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
@@ -56,7 +72,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="hora_inicio">Hora Inicio de la Poda</label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
-                                            <i class="fas fa-truck"></i>
+                                            <i class="fas fa-clock"></i>
                                         </span>
                                         <input type="time" readonly required class="form-control" name="hora_inicio"
                                             id="hora_inicio" />
@@ -89,7 +105,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                             <i class="fas fa-user"></i>
                                         </span>
                                         <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this)"
-                                            onkeypress="return multiplenumber(event);" class="form-control " disabled
+                                            onkeypress="return multiplenumber(event);" class="form-control " readonly
                                             required id="documento" value="<?php echo ($documento); ?>" name="documento"
                                             placeholder="Ingresa tu número de documento" autofocus />
                                     </div>
@@ -114,10 +130,11 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                         <span id="nombres_span" class="input-group-text"><i
                                                 class="fas fa-city"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="nombres" id="ciudad" disabled value="<?php echo $user['ciudad']; ?>"
+                                            name="nombres" id="ciudad" readonly value="<?php echo $user['ciudad']; ?>"
                                             placeholder="Ingresa la ciudad" />
                                         <input type="hidden" name="id_ciudad" id="id_ciudad"
-                                            value="<?php echo [$id_city]; ?>" placeholder="Ingresa la ciudad" />
+                                            value="<?php echo htmlspecialchars($id_city); ?>"
+                                            placeholder="Ingresa la ciudad" />
                                     </div>
 
 
@@ -130,8 +147,8 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                         Cancelar
                                     </a>
                                     <input type="submit" class="btn btn-primary" value="Registrar"></input>
-                                    <input type="hidden" class="btn btn-info" value="formRegisterEmployee"
-                                        name="MM_formRegisterEmployee"></input>
+                                    <input type="hidden" class="btn btn-info" value="formRegisterGrassPruning"
+                                        name="MM_formRegisterGrassPruning"></input>
                                 </div>
                             </div>
                         </form>
