@@ -28,10 +28,6 @@ if ($tipo_usuario != 4) {
 
 
 
-$queryVehiculo = $connection->prepare("SELECT * FROM vehiculos");
-$queryVehiculo->bindParam(":id_ciudad", $id_city);
-$queryVehiculo->execute();
-$vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -46,7 +42,7 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formRegisterEmployee">
+                            name="formRegisterMechanics">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
@@ -102,7 +98,7 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
                                             <i class="fas fa-user"></i>
                                         </span>
                                         <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this)"
-                                            onkeypress="return multiplenumber(event);" class="form-control " disabled
+                                            onkeypress="return multiplenumber(event);" class="form-control " readonly
                                             required id="documento" value="<?php echo ($documento); ?>" name="documento"
                                             placeholder="Ingresa tu número de documento" autofocus />
                                     </div>
@@ -114,14 +110,14 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
                                         <span id="nombres_span" class="input-group-text"><i
                                                 class="fas fa-user"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="nombres" id="nombres" disabled
+                                            name="nombres" id="nombres" readonly
                                             value="<?php echo ($nombre_completo); ?>"
                                             placeholder="Ingresar nombres completos" />
                                     </div>
                                 </div>
                                 <!-- equipo de transporte -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label for="estado" class="form-label">Vehiculo Mantenimiento</label>
+                                    <label for="estado" class="form-label">Vehiculo</label>
                                     <div class="input-group input-group-merge">
                                         <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
                                         <select class="form-select" name="vehiculo" autofocus required>
@@ -144,9 +140,7 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
                                         </select>
                                     </div>
                                 </div>
-                                <?php
-                                if ($user['id_tipo_usuario'] == 4) {
-                                ?>
+                                
 
 
 
@@ -157,8 +151,8 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
                                         Cancelar
                                     </a>
                                     <input type="submit" class="btn btn-primary" value="Registrar"></input>
-                                    <input type="hidden" class="btn btn-info" value="formRegisterEmployee"
-                                        name="MM_formRegisterEmployee"></input>
+                                    <input type="hidden" class="btn btn-info" value="formRegisterMechanics"
+                                        name="MM_formRegisterMechanics"></input>
                                 </div>
                             </div>
                         </form>
