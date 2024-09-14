@@ -70,27 +70,27 @@ $fecha_inicio = date('Y-m-d');
                                 <?php
                                 if ($user['id_tipo_usuario'] == 4) {
                                 ?>
-                                <!-- numero de documento -->
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label class="form-label" for="documento">CONDUCTOR ENCARGADO DE REGISTRO</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="6" maxlength="10" readonly
-                                            value="<?= $documento ?>" class="form-control" required id="documento"
-                                            name="documento" placeholder="Ingresa tu numero de documento" />
+                                    <!-- numero de documento -->
+                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                        <label class="form-label" for="documento">CONDUCTOR ENCARGADO DE REGISTRO</label>
+                                        <div class="input-group input-group-merge">
+                                            <span id="documento-icon" class="input-group-text"><i
+                                                    class="fas fa-truck"></i></span>
+                                            <input type="text" minlength="6" maxlength="10" readonly
+                                                value="<?= $documento ?>" class="form-control" required id="documento"
+                                                name="documento" placeholder="Ingresa tu numero de documento" />
+                                        </div>
                                     </div>
-                                </div>
                                 <?php
                                 } else {
                                 ?>
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label for="estado" class="form-label">Conductor Asignado</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
-                                        <select class="form-select" name="conductor" required>
-                                            <option value="">Seleccionar Conductor...</option>
-                                            <?php
+                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                        <label for="estado" class="form-label">Conductor Asignado</label>
+                                        <div class="input-group input-group-merge">
+                                            <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                            <select class="form-select" name="conductor" required>
+                                                <option value="">Seleccionar Conductor...</option>
+                                                <?php
                                                 // tipo de usuario conductor
                                                 $confirmacion = 4;
                                                 // CONSUMO DE DATOS DE LOS PROCESOS
@@ -108,20 +108,20 @@ $fecha_inicio = date('Y-m-d');
                                                     }
                                                 }
                                                 ?>
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- numero de documento -->
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label class="form-label" for="documento">PERSONA ENCARGADA DE REGISTRO</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="6" maxlength="10" readonly
-                                            value="<?= $documento ?>" class="form-control" required id="documento"
-                                            name="documento" placeholder="Ingresa tu numero de documento" />
+                                    <!-- numero de documento -->
+                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                        <label class="form-label" for="documento">PERSONA ENCARGADA DE REGISTRO</label>
+                                        <div class="input-group input-group-merge">
+                                            <span id="documento-icon" class="input-group-text"><i
+                                                    class="fas fa-truck"></i></span>
+                                            <input type="text" minlength="6" maxlength="10" readonly
+                                                value="<?= $documento ?>" class="form-control" required id="documento"
+                                                name="documento" placeholder="Ingresa tu numero de documento" />
+                                        </div>
                                     </div>
-                                </div>
                                 <?php
                                 }
                                 ?>
@@ -163,20 +163,20 @@ $fecha_inicio = date('Y-m-d');
                                     </div>
                                 </div>
                                 <script>
-                                // Función para actualizar la hora en el campo de hora_inicio
-                                function actualizarHora() {
-                                    // Obtener la hora actual
-                                    const ahora = new Date();
-                                    // Formatear la hora en formato HH:MM (24 horas)
-                                    const horas = String(ahora.getHours()).padStart(2, '0');
-                                    const minutos = String(ahora.getMinutes()).padStart(2, '0');
-                                    // Actualizar el valor del input con la hora formateada
-                                    document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
-                                }
-                                // Actualizar la hora cada segundo
-                                setInterval(actualizarHora, 1000);
-                                // Llamar a la función inmediatamente para establecer la hora inicial
-                                actualizarHora();
+                                    // Función para actualizar la hora en el campo de hora_inicio
+                                    function actualizarHora() {
+                                        // Obtener la hora actual
+                                        const ahora = new Date();
+                                        // Formatear la hora en formato HH:MM (24 horas)
+                                        const horas = String(ahora.getHours()).padStart(2, '0');
+                                        const minutos = String(ahora.getMinutes()).padStart(2, '0');
+                                        // Actualizar el valor del input con la hora formateada
+                                        document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
+                                    }
+                                    // Actualizar la hora cada segundo
+                                    setInterval(actualizarHora, 1000);
+                                    // Llamar a la función inmediatamente para establecer la hora inicial
+                                    actualizarHora();
                                 </script>
                                 <!-- foto_kilometraje -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
@@ -191,41 +191,41 @@ $fecha_inicio = date('Y-m-d');
                                     </div>
                                 </div>
                                 <script>
-                                function validarImagen() {
-                                    const inputFile = document.getElementById('foto_kilometraje');
-                                    const file = inputFile.files[0];
+                                    function validarImagen() {
+                                        const inputFile = document.getElementById('foto_kilometraje');
+                                        const file = inputFile.files[0];
 
-                                    if (file) {
-                                        const fileType = file.type;
-                                        const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
-                                        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                                        const maxSize = 5; // Tamaño máximo en MB
+                                        if (file) {
+                                            const fileType = file.type;
+                                            const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
+                                            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                                            const maxSize = 5; // Tamaño máximo en MB
 
-                                        // Validar el tipo de archivo
-                                        if (!validImageTypes.includes(fileType)) {
-                                            swal.fire({
-                                                title: 'Error',
-                                                text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
-                                                icon: 'error',
-                                                confirmButtonText: 'Aceptar'
-                                            });
-                                            inputFile.value = ''; // Limpiar el input si el archivo no es válido
-                                            return;
-                                        }
+                                            // Validar el tipo de archivo
+                                            if (!validImageTypes.includes(fileType)) {
+                                                swal.fire({
+                                                    title: 'Error',
+                                                    text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
+                                                    icon: 'error',
+                                                    confirmButtonText: 'Aceptar'
+                                                });
+                                                inputFile.value = ''; // Limpiar el input si el archivo no es válido
+                                                return;
+                                            }
 
-                                        // Validar el tamaño del archivo
-                                        if (fileSize > maxSize) {
-                                            swal.fire({
-                                                title: 'Error',
-                                                text: 'El tamaño de la imagen no debe exceder los 5 MB.',
-                                                icon: 'error',
-                                                confirmButtonText: 'Aceptar'
-                                            });
-                                            inputFile.value = ''; // Limpiar el input si el archivo es muy grande
-                                            return;
+                                            // Validar el tamaño del archivo
+                                            if (fileSize > maxSize) {
+                                                swal.fire({
+                                                    title: 'Error',
+                                                    text: 'El tamaño de la imagen no debe exceder los 5 MB.',
+                                                    icon: 'error',
+                                                    confirmButtonText: 'Aceptar'
+                                                });
+                                                inputFile.value = ''; // Limpiar el input si el archivo es muy grande
+                                                return;
+                                            }
                                         }
                                     }
-                                }
                                 </script>
                                 <!-- kilometraje -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
@@ -273,7 +273,7 @@ $fecha_inicio = date('Y-m-d');
                                 </div>
                                 <div class="mt-4">
                                     <!-- Botón de Cancelar -->
-                                    <a href="index.php" class="btn btn-danger" id="cancelarBtn">
+                                    <a href="index.php" class="btn btn-danger">
                                         Cancelar
                                     </a>
                                     <input type="submit" class="btn btn-primary" value="Registrar"></input>

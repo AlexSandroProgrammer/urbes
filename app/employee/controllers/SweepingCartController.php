@@ -17,7 +17,7 @@ if ((isset($_POST["MM_formRegisterSweepingCart"])) && ($_POST["MM_formRegisterSw
     // OBTENEMOS LA FECHA ACTUAL 
     $fecha_registro = date('Y-m-d H:i:s');
     $pendiente = 4;
-    $actvidad = 5;
+    $actividad = 5;
 
     // Inserta los datos en la base de datos
     $register = $connection->prepare("INSERT INTO carro_barrido (fecha_inicio, hora_inicio,id_actividad, ciudad, documento, id_estado, fecha_registro) VALUES(:fecha_inicio, :hora_inicio,:id_actividad, :ciudad, :documento, :id_estado, :fecha_registro)");
@@ -25,7 +25,7 @@ if ((isset($_POST["MM_formRegisterSweepingCart"])) && ($_POST["MM_formRegisterSw
     // Vincular los parámetros
     $register->bindParam(':fecha_inicio', $fecha_inicio);
     $register->bindParam(':hora_inicio', $hora_inicio);
-    $register->bindParam(':id_actividad', $actvidad);
+    $register->bindParam(':id_actividad', $actividad);
     $register->bindParam(':ciudad', $ciudad);
     $register->bindParam(':documento', $documento);
     $register->bindParam(':id_estado', $pendiente);
@@ -52,5 +52,3 @@ if ((isset($_POST["MM_formRegisterSweepingCart"])) && ($_POST["MM_formRegisterSw
     }
 }
 ?>
-
-
