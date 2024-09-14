@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `carro_barrido` (
   `id_estado` int DEFAULT NULL,
   `fecha_registro` datetime DEFAULT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL,
-  `id_zona` int DEFAULT NULL,
   `observaciones` varchar(500) DEFAULT NULL,
+  `ciudad` int DEFAULT NULL,
   PRIMARY KEY (`id_registro_barrido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `detalle_tripulacion` (
   `documento` bigint NOT NULL,
   `id_registro` bigint NOT NULL,
   PRIMARY KEY (`id_detalle`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.detalle_tripulacion: ~6 rows (aproximadamente)
 INSERT INTO `detalle_tripulacion` (`id_detalle`, `documento`, `id_registro`) VALUES
@@ -102,7 +102,9 @@ INSERT INTO `detalle_tripulacion` (`id_detalle`, `documento`, `id_registro`) VAL
 	(3, 1023210978, 9),
 	(4, 1108123450, 9),
 	(5, 1023210978, 10),
-	(6, 1108123450, 10);
+	(6, 1108123450, 10),
+	(7, 1023210978, 11),
+	(8, 1108123450, 11);
 
 -- Volcando estructura para tabla urbes_db.detalle_zonas
 CREATE TABLE IF NOT EXISTS `detalle_zonas` (
@@ -197,6 +199,9 @@ CREATE TABLE IF NOT EXISTS `recoleccion_relleno` (
   `fecha_registro` datetime DEFAULT NULL,
   `observaciones` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL,
+  `ciudad` int DEFAULT NULL,
+  `toneladas` varchar(50) DEFAULT NULL,
+  `galones` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_recoleccion`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -284,9 +289,11 @@ CREATE TABLE IF NOT EXISTS `vehiculo_compactador` (
   `observaciones` varchar(500) DEFAULT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id_registro_veh_compactador`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.vehiculo_compactador: ~1 rows (aproximadamente)
+INSERT INTO `vehiculo_compactador` (`id_registro_veh_compactador`, `fecha_inicio`, `fecha_fin`, `hora_inicio`, `hora_finalizacion`, `km_inicio`, `km_fin`, `foto_kilometraje_inicial`, `foto_kilometraje_final`, `horometro_inicio`, `horometro_fin`, `id_labor`, `id_vehiculo`, `ciudad`, `documento`, `id_estado`, `fecha_registro`, `observaciones`, `fecha_actualizacion`) VALUES
+	(11, '2024-09-13', NULL, '20:41:00', NULL, '1200', NULL, 'umberto-jXd2FSvcRr8-unsplash.jpg', NULL, '230', NULL, 4, 'HNT426', 1, 79464482, 4, '2024-09-13 20:41:49', NULL, NULL);
 
 -- Volcando estructura para tabla urbes_db.zonas
 CREATE TABLE IF NOT EXISTS `zonas` (

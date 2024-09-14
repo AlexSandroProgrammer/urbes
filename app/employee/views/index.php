@@ -40,12 +40,17 @@ if ($documentoSession) {
                             alt="Card image cap" />
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">1. Formulario Vehiculo Compactador</h5>
-                        <p class="card-text">
-                            Presiona clic para ingresar en el formulario
-                        </p>
-                        <a href="vehiculo_compactador.php" class="btn btn-primary"><i class='bx bx-right-arrow-alt'></i>
-                            Ingresar</a>
+                        <h5 class="card-title">1. Formulario Vehículo Compactador</h5>
+                        <p class="card-text">Presiona clic para ingresar en el formulario</p>
+                        <!-- Contenedor flexible para los botones -->
+                        <div class="d-flex flex-column flex-lg-row gap-2">
+                            <a href="vehiculo_compactador.php" class="btn btn-primary">
+                                Recoleccion <i class='bx bx-right-arrow-alt'></i>
+                            </a>
+                            <a href="recoleccion_relleno.php" class="btn btn-primary">
+                                Disposicion relleno <i class='bx bx-right-arrow-alt'></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
