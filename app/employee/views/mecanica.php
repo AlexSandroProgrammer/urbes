@@ -42,7 +42,7 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header mt-3 justify-content-between align-items-center text-center">
-                        <h3 class="fw-bold">REGISTRO DE LAVA</h3>
+                        <h3 class="fw-bold">REGISTRO DE MECANICA VEHICULO</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
@@ -69,7 +69,7 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="hora_inicio">Hora Inicio del Mantenimiento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
-                                            <i class="fas fa-truck"></i>
+                                            <i class="fas fa-clock"></i>
                                         </span>
                                         <input type="time" readonly required class="form-control" name="hora_inicio"
                                             id="hora_inicio" />
@@ -119,8 +119,36 @@ $vehiculo = $queryVehiculo->fetchAll(PDO::FETCH_ASSOC);
                                             placeholder="Ingresar nombres completos" />
                                     </div>
                                 </div>
+                                <!-- equipo de transporte -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label for="estado" class="form-label">Vehiculo Mantenimiento</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                        <select class="form-select" name="vehiculo" autofocus required>
+                                            <option value="">Seleccionar Equipo de Transporte...</option>
+                                            <?php
+                                            // CONSUMO DE DATOS DE LOS vehiculos
+                                            $driversGet = $connection->prepare("SELECT * FROM vehiculos");
+                                            $driversGet->execute();
+                                            $equipos = $driversGet->fetchAll(PDO::FETCH_ASSOC);
+                                            // Verificar si no hay datos
+                                            if (empty($equipos)) {
+                                                echo "<option value=''>No hay datos...</option>";
+                                            } else {
+                                                // Iterar sobre los vehiculos
+                                                foreach ($equipos as $equipo) {
+                                                    echo "<option value='{$equipo['placa']}'>{$equipo['vehiculo']} - {$equipo['placa']}</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <?php
+                                if ($user['id_tipo_usuario'] == 4) {
+                                ?>
 
-                                
+
 
 
 
