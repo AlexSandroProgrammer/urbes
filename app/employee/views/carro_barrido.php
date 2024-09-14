@@ -7,13 +7,13 @@ $today = date('Y-m-d');
 $documento = $_SESSION['documento'];
 
 // Preparamos la consulta para buscar el usuario
-$queryUser = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario WHERE documento = :documento");
-$queryUser->bindParam(":documento", $documento);
-$queryUser->execute();
-$user = $queryUser->fetch(PDO::FETCH_ASSOC);
+$queryType= $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario WHERE documento = :documento");
+$queryType->bindParam(":documento", $documento);
+$queryType->execute();
+$type = $queryType->fetch(PDO::FETCH_ASSOC);
 // nombre completo
-$nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
-$tipo_usuario = $user['id_tipo_usuario'];
+
+$tipo_usuario = $type['id_tipo_usuario'];
 
 
 if ($tipo_usuario != 3) {
