@@ -72,21 +72,21 @@ if ($tipo_usuario != 4) {
                                     </div>
                                 </div>
                                 <script>
-                                // Función para actualizar la hora en el campo de hora_inicio
-                                function actualizarHora() {
-                                    // Obtener la hora actual
-                                    const ahora = new Date();
-                                    // Formatear la hora en formato HH:MM (24 horas)
-                                    const horas = String(ahora.getHours()).padStart(2, '0');
-                                    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+                                    // Función para actualizar la hora en el campo de hora_inicio
+                                    function actualizarHora() {
+                                        // Obtener la hora actual
+                                        const ahora = new Date();
+                                        // Formatear la hora en formato HH:MM (24 horas)
+                                        const horas = String(ahora.getHours()).padStart(2, '0');
+                                        const minutos = String(ahora.getMinutes()).padStart(2, '0');
 
-                                    // Actualizar el valor del input con la hora formateada
-                                    document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
-                                }
-                                // Actualizar la hora cada segundo
-                                setInterval(actualizarHora, 1000);
-                                // Llamar a la función inmediatamente para establecer la hora inicial
-                                actualizarHora();
+                                        // Actualizar el valor del input con la hora formateada
+                                        document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
+                                    }
+                                    // Actualizar la hora cada segundo
+                                    setInterval(actualizarHora, 1000);
+                                    // Llamar a la función inmediatamente para establecer la hora inicial
+                                    actualizarHora();
                                 </script>
 
 
@@ -140,12 +140,6 @@ if ($tipo_usuario != 4) {
                                         </select>
                                     </div>
                                 </div>
-                                
-
-
-
-
-
                                 <div class="mt-4">
                                     <a href="index.php" class="btn btn-danger">
                                         Cancelar

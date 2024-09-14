@@ -54,7 +54,6 @@
     date_default_timezone_set('America/Bogota');
     // importacion de funciones
     require_once("../../functions/functions.php");
-    require_once("../auto/automations.php");
     // importacion de controladores
     require_once("../controllers/index.php");
     $documento = $_SESSION['documento'];

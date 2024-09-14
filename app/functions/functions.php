@@ -45,6 +45,23 @@ function showErrorOrSuccessAndRedirect($icon, $title, $description, $location)
                         Swal.showLoading();
                     },
                     willClose: () => {
+                        localStorage.removeItem('empleados');
+                         window.location = '$location'
+                    },
+                });</script>";
+}
+
+function showErrorOrSuccessAndRedirectInfo($icon, $title, $description, $location)
+{
+
+    echo "<script>      // Mostrar advertencia con SweetAlert
+                Swal.fire({
+                    icon: '$icon',
+                    title: '$title',
+                    text: '$description',
+                    confirmButtonText: 'Aceptar',
+                    willClose: () => {
+                        localStorage.removeItem('empleados');
                          window.location = '$location'
                     },
                 });</script>";
