@@ -33,7 +33,7 @@ if ((isset($_POST["MM_formRegisterGrassPruning"])) && ($_POST["MM_formRegisterGr
     $register->bindParam(':id_ciudad', $ciudad);
     
     if ($register->execute()) {
-        showErrorOrSuccessAndRedirect("success", "Formulario Registrado", "Se ha registrado la etapa inicial del formulario, debes terminar de rellenar la información restante en el panel de formularios pendientes", "cesped.php");
+        showErrorOrSuccessAndRedirect("success", "Formulario Registrado", "Se ha registrado la etapa inicial del formulario, debes terminar de rellenar la información restante en el panel de formularios pendientes", "index.php");
         exit();
     } else {
         showErrorOrSuccessAndRedirect("error", "Error de Registro", "Error al momento de registrar los datos, por favor inténtalo nuevamente.", "cesped.php");
