@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `detalle_tripulacion` (
   PRIMARY KEY (`id_detalle`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla urbes_db.detalle_tripulacion: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla urbes_db.detalle_tripulacion: ~6 rows (aproximadamente)
 INSERT INTO `detalle_tripulacion` (`id_detalle`, `documento`, `id_registro`) VALUES
 	(1, 7834501, 8),
 	(2, 1004230111, 8),
@@ -177,6 +177,31 @@ CREATE TABLE IF NOT EXISTS `mecanica` (
 
 -- Volcando datos para la tabla urbes_db.mecanica: ~0 rows (aproximadamente)
 
+-- Volcando estructura para tabla urbes_db.recoleccion_relleno
+CREATE TABLE IF NOT EXISTS `recoleccion_relleno` (
+  `id_recoleccion` bigint NOT NULL AUTO_INCREMENT,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
+  `hora_inicio` time DEFAULT NULL,
+  `hora_finalizacion` time DEFAULT NULL,
+  `km_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `km_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `foto_kilometraje_inicial` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `foto_kilometraje_final` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `horometro_inicio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `horometro_fin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `id_labor` int DEFAULT NULL,
+  `id_vehiculo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `documento` bigint DEFAULT NULL,
+  `id_estado` int DEFAULT NULL,
+  `fecha_registro` datetime DEFAULT NULL,
+  `observaciones` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `fecha_actualizacion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_recoleccion`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla urbes_db.recoleccion_relleno: ~0 rows (aproximadamente)
+
 -- Volcando estructura para tabla urbes_db.tipo_usuario
 CREATE TABLE IF NOT EXISTS `tipo_usuario` (
   `id_tipo_usuario` int NOT NULL AUTO_INCREMENT,
@@ -239,7 +264,7 @@ INSERT INTO `vehiculos` (`placa`, `vehiculo`, `fecha_registro`, `fecha_actualiza
 
 -- Volcando estructura para tabla urbes_db.vehiculo_compactador
 CREATE TABLE IF NOT EXISTS `vehiculo_compactador` (
-  `id_registro` bigint NOT NULL AUTO_INCREMENT,
+  `id_registro_veh_compactador` bigint NOT NULL AUTO_INCREMENT,
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
   `hora_inicio` time DEFAULT NULL,
@@ -258,13 +283,10 @@ CREATE TABLE IF NOT EXISTS `vehiculo_compactador` (
   `fecha_registro` datetime DEFAULT NULL,
   `observaciones` varchar(500) DEFAULT NULL,
   `fecha_actualizacion` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_registro`)
+  PRIMARY KEY (`id_registro_veh_compactador`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla urbes_db.vehiculo_compactador: ~1 rows (aproximadamente)
-INSERT INTO `vehiculo_compactador` (`id_registro`, `fecha_inicio`, `fecha_fin`, `hora_inicio`, `hora_finalizacion`, `km_inicio`, `km_fin`, `foto_kilometraje_inicial`, `foto_kilometraje_final`, `horometro_inicio`, `horometro_fin`, `id_labor`, `id_vehiculo`, `ciudad`, `documento`, `id_estado`, `fecha_registro`, `observaciones`, `fecha_actualizacion`) VALUES
-	(9, '2024-09-13', NULL, '01:14:00', NULL, '1500', NULL, '9174404_6289.jpg', NULL, '230', NULL, 4, 'HNT426', 1, 79464482, 4, '2024-09-13 01:15:07', NULL, NULL),
-	(10, '2024-09-13', NULL, '01:18:00', NULL, '2000', NULL, 'Untitled-removebg-preview.png', NULL, '20', NULL, 4, 'HNT426', 1, 79464482, 4, '2024-09-13 01:18:04', NULL, NULL);
 
 -- Volcando estructura para tabla urbes_db.zonas
 CREATE TABLE IF NOT EXISTS `zonas` (

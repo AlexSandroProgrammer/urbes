@@ -57,6 +57,8 @@ function isValidTime($time)
     return $parsedTime && $parsedTime->format($format) === $time;
 }
 
+
+
 function showErrorFieldsEmpty($location)
 {
     echo "<script>
