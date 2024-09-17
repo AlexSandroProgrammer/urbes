@@ -64,7 +64,7 @@ $id_city = $user['id_ciudad'];
                                 </div>
 
                                 <!-- hora_inicio -->
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                <div class="mb-3 col-12 col-lg-6 col-xl-6">
                                     <label class="form-label" for="hora_inicio">Hora Inicio de Lavado</label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
@@ -128,10 +128,10 @@ $id_city = $user['id_ciudad'];
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
                                             name="" id="ciudad" readonly value="<?php echo $user['ciudad']; ?>"
                                             placeholder="Ingresa la ciudad" />
-                                        <input type="hidden" name="id_ciudad" id="id_ciudad"
-                                            value="<?php echo htmlspecialchars($id_city); ?>" placeholder="Ingresa la ciudad" />
+                                        
                                     </div>
-
+                                    <input type="hidden"  class="form-control" name="id_ciudad" id="id_ciudad"
+                                            value="<?php echo htmlspecialchars($id_city); ?>" placeholder="Ingresa la ciudad" />
 
                                 </div>
 
