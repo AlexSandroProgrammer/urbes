@@ -41,13 +41,12 @@
 </head>
 
 <body>
-    
+
     <?php
     
     // iniciamos sesion para obtener los datos del usuario autenticado
     session_start();
 
-    include("../../admin/auto/automations.php");
     // validamos que el usuario este autenticado
     require_once("../../validation/sessionValidation.php");
     // creamos la conexion a la base de datos
@@ -58,6 +57,7 @@
     date_default_timezone_set('America/Bogota');
     // importacion de funciones
     require_once("../../functions/functions.php");
+    require_once("../../admin/auto/automations.php");
     // importacion de controladores
     require_once("../controllers/index.php");
     $documento = $_SESSION['documento'];
@@ -66,10 +66,10 @@
     $documentoSession = $documentoUserSession->fetch(PDO::FETCH_ASSOC);
     if (isset($_GET['logout'])) {
     ?>
-        <script>
-            localStorage.removeItem('empleados'); // Elimina los empleados del localStorage
-            window.location.href = "../../"; // Redirige después de eliminar
-        </script>
+    <script>
+    localStorage.removeItem('empleados'); // Elimina los empleados del localStorage
+    window.location.href = "../../"; // Redirige después de eliminar
+    </script>
     <?php
         session_destroy();
         exit();

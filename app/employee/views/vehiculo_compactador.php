@@ -12,6 +12,14 @@ $user = $queryUser->fetch(PDO::FETCH_ASSOC);
 $nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
 // fecha inicio
 $fecha_inicio = date('Y-m-d');
+// validamos que sea un conductor
+$tipo_usuario = $_SESSION['id_rol'];
+
+if ($tipo_usuario != 4) {
+    // El usuario no es un conductor, redirige al index con un mensaje de error
+    showErrorOrSuccessAndRedirect("error", "Error de usuario", "No eres un conductor por lo tanto no puedes ingresar a este formulario", "index.php");
+    exit();
+}
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -159,8 +167,8 @@ $fecha_inicio = date('Y-m-d');
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="file" accept="image/*" required class="form-control"
-                                            name="foto_kilometraje" id="foto_kilometraje" onchange="validarImagen()" />
+                                        <input type="file" accept="image/*" class="form-control" name="foto_kilometraje"
+                                            id="foto_kilometraje" onchange="validarImagen()" />
 
                                     </div>
                                 </div>
@@ -207,7 +215,7 @@ $fecha_inicio = date('Y-m-d');
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" required
+                                        <input type="text" minlength="1" maxlength="10"
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="kilometraje" id="kilometraje" placeholder="Ingresar kilometraje" />
                                     </div>

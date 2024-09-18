@@ -1,5 +1,5 @@
 <?php
-$titlePage = "Terminar Registro Form. Vehiculo Compactador";
+$titlePage = "Terminar Registro Form. Vehiculo Compactador Disposicion Relleno";
 require_once("../components/navbar.php");
 // asignamos la query a una variable
 $documento = $_SESSION['documento'];
@@ -19,26 +19,17 @@ if ($tipo_usuario != 4) {
 // fecha inicio
 $fecha_final = date('Y-m-d');
 if (isNotEmpty([$_GET['stmp']])) {
-    $stmp = $_GET['stmp'];
+    $id_recoleccion = $_GET['stmp'];
     // Preparamos la consulta para obtener los datos del registro
-    $query = "SELECT vehiculo_compactador.*, labores.id_labor, labores.labor, vehiculos.placa, vehiculos.vehiculo, usuarios.documento, usuarios.nombres, usuarios.apellidos, ciudades.id_ciudad, ciudades.ciudad, estados.id_estado,estados.estado FROM vehiculo_compactador INNER JOIN labores ON vehiculo_compactador.id_labor = labores.id_labor INNER JOIN vehiculos ON vehiculo_compactador.id_vehiculo = vehiculos.placa INNER JOIN usuarios ON vehiculo_compactador.documento = usuarios.documento JOIN ciudades ON vehiculo_compactador.ciudad = ciudades.id_ciudad INNER JOIN estados ON vehiculo_compactador.id_estado = estados.id_estado WHERE vehiculo_compactador.id_registro_veh_compactador = :id_registro_veh_compact;";
+    $query = "SELECT recoleccion_relleno.*, labores.id_labor, labores.labor, vehiculos.placa, vehiculos.vehiculo, usuarios.documento, usuarios.nombres, usuarios.apellidos, ciudades.id_ciudad, ciudades.ciudad, estados.id_estado,estados.estado FROM recoleccion_relleno INNER JOIN labores ON recoleccion_relleno.id_labor = labores.id_labor INNER JOIN vehiculos ON recoleccion_relleno.id_vehiculo = vehiculos.placa INNER JOIN usuarios ON recoleccion_relleno.documento = usuarios.documento JOIN ciudades ON recoleccion_relleno.ciudad = ciudades.id_ciudad INNER JOIN estados ON recoleccion_relleno.id_estado = estados.id_estado WHERE recoleccion_relleno.id_recoleccion = :id_recoleccion;";
     // Ejecutamos la query
     $execute = $connection->prepare($query);
-    $execute->bindParam(":id_registro_veh_compact", $stmp);
+    $execute->bindParam(":id_recoleccion", $id_recoleccion);
     $execute->execute();
     $data = $execute->fetch(PDO::FETCH_ASSOC);
     if (isEmpty([$data])) {
         showErrorOrSuccessAndRedirect('error', "Lo sentimos...!", "Error al momento de obtener los datos del registro ", "index.php");
         exit();
-    }
-    // CONSULTA PARA TRAER DETALLE DE TRIPULACION
-    $id_registro = $data['id_registro_veh_compactador'];
-    $employees = $connection->prepare("SELECT * FROM detalle_tripulacion INNER JOIN usuarios ON detalle_tripulacion.documento = usuarios.documento WHERE id_registro = :id_registro");
-    $employees->bindParam(":id_registro", $id_registro);
-    $employees->execute();
-    $detalle = $employees->fetchAll(PDO::FETCH_ASSOC);
-    if (isEmpty([$detalle])) {
-        echo 'No funciono';
     }
 
 ?>
@@ -55,7 +46,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formUpdateRecoleccion">
+                            name="formUpdateDisposicion">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Hola(a)
                                     <?= $nombre_completo ?>, te invitamos a terminar de rellanar al registro del
@@ -71,8 +62,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="id_registro_veh_compactador"
-                                    value="<?= $data['id_registro_veh_compactador'] ?>">
+                                <input type="hidden" name="id_recoleccion" value="<?= $data['id_recoleccion'] ?>">
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label class="form-label" for="fecha_final">Fecha Final</label>
                                     <div class="input-group input-group-merge">
@@ -262,6 +252,26 @@ if (isNotEmpty([$_GET['stmp']])) {
                                             value="<?= $data['ciudad'] ?>" />
                                     </div>
                                 </div>
+                                <!-- toneladas -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="toneladas">Toneladas</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="kilometraje_span" class="input-group-text"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input type="text" minlength="1" maxlength="10" class="form-control"
+                                            name="toneladas" id="toneladas" placeholder="Ingresar tonelada" />
+                                    </div>
+                                </div>
+                                <!-- galones -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="galones">Galones</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="kilometraje_span" class="input-group-text"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input type="text" minlength="1" maxlength="10" class="form-control"
+                                            name="galones" id="galones" placeholder="Ingresar galones" />
+                                    </div>
+                                </div>
                                 <div class="mb-3 col-12 col-lg-6 col-xl-8">
                                     <label for="observaciones" class="form-label">Observaciones</label>
                                     <div class="input-group input-group-merge">
@@ -272,24 +282,6 @@ if (isNotEmpty([$_GET['stmp']])) {
                                             placeholder="Ingresar observación"></textarea>
                                     </div>
                                 </div>
-
-                                <!-- Contenedor de los empleados -->
-                                <div class="mb-3 col-12" id="empleados">
-                                    <!-- Mostrar la lista de empleados -->
-                                    <h5>Tripulacion Asignada</h5>
-                                    <ul class="list-group">
-                                        <?php foreach ($detalle as $employee): ?>
-                                        <li class="list-group-item">
-                                            <strong>Nombre Completo:</strong>
-                                            <?php echo htmlspecialchars($employee['nombres'] . ' ' . $employee['apellidos']); ?><br>
-                                            <strong>Documento:</strong>
-                                            <?php echo htmlspecialchars($employee['documento']); ?><br>
-
-                                        </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-
-                                </div>
                                 <input type="hidden" id="empleadosInput" name="empleados">
                                 <div class="mt-4">
                                     <!-- Botón de Cancelar -->
@@ -297,8 +289,8 @@ if (isNotEmpty([$_GET['stmp']])) {
                                         Cancelar
                                     </a>
                                     <input type="submit" class="btn btn-primary" value="Registrar"></input>
-                                    <input type="hidden" class="btn btn-info" value="formUpdateRecoleccion"
-                                        name="MM_formUpdateRecoleccion"></input>
+                                    <input type="hidden" class="btn btn-info" value="formUpdateDisposicion"
+                                        name="MM_formUpdateDisposicion"></input>
                                 </div>
                             </div>
                         </form>

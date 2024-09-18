@@ -12,6 +12,14 @@ $user = $queryUser->fetch(PDO::FETCH_ASSOC);
 $nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
 // fecha inicio
 $fecha_inicio = date('Y-m-d');
+
+$tipo_usuario = $_SESSION['id_rol'];
+
+if ($tipo_usuario != 4) {
+    // El usuario no es un conductor, redirige al index con un mensaje de error
+    showErrorOrSuccessAndRedirect("error", "Error de usuario", "No eres un conductor por lo tanto no puedes ingresar a este formulario", "index.php");
+    exit();
+}
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -73,47 +81,6 @@ $fecha_inicio = date('Y-m-d');
                                 <!-- numero de documento -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label class="form-label" for="documento">CONDUCTOR ENCARGADO DE REGISTRO</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="6" maxlength="10" readonly
-                                            value="<?= $documento ?>" class="form-control" required id="documento"
-                                            name="documento" placeholder="Ingresa tu numero de documento" />
-                                    </div>
-                                </div>
-                                <?php
-                                } else {
-                                ?>
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label for="estado" class="form-label">Conductor Asignado</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>
-                                        <select class="form-select" name="conductor" required>
-                                            <option value="">Seleccionar Conductor...</option>
-                                            <?php
-                                                // tipo de usuario conductor
-                                                $confirmacion = 4;
-                                                // CONSUMO DE DATOS DE LOS PROCESOS
-                                                $driversGet = $connection->prepare("SELECT * FROM usuarios WHERE id_tipo_usuario = :confirmacion");
-                                                $driversGet->bindParam(':confirmacion', $confirmacion);
-                                                $driversGet->execute();
-                                                $drivers = $driversGet->fetchAll(PDO::FETCH_ASSOC);
-                                                // Verificar si no hay datos
-                                                if (empty($drivers)) {
-                                                    echo "<option value=''>No hay datos...</option>";
-                                                } else {
-                                                    // Iterar sobre los documentos de los conductores
-                                                    foreach ($drivers as $driver) {
-                                                        echo "<option value='{$driver['documento']}'>{$driver['documento']} - {$driver['nombres']} {$driver['apellidos']}</option>";
-                                                    }
-                                                }
-                                                ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- numero de documento -->
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label class="form-label" for="documento">PERSONA ENCARGADA DE REGISTRO</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>

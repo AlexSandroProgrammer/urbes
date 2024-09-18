@@ -89,7 +89,6 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
     }
 }
 
-
 //* Registro de datos de registro de actividades
 if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRecoleccion"] == "formRegisterRecoleccion")) {
     // VARIABLES DE ASIGNACIÓN DE VALORES QUE SE ENVÍAN DESDE EL FORMULARIO DE REGISTRO DE VEHICULO COMPACTADOR
@@ -166,5 +165,148 @@ if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRec
     } catch (\Throwable $th) {
         showErrorOrSuccessAndRedirect("error", "Error de Registro", "Error al momento de registrar los datos, por favor inténtalo nuevamente.", "recoleccion_relleno.php");
         exit();
+    }
+}
+
+
+//* ... METODO PARA ACTUALIZAR LOS DATOS DE TIPO LABOR DE RELLENO ...
+if ((isset($_POST["MM_formUpdateDisposicion"])) && ($_POST["MM_formUpdateDisposicion"] == "formUpdateDisposicion")) {
+    // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE ACTIVIDAD
+    $id_recoleccion = $_POST['id_recoleccion'];
+    $fecha_final = $_POST['fecha_final'];
+    $hora_finalizacion = $_POST['hora_finalizacion'];
+    $foto_kilometraje_final = $_FILES['foto_kilometraje_final']['name'];
+    $kilometraje_final = $_POST['kilometraje_final'];
+    $horometro_final = $_POST['horometro_final'];
+    $observaciones = $_POST['observaciones'];
+    $toneladas = $_POST['toneladas'];
+    $galones = $_POST['galones'];
+
+    // validamos que no hayamos recibido ningun dato vacio
+    if (isEmpty([$fecha_final, $hora_finalizacion, $horometro_final, $toneladas, $galones])) {
+        showErrorFieldsEmpty("pendientes.php");
+        exit();
+    } else {
+        try {
+            if (isFileUploaded($_FILES['foto_kilometraje_final'])) {
+                $permitidos = array(
+                    'image/jpeg',
+                    'image/png',
+                    'image/jpg',
+                );
+                $limite_KB = 5000;
+                if (isFileValid($_FILES['foto_kilometraje_final'], $permitidos, $limite_KB)) {
+                    $ruta = "../assets/images/";
+                    // Obtener la extensión del archivo
+                    $nombreArchivo = $_FILES['foto_kilometraje_final']['name'];
+                    $imagenRuta = $ruta . $nombreArchivo;
+                    createDirectoryIfNotExists($ruta);
+                    if (file_exists($imagenRuta)) {
+                        showErrorOrSuccessAndRedirect("error", "Error de archivo", "El nombre de la imagen ya esta registrado", "pendientes.php");
+                        exit();
+                    }
+                    $registroFotoFinal = moveUploadedFile($_FILES['foto_kilometraje_final'], $imagenRuta);
+                    if ($registroFotoFinal) {
+                        // OBTENEMOS LA FECHA ACTUAL 
+                        $fecha_actualizacion = date('Y-m-d H:i:s');
+                        $finalizado = 5;
+                        // Inserta los datos en la base de datos, incluyendo la edad
+                        // Inserta los datos en la base de datos
+                        $updateRegister = $connection->prepare("UPDATE recoleccion_relleno SET fecha_fin = :fecha_final, fecha_actualizacion = :fecha_actualizacion, hora_finalizacion = :hora_finalizacion, foto_kilometraje_final = :foto_kilometraje_final, km_fin = :km_fin, horometro_fin = :horometro_final, id_estado = :id_estado, observaciones = :observaciones, toneladas = :toneladas, galones = :galones WHERE id_recoleccion = :id_recoleccion");
+                        $updateRegister->bindParam(':fecha_final', $fecha_final);
+                        $updateRegister->bindParam(':fecha_actualizacion', $fecha_actualizacion);
+                        $updateRegister->bindParam(':hora_finalizacion', $hora_finalizacion);
+                        $updateRegister->bindParam(':foto_kilometraje_final', $foto_kilometraje_final);
+                        $updateRegister->bindParam(':km_fin', $kilometraje_final);
+                        $updateRegister->bindParam(':horometro_final', $horometro_final);
+                        $updateRegister->bindParam(':id_estado', $finalizado);
+                        $updateRegister->bindParam(':observaciones', $observaciones);
+                        $updateRegister->bindParam(':toneladas', $toneladas);
+                        $updateRegister->bindParam(':galones', $galones);
+                        $updateRegister->bindParam(':id_recoleccion', $id_recoleccion);
+                        $updateRegister->execute();
+                        if ($updateRegister) {
+                            showErrorOrSuccessAndRedirect("success", "Actualizacion Exitosa", "Los datos se han actualizado correctamente", "index.php");
+                            exit();
+                        } else {
+                            showErrorOrSuccessAndRedirect("error", "Error de Actualizacion", "Error al momento de actualizar los datos, por favor intentalo nuevamente", "pendientes.php");
+                            exit();
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            showErrorOrSuccessAndRedirect("error", "Error de Actualizacion", "Error al momento de actualizar los datos, por favor intentalo nuevamente", "pendientes.php");
+            exit();
+        }
+    }
+}
+
+
+//* ... METODO PARA ACTUALIZAR LOS DATOS DE TIPO LABOR DE RELLENO ...
+if ((isset($_POST["MM_formUpdateRecoleccion"])) && ($_POST["MM_formUpdateRecoleccion"] == "formUpdateRecoleccion")) {
+    // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE ACTIVIDAD
+    $id_registro_veh_compactador = $_POST['id_registro_veh_compactador'];
+    $fecha_final = $_POST['fecha_final'];
+    $hora_finalizacion = $_POST['hora_finalizacion'];
+    $foto_kilometraje_final = $_FILES['foto_kilometraje_final']['name'];
+    $kilometraje_final = $_POST['kilometraje_final'];
+    $horometro_final = $_POST['horometro_final'];
+    $observaciones = $_POST['observaciones'];
+    // validamos que no hayamos recibido ningun dato vacio
+    if (isEmpty([$fecha_final, $hora_finalizacion, $horometro_final])) {
+        showErrorFieldsEmpty("pendientes.php");
+        exit();
+    } else {
+        try {
+            if (isFileUploaded($_FILES['foto_kilometraje_final'])) {
+                $permitidos = array(
+                    'image/jpeg',
+                    'image/png',
+                    'image/jpg',
+                );
+                $limite_KB = 5000;
+                if (isFileValid($_FILES['foto_kilometraje_final'], $permitidos, $limite_KB)) {
+                    $ruta = "../assets/images/";
+                    // Obtener la extensión del archivo
+                    $nombreArchivo = $_FILES['foto_kilometraje_final']['name'];
+                    $imagenRuta = $ruta . $nombreArchivo;
+                    createDirectoryIfNotExists($ruta);
+                    if (file_exists($imagenRuta)) {
+                        showErrorOrSuccessAndRedirect("error", "Error de archivo", "El nombre de la imagen ya esta registrado", "pendientes.php");
+                        exit();
+                    }
+                    $registroFotoFinal = moveUploadedFile($_FILES['foto_kilometraje_final'], $imagenRuta);
+                    if ($registroFotoFinal) {
+                        // OBTENEMOS LA FECHA ACTUAL 
+                        $fecha_actualizacion = date('Y-m-d H:i:s');
+                        $finalizado = 5;
+                        // Inserta los datos en la base de datos, incluyendo la edad
+                        // Inserta los datos en la base de datos
+                        $updateRegister = $connection->prepare("UPDATE vehiculo_compactador SET fecha_fin = :fecha_final, fecha_actualizacion = :fecha_actualizacion, hora_finalizacion = :hora_finalizacion, foto_kilometraje_final = :foto_kilometraje_final, km_fin = :km_fin, horometro_fin = :horometro_final, id_estado = :id_estado, observaciones = :observaciones WHERE id_registro_veh_compactador = :id_registro_veh_compactador");
+                        $updateRegister->bindParam(':fecha_final', $fecha_final);
+                        $updateRegister->bindParam(':fecha_actualizacion', $fecha_actualizacion);
+                        $updateRegister->bindParam(':hora_finalizacion', $hora_finalizacion);
+                        $updateRegister->bindParam(':foto_kilometraje_final', $foto_kilometraje_final);
+                        $updateRegister->bindParam(':km_fin', $kilometraje_final);
+                        $updateRegister->bindParam(':horometro_final', $horometro_final);
+                        $updateRegister->bindParam(':id_estado', $finalizado);
+                        $updateRegister->bindParam(':observaciones', $observaciones);
+                        $updateRegister->bindParam(':id_registro_veh_compactador', $id_registro_veh_compactador);
+                        $updateRegister->execute();
+                        if ($updateRegister) {
+                            showErrorOrSuccessAndRedirect("success", "Actualizacion Exitosa", "Los datos se han actualizado correctamente", "index.php");
+                            exit();
+                        } else {
+                            showErrorOrSuccessAndRedirect("error", "Error de Actualizacion", "Error al momento de actualizar los datos, por favor intentalo nuevamente", "pendientes.php");
+                            exit();
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            showErrorOrSuccessAndRedirect("error", "Error de Actualizacion", "Error al momento de actualizar los datos, por favor intentalo nuevamente", "pendientes.php");
+            exit();
+        }
     }
 }
