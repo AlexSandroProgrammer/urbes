@@ -61,7 +61,7 @@ if ($tipo_usuario != 4) {
                                 </div>
 
                                 <!-- hora_inicio -->
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                <div class="mb-3 col-12 col-lg-6 col-xl-6">
                                     <label class="form-label" for="hora_inicio">Hora Inicio del Mantenimiento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
@@ -116,7 +116,7 @@ if ($tipo_usuario != 4) {
                                     </div>
                                 </div>
                                 <!-- equipo de transporte -->
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                <div class="mb-3 col-12 col-lg-6 col-xl-6">
                                     <label for="estado" class="form-label">Vehiculo</label>
                                     <div class="input-group input-group-merge">
                                         <span id="estado-2" class="input-group-text"><i class="fas fa-truck"></i></span>

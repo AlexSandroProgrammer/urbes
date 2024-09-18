@@ -257,7 +257,7 @@ if ($documentoSession) {
                             ?>
                                 <!-- // Iteramos sobre los datos para mostrar cada registro -->
                                 <?php
-                                foreach ($driversData as $driver) {
+                                foreach ($mecanicData as $driver) {
                                     // Convertir la fecha de registro a formato timestamp
                                     $fechaRegistro = strtotime($driver['fecha_registro']);
                                     $fechaActual = time();
@@ -294,7 +294,7 @@ if ($documentoSession) {
                                                 pendiente.
                                             </div>
                                             <div class="toast-body">
-                                                <a href="terminar_form_mec_veh_compactador.php?stmp=<?php echo $driver['id_registro'] ?>"
+                                                <a href="terminar_mecanica.php?stmp=<?php echo $driver['id_registro'] ?>"
                                                     class="btn btn-primary">Finalizar Formulario <i
                                                         class='bx bx-right-arrow-alt'></i></a>
                                             </div>
@@ -491,7 +491,7 @@ if ($documentoSession) {
                                                 pendiente.
                                             </div>
                                             <div class="toast-body">
-                                                <a href="carro_barrido.php?stmp=<?php echo $barrido['id_registro_barrido'] ?>"
+                                                <a href="terminar_carro_barrido.php?stmp=<?php echo $barrido['id_registro_barrido'] ?>"
                                                     class="btn btn-primary">Finalizar Formulario <i
                                                         class='bx bx-right-arrow-alt'></i></a>
                                             </div>

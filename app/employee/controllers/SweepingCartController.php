@@ -52,3 +52,66 @@ if ((isset($_POST["MM_formRegisterSweepingCart"])) && ($_POST["MM_formRegisterSw
     }
 }
 ?>
+
+
+<?php
+// * Método actualizar
+if ((isset($_POST["MM_formFinishSweepingCart"])) && ($_POST["MM_formFinishSweepingCart"] == "formFinishSweepingCart")) {
+    
+    // Variables de asignación de valores que se envían desde el formulario
+    $fecha_fin     = $_POST['fecha_fin'];
+    $hora_fin      = $_POST['hora_fin'];
+    $peso          = $_POST['peso'];
+    $observacion   = $_POST['observacion'];
+    $id_registro   = $_POST['id_registro'];
+
+    // Validamos que no hayamos recibido ningún dato vacío
+    if (isEmpty([
+        $fecha_fin,
+        $hora_fin, 
+        $peso, 
+        $observacion,
+        $id_registro 
+    ])) {
+        showErrorFieldsEmpty("terminar_carro_barrido.php");
+        exit();
+    }
+
+    try {
+        // Fecha actual
+        $fecha_actualizacion = date('Y-m-d H:i:s');
+        $id_estado = 5;
+       
+        // Inserción de los datos en la base de datos
+        $finishRegister = $connection->prepare("
+            UPDATE carro_barrido
+            SET fecha_fin = :fecha_fin, 
+                hora_fin = :hora_fin, 
+                peso = :peso, 
+                observaciones = :observacion, 
+                fecha_actualizacion = :fecha_actualizacion,
+                id_estado = :id_estado
+            WHERE id_registro_barrido = :id_registro
+        ");
+
+        // Vincular los parámetros
+        $finishRegister->bindParam(':fecha_fin', $fecha_fin);
+        $finishRegister->bindParam(':hora_fin', $hora_fin);
+        $finishRegister->bindParam(':peso', $peso);
+        $finishRegister->bindParam(':observacion', $observacion);
+        $finishRegister->bindParam(':fecha_actualizacion', $fecha_actualizacion);
+        $finishRegister->bindParam(':id_estado', $id_estado);
+        $finishRegister->bindParam(':id_registro', $id_registro);  // Añadir el parámetro que faltaba
+        $finishRegister->execute();
+
+        if ($finishRegister) {
+            showErrorOrSuccessAndRedirect("success", "¡Perfecto!", "Los datos se han actualizado correctamente", "./index.php");
+            exit();
+        }
+    } catch (\Throwable $th) {
+      
+        showErrorOrSuccessAndRedirect("error", "Error de actualización", "Error al momento de actualizar los datos.", "./index.php");
+        exit();
+    }
+}
+?>

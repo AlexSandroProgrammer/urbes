@@ -41,3 +41,69 @@ if ((isset($_POST["MM_formRegisterMechanics"])) && ($_POST["MM_formRegisterMecha
 ?>
 
 
+
+
+
+
+<?php
+// * Método actualizar
+if ((isset($_POST["MM_formFinishMechanics"])) && ($_POST["MM_formFinishMechanics"] == "formFinishMechanics")) {
+    
+    // Variables de asignación de valores que se envían desde el formulario
+    $fecha_fin     = $_POST['fecha_fin'];
+    $hora_fin      = $_POST['hora_fin'];
+    $observacion   = $_POST['observacion'];
+    $mantenimiento = $_POST['mantenimiento'];
+    $id_registro   = $_POST['id_registro'];
+
+    // Validamos que no hayamos recibido ningún dato vacío
+    if (isEmpty([
+        $fecha_fin,
+        $hora_fin, 
+        $observacion,
+        $mantenimiento,
+        $id_registro 
+    ])) {
+        showErrorFieldsEmpty("terminar_mecanica.php");
+        exit();
+    }
+
+    try {
+        // Fecha actual
+        $fecha_actualizacion = date('Y-m-d H:i:s');
+        $id_estado = 5;
+       
+        // Inserción de los datos en la base de datos
+        $finishRegister = $connection->prepare("
+            UPDATE mecanica
+            SET fecha_fin = :fecha_fin, 
+                hora_finalizacion = :hora_fin, 
+                observaciones = :observacion, 
+                labor_mantenimiento = :mantenimiento,
+                fecha_actualizacion = :fecha_actualizacion,
+                id_estado = :id_estado
+            WHERE id_registro = :id_registro
+        ");
+
+        // Vincular los parámetros
+        $finishRegister->bindParam(':fecha_fin', $fecha_fin);
+        $finishRegister->bindParam(':hora_fin', $hora_fin);
+        $finishRegister->bindParam(':observacion', $observacion);
+        $finishRegister->bindParam(':mantenimiento', $mantenimiento);
+        $finishRegister->bindParam(':fecha_actualizacion', $fecha_actualizacion);
+        $finishRegister->bindParam(':id_estado', $id_estado);
+        $finishRegister->bindParam(':id_registro', $id_registro);  // Añadir el parámetro que faltaba
+        $finishRegister->execute();
+
+        if ($finishRegister) {
+            showErrorOrSuccessAndRedirect("success", "¡Perfecto!", "Los datos se han actualizado correctamente", "./index.php");
+            exit();
+        }
+    } catch (\Throwable $th) {
+        $errorMessage = $th->getMessage();
+        echo $errorMessage;
+        exit();
+    }
+}
+?>
+

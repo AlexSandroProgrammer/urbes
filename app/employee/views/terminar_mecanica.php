@@ -1,5 +1,5 @@
 <?php
-$titlePage = "Actualizacion de Poda de Arboles";
+$titlePage = "Finalizacion Mecanica Vehiculo ";
 require_once("../components/navbar.php");
 $today = date('Y-m-d');
 
@@ -8,28 +8,25 @@ if (isset($_GET['stmp'])) {
     $id_registro = $_GET['stmp'];
     
 
-// Preparamos la consulta para buscar el usuario
-$queryRegis = $connection->prepare("SELECT   areas_publicas.*, 
-                                labores.id_labor, 
-                                labores.labor, 
-                                usuarios.documento, 
-                                usuarios.nombres, 
-                                usuarios.apellidos, 
-                                ciudades.id_ciudad, 
-                                ciudades.ciudad, 
-                                estados.id_estado,
-                                estados.estado
-            
-                                FROM  areas_publicas 
-                                INNER JOIN usuarios ON areas_publicas.documento = usuarios.documento 
-                                INNER JOIN ciudades ON areas_publicas.id_ciudad = ciudades.id_ciudad 
-                                INNER JOIN labores ON areas_publicas.id_labor = labores.id_labor 
-                                INNER JOIN estados ON areas_publicas.id_estado = estados.id_estado 
-                                WHERE id_registro = :id_registro");
+// Preparamos la consulta para buscar el registro en la tabla mecanica
+$queryRegis = $connection->prepare("SELECT mecanica.*, 
+                                    usuarios.documento, 
+                                    usuarios.nombres, 
+                                    usuarios.apellidos, 
+                                    vehiculos.placa, 
+                                    vehiculos.vehiculo, 
+                                    actividades.id_actividad, 
+                                    actividades.actividad
+                                    FROM mecanica 
+                                    INNER JOIN usuarios ON mecanica.documento = usuarios.documento
+                                    INNER JOIN vehiculos ON mecanica.id_vehiculo = vehiculos.placa
+                                    INNER JOIN actividades ON mecanica.id_actividad = actividades.id_actividad
+                                    WHERE mecanica.id_registro = :id_registro");
 $queryRegis->bindParam(":id_registro", $id_registro);
 $queryRegis->execute();
 $Register = $queryRegis->fetch(PDO::FETCH_ASSOC);
-// nombre complet
+
+// nombre completo
 } else {
     echo "No se ha proporcionado ningún id_registro en la URL.";
 }
@@ -37,7 +34,8 @@ $Register = $queryRegis->fetch(PDO::FETCH_ASSOC);
 
 // nombre completo
 $nombre_completo = $Register['nombres'] . ' ' . $Register['apellidos'];
-$labor = $Register['labor']; 
+$actividad = $Register['actividad'];
+$vehiculo =  $Register['placa'] . ' ' . $Register['vehiculo'];
 ?>
 
 <!-- Content wrapper -->
@@ -49,15 +47,15 @@ $labor = $Register['labor'];
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header mt-3 justify-content-between align-items-center text-center">
-                        <h3 class="fw-bold">FINALIZAR FORMULARIO DE <?= $labor ?> </h3>
+                        <h3 class="fw-bold">FINALIZAR FORMULARIO DE <?= $actividad ?> </h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formFinishPublicAreas">
+                            name="formFinishMechanics">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
-                                    formulario de <?= $labor ?> , te
+                                    formulario de <?= $actividad ?> , te
                                     Invitamos a finalizarlo , Por Favor Completa La Siguiente Informacion </h5>
                                 <!-- fecha_inicio -->
                                 <div class="mb-3 col-12 col-lg-6">
@@ -74,7 +72,7 @@ $labor = $Register['labor'];
 
                                 <!-- hora_inicio -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-6">
-                                    <label class="form-label" for="hora_inicio">Hora Inicio de Lavado</label>
+                                    <label class="form-label" for="hora_inicio">Hora Inicio </label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
                                             <i class="fas fa-truck"></i>
@@ -112,40 +110,36 @@ $labor = $Register['labor'];
                                             placeholder="Ingresar nombres completos" />
                                     </div>
                                 </div>
-
-                                <!-- ciudad -->
+                                <!-- vehiculo -->
                                 <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="nombres">Ciudad</label>
+                                    <label class="form-label" for="nombres">Vehiculo</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombres_span" class="input-group-text"><i
-                                                class="fas fa-city"></i></span>
+                                                class="fas fa-truck"></i></span>
                                         <input type="text" required minlength="2" maxlength="100"
-                                            class="form-control ps-2" name="ciudad" id="ciudad" readonly
-                                            value="<?php echo htmlspecialchars($Register['ciudad']); ?>"
-                                            placeholder="Ingresa la ciudad" />
-                                        <input type="hidden" name="id_ciudad" id="id_ciudad"
-                                            value="<?php echo htmlspecialchars($Register['id_ciudad']); ?>"
-                                            placeholder="Ingresa la ciudad" />
+                                            class="form-control ps-2" name="vehiculo" id="vehiculo" readonly
+                                            value="<?php echo ($vehiculo); ?>"
+                                            placeholder="Ingresar nombres completos" />
                                     </div>
-
-
                                 </div>
+
+
                                 <!-- fecha_fin -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="fecha_inicio">Fecha Finalizacion</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-calendar"></i></span>
-                                        <input type="date" required class="form-control" name="fecha_fin"
-                                            id="fecha_fin"  readonly min="<?php echo $today; ?>" max="<?php echo $today; ?>"
+                                        <input type="date" required class="form-control" name="fecha_fin" id="fecha_fin"
+                                            readonly min="<?php echo $today; ?>" max="<?php echo $today; ?>"
                                             value="<?php echo $today; ?>" />
                                     </div>
                                 </div>
-                                  <!-- hora_fin -->
-                                  <div class="mb-3 col-12 col-lg-6 col-xl-6">
+                                <!-- hora_fin -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-6">
                                     <label class="form-label" for="hora_inicio">Hora finalizacion</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="hora_inicio_span" class="input-group-text">
+                                        <span id="hora_fin_span" class="input-group-text">
                                             <i class="fas fa-clock"></i>
                                         </span>
                                         <input type="time" readonly required class="form-control" name="hora_fin"
@@ -170,59 +164,71 @@ $labor = $Register['labor'];
                                 actualizarHora();
                                 </script>
 
-                                <!-- peso -->
+                                <!-- observaciones -->
+
                                 <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="documento">Peso Final en KG</label>
+
+                                    <label class="form-label" for="observaciones">Labor realizada en el
+                                        mantenimiento</label>
+
                                     <div class="input-group input-group-merge">
-                                        <span id="documento-icon" class="input-group-text">
+                                        <span id="observaciones-icon" class="input-group-text">
                                             <i class="fas fa-weight-hanging"></i>
                                         </span>
-                                        <input type="text" minlength="1" maxlength="10" class="form-control ps-2 "
-                                            required id="peso" name="peso" placeholder="Ingresa el peso de la poda"
-                                            autofocus />
+                                        <textarea minlength="0" maxlength="500" class="form-control ps-2" required
+                                            id="mantenimiento" name="mantenimiento"
+                                            placeholder="Ingresa la labor realizada en el mantenimiento" rows="3"
+                                            autofocus></textarea>
                                     </div>
-                                </div>
-
-                                <!-- observaciones -->
-                                <div class="mb-3 col-12 d-flex justify-content-center">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="text-center mt-3">
-                                            <label class="form-label" for="observaciones">Novedades y
-                                                Observaciones</label>
-                                        </div>
-                                        <div class="input-group input-group-merge">
-                                            <span id="observaciones-icon" class="input-group-text">
-                                                <i class="fas fa-weight-hanging"></i>
-                                            </span>
-                                            <textarea minlength="0" maxlength="500" class="form-control ps-2" required
-                                                id="observacion" name="observacion"
-                                                placeholder="Ingresa las novedades y observaciones aquí" rows="3"
-                                                autofocus></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="mt-4">
-                                    <a href="index.php" class="btn btn-danger">
-                                        Cancelar
-                                    </a>
-                                    <input type="submit" class="btn btn-primary" value="Registrar"></input>
-                                    <input type="hidden" class="btn btn-info" value="formFinishPublicAreas"
-                                        name="MM_formFinishPublicAreas"></input>
-                                    <input type="hidden" class="btn btn-info" value="<?php echo htmlspecialchars($Register['id_registro']); ?>""
-                                        name="id_registro"></input>
                                 </div>
                             </div>
-                        </form>
+
+                            <!-- observaciones -->
+                            <div class="mb-3 col-12 d-flex justify-content-center">
+                                <div class="col-12 col-lg-6">
+                                    <div class="text-center mt-3">
+                                        <label class="form-label" for="observaciones">Novedades y
+                                            Observaciones</label>
+                                    </div>
+                                    <div class="input-group input-group-merge">
+                                        <span id="observaciones-icon" class="input-group-text">
+                                            <i class="fas fa-weight-hanging"></i>
+                                        </span>
+                                        <textarea minlength="0" maxlength="500" class="form-control ps-2" required
+                                            id="observacion" name="observacion"
+                                            placeholder="Ingresa las novedades y observaciones aquí" rows="3"
+                                            autofocus></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="mt-4">
+                                <a href="index.php" class="btn btn-danger">
+                                    Cancelar
+                                </a>
+                                <input type="submit" class="btn btn-primary" value="Registrar"></input>
+                                <input type="hidden" class="btn btn-info" value="formFinishMechanics"
+                                    name="MM_formFinishMechanics"></input>
+                                <input type="hidden" class="btn btn-info"
+                                    value="<?php echo htmlspecialchars($Register['id_registro']); ?>"
+                                    name="id_registro"></input>
+
+                            </div>
                     </div>
+
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
-    <?php
+<?php
     require_once("../components/footer.php");
 
     ?>
