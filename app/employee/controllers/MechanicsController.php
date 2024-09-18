@@ -1,4 +1,31 @@
 <?php
+function enviarMecanichs($datos) {
+    $url = 'https://script.google.com/macros/s/AKfycby3LqWfR0Si3a-qAbBpXZaPvZyfk5WAo4B_5W-Augv70Gml3EOsN2d6MUeFfsXeYK_5Rg/exec'; // Reemplaza con la URL de tu aplicación web de Google Apps Script
+
+    $opciones = [
+        'http' => [
+            'header'  => "Content-type: application/json\r\n",
+            'method'  => 'POST',
+            'content' => json_encode($datos),
+        ],
+    ];
+    $contexto  = stream_context_create($opciones);
+    $resultado = file_get_contents($url, false, $contexto);
+    
+    if ($resultado === FALSE) {
+        // Manejar el error
+        echo "Error al enviar datos a Google Sheets.";
+    }
+
+    return $resultado;
+}
+?>
+
+
+
+
+
+<?php
 //* Registro de datos de registro de actividades
 if ((isset($_POST["MM_formRegisterMechanics"])) && ($_POST["MM_formRegisterMechanics"] == "formRegisterMechanics")) {
     // VARIABLES DE ASIGNACIÓN DE VALORES QUE SE ENVÍAN DESDE EL FORMULARIO DE REGISTRO DE VEHICULO COMPACTADOR
@@ -31,6 +58,35 @@ if ((isset($_POST["MM_formRegisterMechanics"])) && ($_POST["MM_formRegisterMecha
     $register->bindParam(':id_vehiculo', $id_vehiculo);
     
     if ($register->execute()) {
+         // Obtener el ID autoincremental
+         $id_registro = $connection->lastInsertId();
+
+         // Consultar los nombres de la ciudad, documento y usuario
+         $querySheets = $connection->prepare("SELECT   mecanica.*,  
+                                actividades.actividad,
+                                estados.estado
+                                FROM  mecanica 
+                                INNER JOIN actividades ON mecanica.id_actividad = actividades.id_actividad 
+                                INNER JOIN estados ON mecanica.id_estado = estados.id_estado 
+                                WHERE id_registro = :id_registro");
+            $querySheets->bindParam(":id_registro", $id_registro);
+            $querySheets->execute();
+            $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
+ 
+         $datos = [
+             'id_registro' => $id_registro,
+             'fecha_inicio' => $fecha_inicio,
+             'hora_inicio' => $hora_inicio,
+             'documento' => $documento, 
+             'actividad' => $sheets['actividad'],
+             'id_estado' => $sheets['estado'],
+             'vehiculo' => $id_vehiculo, 
+             'fecha_registro' => $fecha_registro,
+             'tipo_operacion' => 'registro_inicial' // Nombre de la ciudad
+         ];
+ 
+         // Enviar datos a Google Sheets
+         enviarMecanichs($datos);
         showErrorOrSuccessAndRedirect("success", "Formulario Registrado", "Se ha registrado la etapa inicial del formulario, debes terminar de rellenar la información restante en el panel de formularios pendientes", "index.php");
         exit();
     } else {
@@ -96,6 +152,30 @@ if ((isset($_POST["MM_formFinishMechanics"])) && ($_POST["MM_formFinishMechanics
         $finishRegister->execute();
 
         if ($finishRegister) {
+            $querySheets = $connection->prepare("
+            SELECT mecanica.*, estados.estado
+            FROM mecanica
+            INNER JOIN estados ON mecanica.id_estado = estados.id_estado
+            WHERE id_registro = :id_registro
+        ");
+        $querySheets->bindParam(":id_registro", $id_registro); // Usar el ID correcto
+        $querySheets->execute();
+        $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
+
+        // Preparar los datos para Google Sheets
+        $datos = [
+            'id_registro' => $id_registro,
+            'fecha_fin' => $fecha_fin,
+            'hora_fin' => $hora_fin,
+            'mantenimiento' => $mantenimiento,
+            'observacion' => $observacion,
+            'id_estado' => $sheets['estado'], // Estado actualizado
+            'fecha_actualizacion' => $fecha_actualizacion,
+            'tipo_operacion' => 'actualizacion'
+        ];
+
+        // Enviar datos a Google Sheets
+        enviarMecanichs($datos);
             showErrorOrSuccessAndRedirect("success", "¡Perfecto!", "Los datos se han actualizado correctamente", "./index.php");
             exit();
         }
