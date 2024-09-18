@@ -44,6 +44,7 @@
     <?php
     // iniciamos sesion para obtener los datos del usuario autenticado
     session_start();
+    include("../auto/automations.php");
     // validamos que el usuario este autenticado
     require_once("../../validation/sessionValidation.php");
     // creamos la conexion a la base de datos

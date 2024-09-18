@@ -32,6 +32,8 @@ if (isset($_POST["iniciarSesion"])) {
         $_SESSION['names'] = $authSession['nombres'];
         $_SESSION['surnames'] = $authSession['apellidos'];
         $_SESSION['documento'] = $authSession['documento'];
+        
+        $_SESSION['last_activity'] = time();
         if ($_SESSION['id_rol'] == 1) {
             header("Location:../../admin");
         } else if ($_SESSION['id_rol'] == 2) {
