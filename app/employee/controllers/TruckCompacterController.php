@@ -1,4 +1,3 @@
-
 <?php
 
 function enviarRecollection($datos) {
@@ -272,6 +271,30 @@ if ((isset($_POST["MM_formUpdateRecoleccion"])) && ($_POST["MM_formUpdateRecolec
 ?>
 
 <?php
+function enviarRelleno($datos) {
+    $url = 'https://script.google.com/macros/s/AKfycbwaygVSXfhySACMdPOeFaG0qjf671OG79H2xAI8-Om2y9LN70ttPjQS5KjSlXc3vPdiQQ/exec'; // Reemplaza con la URL de tu aplicación web de Google Apps Script
+
+    $opciones = [
+        'http' => [
+            'header'  => "Content-type: application/json\r\n",
+            'method'  => 'POST',
+            'content' => json_encode($datos),
+        ],
+    ];
+    $contexto  = stream_context_create($opciones);
+    $resultado = file_get_contents($url, false, $contexto);
+    
+    if ($resultado === FALSE) {
+        // Manejar el error
+        echo "Error al enviar datos a Google Sheets.";
+    }
+
+    return $resultado;
+}
+?>
+
+
+<?php
 //* Registro de datos de registro de actividades
 if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRecoleccion"] == "formRegisterRecoleccion")) {
     // VARIABLES DE ASIGNACIÓN DE VALORES QUE SE ENVÍAN DESDE EL FORMULARIO DE REGISTRO DE VEHICULO COMPACTADOR
@@ -310,8 +333,9 @@ if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRec
             $limite_KB = 5000;
             if (isFileValid($_FILES['foto_kilometraje'], $permitidos, $limite_KB)) {
                 $ruta = "../assets/images/";
+                $extension = pathinfo($_FILES['foto_kilometraje']['name'], PATHINFO_EXTENSION);
+                $nombreArchivo = uniqid() . '.' . $extension; 
                 // Obtener la extensión del archivo
-                $nombreArchivo = $_FILES['foto_kilometraje']['name'];
                 $imagenRuta = $ruta . $nombreArchivo;
                 createDirectoryIfNotExists($ruta);
                 if (file_exists($imagenRuta)) {
@@ -338,7 +362,51 @@ if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRec
                     $registerRecoleccionRelleno->bindParam(':id_estado', $pendiente);
                     $registerRecoleccionRelleno->bindParam(':fecha_registro', $fecha_registro);
                     $registerRecoleccionRelleno->execute();
+
                     if ($registerRecoleccionRelleno) {
+                        $idRegister = $connection->lastInsertId();
+
+                     
+                        // Consulta para obtener datos necesarios de la tabla vehiculo_compactador
+                        $query = "SELECT  recoleccion_relleno.*, labores.labor, vehiculos.placa, usuarios.documento, estados.estado, ciudades.ciudad
+                                  FROM recoleccion_relleno
+                                  INNER JOIN labores ON recoleccion_relleno.id_labor = labores.id_labor
+                                  INNER JOIN vehiculos ON recoleccion_relleno.id_vehiculo = vehiculos.placa
+                                  INNER JOIN usuarios ON recoleccion_relleno.documento = usuarios.documento
+                                  INNER JOIN ciudades ON recoleccion_relleno.ciudad = ciudades.id_ciudad
+                                  INNER JOIN estados ON recoleccion_relleno.id_estado = estados.id_estado
+                                  WHERE recoleccion_relleno.id_recoleccion = :id_recoleccion";
+                        $execute = $connection->prepare($query);
+                        $execute->bindParam(":id_recoleccion", $idRegister);
+                        $execute->execute();
+                        $data = $execute->fetch(PDO::FETCH_ASSOC);
+
+                      
+
+                   
+
+                        // Preparar los datos para enviar a Google Sheets
+                        $datos = [
+                            'id_registro' => $idRegister,
+                            'fecha_inicio' => $fecha_inicio,
+                            'hora_inicio' => $hora_inicio,
+                            'documento' => $documento,
+                            'placa' => $vehiculo,
+                            'kilometroje_inicial' => $kilometraje,
+                            'horometro_inicial' => $horometro,
+                            'labor' => $data['labor'],
+                            'id_estado' => $data['estado'],
+                            'fecha_registro' => $fecha_registro,
+                            'ciudad' => $data['ciudad'],
+                            'imagen_km_inicial' => $imagenRuta, // Tripulación concatenada
+                            'tipo_operacion' => 'registro_inicial'
+                        ];
+
+                        // Enviar datos a Google Sheets
+                        enviarRelleno($datos);
+
+
+
                         showErrorOrSuccessAndRedirect("success", "Formulario Registrado", "Se ha registrado la etapa inicial del formulario, debes terminar de rellenar la información restante en el panel de formularios pendientes", "index.php");
                         exit();
                     }
@@ -382,7 +450,9 @@ if ((isset($_POST["MM_formUpdateDisposicion"])) && ($_POST["MM_formUpdateDisposi
                 if (isFileValid($_FILES['foto_kilometraje_final'], $permitidos, $limite_KB)) {
                     $ruta = "../assets/images/";
                     // Obtener la extensión del archivo
-                    $nombreArchivo = $_FILES['foto_kilometraje_final']['name'];
+                    $extension = pathinfo($_FILES['foto_kilometraje_final']['name'], PATHINFO_EXTENSION);
+                    $nombreArchivo = uniqid() . '.' . $extension; 
+                    
                     $imagenRuta = $ruta . $nombreArchivo;
                     createDirectoryIfNotExists($ruta);
                     if (file_exists($imagenRuta)) {
@@ -409,7 +479,31 @@ if ((isset($_POST["MM_formUpdateDisposicion"])) && ($_POST["MM_formUpdateDisposi
                         $updateRegister->bindParam(':galones', $galones);
                         $updateRegister->bindParam(':id_recoleccion', $id_recoleccion);
                         $updateRegister->execute();
+
                         if ($updateRegister) {
+                        $querySheets = $connection->prepare("SELECT recoleccion_relleno.*, estados.estado
+                        FROM recoleccion_relleno
+                        INNER JOIN estados ON recoleccion_relleno.id_estado = estados.id_estado
+                        WHERE id_recoleccion = :id_registro");
+                        $querySheets->bindParam(":id_registro", $id_recoleccion);
+                        $querySheets->execute();
+                        $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
+
+                        $datos = [
+                            'id_registro' => $id_recoleccion,
+                            'fecha_fin' => $fecha_final,
+                            'hora_fin' => $hora_finalizacion,
+                            'kilometraje_final'=> $kilometraje_final,
+                            'horometro_final'=> $horometro_final,
+                            'observaciones' => $observaciones,
+                            'id_estado' => $sheets['estado'],
+                            'galones' => $galones,
+                            'fecha_actualizacion' => $fecha_actualizacion,
+                            'imagen_km_final' => $imagenRuta,
+                            'tipo_operacion' => 'actualizacion'
+                        ];
+
+                        enviarRelleno($datos);
                             showErrorOrSuccessAndRedirect("success", "Actualizacion Exitosa", "Los datos se han actualizado correctamente", "index.php");
                             exit();
                         } else {
