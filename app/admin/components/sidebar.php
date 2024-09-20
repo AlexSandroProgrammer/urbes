@@ -163,27 +163,27 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-star"></i>
-                            <div data-i18n="Misc">Socios</div>
+                            <div data-i18n="Misc">Administradores</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
                                 <a href="registrar_socio.php" class="menu-link">
-                                    <div data-i18n="Error">Registrar Socio</div>
+                                    <div data-i18n="Error">Registrar Administrador</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="socios_activos.php" class="menu-link">
-                                    <div data-i18n="Error">Lis. Socios Activos</div>
+                                    <div data-i18n="Error">Lis. Administradores Activos</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="socios_bloqueados.php" class="menu-link">
-                                    <div data-i18n="Error">Lis. Socios Bloqueados</div>
+                                    <div data-i18n="Error">Lis. Administradores Bloqueados</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="socios_eliminados.php" class="menu-link">
-                                    <div data-i18n="Error">Lis. Socios Eliminados</div>
+                                    <div data-i18n="Error">Lis. Administradores Eliminados</div>
                                 </a>
                             </li>
                         </ul>

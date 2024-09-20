@@ -38,7 +38,7 @@ if (isset($_POST["iniciarSesion"])) {
         if ($_SESSION['id_rol'] == 1) {
             header("Location:../../admin");
         } else if ($_SESSION['id_rol'] == 2) {
-            header("Location:../../partner");
+            header("Location:../../admin");
         } else if ($_SESSION['id_rol'] == 3 || $_SESSION['id_rol'] == 4) {
             header("Location:../../employee");
         } else {

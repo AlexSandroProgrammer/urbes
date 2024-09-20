@@ -26,7 +26,7 @@ require_once("../controllers/AuthController.php");
                         <label for="documento" class="form-label">Documento</label>
                         <div class="input-group input-group-merge">
                             <span class="input-group-text"><i class="bx bx-id-card"></i></span>
-                            <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this);"
+                            <input type="number" minlength="6" maxlength="10" oninput="maxlengthNumber(this);"
                                 onkeypress="return(multiplenumber(event));" class="form-control" required id="documento"
                                 name="documento" placeholder="Ingresa tu numero de documento" autofocus />
                         </div>

@@ -164,7 +164,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="text" value="<?= $data['km_inicio'] ?>" readonly="readonly"
+                                        <input type="number" value="<?= $data['km_inicio'] ?>" readonly="readonly"
                                             required class="form-control" id="kilometraje"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
@@ -223,7 +223,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="1" maxlength="10"
+                                        <input type="number" minlength="1" maxlength="10"
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="kilometraje_final" id="kilometraje_final"
                                             placeholder="Ingresar kilometraje" />
@@ -235,7 +235,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" required
+                                        <input type="number" minlength="1" maxlength="10" required
                                             onkeypress="return(multiplenumber(event));"
                                             value="<?= $data['horometro_inicio'] ?>" readonly="readonly"
                                             class="form-control" id="horometro" placeholder="Ingresar horometro" />
@@ -247,7 +247,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" required
+                                        <input type="number" minlength="1" maxlength="10" required
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             id="horometro_final" name="horometro_final"
                                             placeholder="Ingresar horometro final" />

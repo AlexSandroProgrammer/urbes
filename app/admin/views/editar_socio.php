@@ -108,7 +108,7 @@ if (isNotEmpty([$_GET['id_partner-edit'], $_GET['ruta']])) {
                                             </option>
                                             <?php
                                                     // CONSUMO DE DATOS DE LOS EMPLEADOS
-                                                    $listEstados = $connection->prepare("SELECT * FROM estados");
+                                                    $listEstados = $connection->prepare("SELECT * FROM estados WHERE id_estado = 1 || id_estado = 2 || id_estado = 3");
                                                     $listEstados->execute();
                                                     $estados = $listEstados->fetchAll(PDO::FETCH_ASSOC);
                                                     // Verificar si no hay datos
@@ -130,13 +130,13 @@ if (isNotEmpty([$_GET['id_partner-edit'], $_GET['ruta']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-user"></i></span>
-                                        <input type="text" required minlength="5" value="<?php echo $password  ?>"
+                                        <input type="text" required minlength="5" value="<?php echo $password ?>"
                                             maxlength="100" class="form-control" name="password" id="password"
                                             placeholder="Ingresar contraseña" />
                                     </div>
                                 </div>
                                 <div class="mt-4">
-                                    <a href="empleados_activos.php" class="btn btn-danger">
+                                    <a href="socios_activos.php" class="btn btn-danger">
                                         Cancelar
                                     </a>
                                     <input type="submit" class="btn btn-primary" value="Actualizar"></input>

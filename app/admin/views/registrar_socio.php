@@ -1,5 +1,5 @@
 <?php
-$titlePage = "Registro de Socio";
+$titlePage = "Registro de Administrador";
 require_once("../components/sidebar.php");
 ?>
 <!-- Content wrapper -->
@@ -11,7 +11,7 @@ require_once("../components/sidebar.php");
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header justify-content-between align-items-center text-center">
-                        <h3 class="fw-bold pb-1">Registro de Socio</h3>
+                        <h3 class="fw-bold pb-1">Registro de Administrador</h3>
                         <h6 class="mb-0">Ingresa por favor los siguientes datos.</h6>
                     </div>
                     <div class="card-body">
@@ -40,7 +40,7 @@ require_once("../components/sidebar.php");
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
                                                 class="fas fa-user"></i></span>
-                                        <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this);"
+                                        <input type="number" minlength="6" maxlength="10" oninput="maxlengthNumber(this);"
                                             onkeypress="return(multiplenumber(event));" class="form-control" required
                                             id="documento" name="documento" placeholder="Ingresa tu numero de documento"
                                             autofocus />
@@ -87,7 +87,7 @@ require_once("../components/sidebar.php");
                                             <option value="">Seleccionar Estado...</option>
                                             <?php
                                             // CONSUMO DE DATOS DE LOS PROCESOS
-                                            $estados_sena = $connection->prepare("SELECT * FROM estados");
+                                            $estados_sena = $connection->prepare("SELECT * FROM estados WHERE id_estado = 1 || id_estado = 2 || id_estado = 3");
                                             $estados_sena->execute();
                                             $estados_se = $estados_sena->fetchAll(PDO::FETCH_ASSOC);
                                             // Verificar si no hay datos

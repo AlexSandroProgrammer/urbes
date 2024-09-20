@@ -215,7 +215,7 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="1" maxlength="10"
+                                        <input type="number" minlength="1" maxlength="10"
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="kilometraje" id="kilometraje" placeholder="Ingresar kilometraje" />
                                     </div>
@@ -226,7 +226,7 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" required
+                                        <input type="number" minlength="1" maxlength="10" required
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="horometro" id="horometro" placeholder="Ingresar horometro" />
                                     </div>

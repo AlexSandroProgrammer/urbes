@@ -1,11 +1,11 @@
 <?php
-$titlePage = "Lista Socios Activos";
+$titlePage = "Lista Administrativos Activos";
 require_once("../components/sidebar.php");
 // arreglo con ids de la consulta
 $array_keys = [1, 2];
 //*  CONSULTA PARA CONSUMIR LOS DATOS DE LOS SOCIOS ACTIVOS
 $listaSocios = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario INNER JOIN estados ON usuarios.id_estado = estados.id_estado WHERE usuarios.id_tipo_usuario = :id_tipo_usuario AND usuarios.id_estado = :id_estado");
-$listaSocios->bindParam(":id_tipo_usuario", $array_keys[1]);
+$listaSocios->bindParam(":id_tipo_usuario", $array_keys[0]);
 $listaSocios->bindParam(":id_estado", $array_keys[0]);
 $listaSocios->execute();
 $socios = $listaSocios->fetchAll(PDO::FETCH_ASSOC);
@@ -22,22 +22,22 @@ $socios = $listaSocios->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col-xl-3 col-lg-4">
                         <!-- Button trigger modal -->
                         <a class="btn btn-primary" href="registrar_socio.php">
-                            <i class="fas fa-user"></i> Registrar Socio
+                            <i class="fas fa-user"></i> Registrar Administrador
                         </a>
                     </div>
                     <div class="col-xl-3 col-lg-4">
                         <div class="btn-group">
                             <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <i class="fas fa-star"></i> Filtrar Socios
+                                <i class="fas fa-star"></i> Filtrar Administradores
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="socios_activos.php">Socios Activos</a>
+                                <li><a class="dropdown-item" href="socios_activos.php">Administradores Activos</a>
                                 </li>
-                                <li><a class="dropdown-item" href="socios_bloqueados.php">Socios Bloqueados</a>
+                                <li><a class="dropdown-item" href="socios_bloqueados.php">Administradores Bloqueados</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="socios_eliminados.php">Socios Eliminados</a>
+                                    <a class="dropdown-item" href="socios_eliminados.php">Administradores Eliminados</a>
                                 </li>
                             </ul>
                         </div>

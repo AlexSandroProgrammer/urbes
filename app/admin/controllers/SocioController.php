@@ -50,7 +50,7 @@ if ((isset($_POST["MM_formRegisterPartner"])) && ($_POST["MM_formRegisterPartner
         exit();
     } else {
         try {
-            $id_partner = 2;
+            $id_partner = 1;
             // encriptamos la contraseña
             $password_hash = encrypt_password($password);
             // Insertamos los datos en la base de datos, incluyendo todos los campos requeridos
