@@ -126,6 +126,7 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
                         $execute->bindParam(":id_registro_veh_compact", $idRegister);
                         $execute->execute();
                         $data = $execute->fetch(PDO::FETCH_ASSOC);
+                        
 
                         // Consulta para obtener la tripulación
                         $queryTripulacion = $connection->prepare("SELECT usuarios.documento
@@ -176,7 +177,6 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
     }
 }
 ?>
-
 <?php
 
 if ((isset($_POST["MM_formUpdateRecoleccion"])) && ($_POST["MM_formUpdateRecoleccion"] == "formUpdateRecoleccion")) {
@@ -187,6 +187,21 @@ if ((isset($_POST["MM_formUpdateRecoleccion"])) && ($_POST["MM_formUpdateRecolec
     $kilometraje_final = $_POST['kilometraje_final'];
     $horometro_final = $_POST['horometro_final'];
     $observaciones = $_POST['observaciones'];
+
+    // Query para obtener el kilometraje y horómetro inicial desde la base de datos
+    $queryInicial = $connection->prepare("SELECT km_inicio, horometro_inicio FROM vehiculo_compactador WHERE id_registro_veh_compactador = :id_registro");
+    $queryInicial->bindParam(':id_registro', $id_registro_veh_compactador);
+    $queryInicial->execute();
+    $registroInicial = $queryInicial->fetch(PDO::FETCH_ASSOC);
+
+    $km_inicio = $registroInicial['km_inicio'];
+    $horometro_inicio = $registroInicial['horometro_inicio'];
+
+    // Validación para asegurar que el kilometraje final y el horómetro final no sean menores o iguales al inicial
+    if ($kilometraje_final <= $km_inicio || $horometro_final <= $horometro_inicio) {
+        showErrorOrSuccessAndRedirect("error", "Error en los valores", "El kilometraje o el horómetro final no pueden ser menores o iguales al valor inicial", "pendientes.php");
+        exit();
+    }
 
     if (isEmpty([$fecha_final, $hora_finalizacion, $horometro_final])) {
         showErrorFieldsEmpty("pendientes.php");
@@ -252,7 +267,9 @@ if ((isset($_POST["MM_formUpdateRecoleccion"])) && ($_POST["MM_formUpdateRecolec
                                 'tipo_operacion' => 'actualizacion'
                             ];
 
+                            // Envío a Google Sheets (sin validar kilometraje y horómetro)
                             enviarRecollection($datos);
+
                             showErrorOrSuccessAndRedirect("success", "Actualizacion Exitosa", "Los datos se han actualizado correctamente", "index.php");
                             exit();
                         } else {
@@ -268,8 +285,8 @@ if ((isset($_POST["MM_formUpdateRecoleccion"])) && ($_POST["MM_formUpdateRecolec
         }
     }
 }
-?>
 
+?>
 <?php
 function enviarRelleno($datos) {
     $url = 'https://script.google.com/macros/s/AKfycbwaygVSXfhySACMdPOeFaG0qjf671OG79H2xAI8-Om2y9LN70ttPjQS5KjSlXc3vPdiQQ/exec'; // Reemplaza con la URL de tu aplicación web de Google Apps Script
@@ -421,7 +438,7 @@ if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRec
 
 ?>
 <?php
-//* ... METODO PARA ACTUALIZAR LOS DATOS DE TIPO LABOR DE RELLENO ...
+
 if ((isset($_POST["MM_formUpdateDisposicion"])) && ($_POST["MM_formUpdateDisposicion"] == "formUpdateDisposicion")) {
     // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE ACTIVIDAD
     $id_recoleccion = $_POST['id_recoleccion'];
@@ -434,39 +451,55 @@ if ((isset($_POST["MM_formUpdateDisposicion"])) && ($_POST["MM_formUpdateDisposi
     $toneladas = $_POST['toneladas'];
     $galones = $_POST['galones'];
 
-    // validamos que no hayamos recibido ningun dato vacio
+    // Consulta para obtener los valores iniciales
+    $queryInicial = $connection->prepare("SELECT km_inicio, horometro_inicio FROM recoleccion_relleno WHERE id_recoleccion = :id_recoleccion");
+    $queryInicial->bindParam(':id_recoleccion', $id_recoleccion);
+    $queryInicial->execute();
+    $registroInicial = $queryInicial->fetch(PDO::FETCH_ASSOC);
+
+    $km_inicio = $registroInicial['km_inicio'];
+    $horometro_inicio = $registroInicial['horometro_inicio'];
+
+    // Validación para asegurar que el kilometraje final y el horómetro final no sean menores o iguales al inicial
+    if ($kilometraje_final <= $km_inicio || $horometro_final <= $horometro_inicio) {
+        showErrorOrSuccessAndRedirect("error", "Error en los valores", "El kilometraje o el horómetro final no pueden ser menores o iguales al valor inicial", "pendientes.php");
+        exit();
+    }
+
+    // Validamos que no hayamos recibido ningún dato vacío
     if (isEmpty([$fecha_final, $hora_finalizacion, $horometro_final, $toneladas, $galones])) {
         showErrorFieldsEmpty("pendientes.php");
         exit();
     } else {
         try {
             if (isFileUploaded($_FILES['foto_kilometraje_final'])) {
-                $permitidos = array(
-                    'image/jpeg',
-                    'image/png',
-                    'image/jpg',
-                );
+                $permitidos = array('image/jpeg', 'image/png', 'image/jpg');
                 $limite_KB = 5000;
+
                 if (isFileValid($_FILES['foto_kilometraje_final'], $permitidos, $limite_KB)) {
                     $ruta = "../assets/images/";
                     // Obtener la extensión del archivo
                     $extension = pathinfo($_FILES['foto_kilometraje_final']['name'], PATHINFO_EXTENSION);
-                    $nombreArchivo = uniqid() . '.' . $extension; 
-                    
+                    $nombreArchivo = uniqid() . '.' . $extension;
                     $imagenRuta = $ruta . $nombreArchivo;
+                    
                     createDirectoryIfNotExists($ruta);
+
                     if (file_exists($imagenRuta)) {
-                        showErrorOrSuccessAndRedirect("error", "Error de archivo", "El nombre de la imagen ya esta registrado", "pendientes.php");
+                        showErrorOrSuccessAndRedirect("error", "Error de archivo", "El nombre de la imagen ya está registrado", "pendientes.php");
                         exit();
                     }
+
                     $registroFotoFinal = moveUploadedFile($_FILES['foto_kilometraje_final'], $imagenRuta);
+
                     if ($registroFotoFinal) {
                         // OBTENEMOS LA FECHA ACTUAL 
                         $fecha_actualizacion = date('Y-m-d H:i:s');
                         $finalizado = 5;
-                        // Inserta los datos en la base de datos, incluyendo la edad
-                        // Inserta los datos en la base de datos
+
+                        // Actualizamos los datos en la base de datos
                         $updateRegister = $connection->prepare("UPDATE recoleccion_relleno SET fecha_fin = :fecha_final, fecha_actualizacion = :fecha_actualizacion, hora_finalizacion = :hora_finalizacion, foto_kilometraje_final = :foto_kilometraje_final, km_fin = :km_fin, horometro_fin = :horometro_final, id_estado = :id_estado, observaciones = :observaciones, toneladas = :toneladas, galones = :galones WHERE id_recoleccion = :id_recoleccion");
+
                         $updateRegister->bindParam(':fecha_final', $fecha_final);
                         $updateRegister->bindParam(':fecha_actualizacion', $fecha_actualizacion);
                         $updateRegister->bindParam(':hora_finalizacion', $hora_finalizacion);
@@ -481,44 +514,45 @@ if ((isset($_POST["MM_formUpdateDisposicion"])) && ($_POST["MM_formUpdateDisposi
                         $updateRegister->execute();
 
                         if ($updateRegister) {
-                        $querySheets = $connection->prepare("SELECT recoleccion_relleno.*, estados.estado
-                        FROM recoleccion_relleno
-                        INNER JOIN estados ON recoleccion_relleno.id_estado = estados.id_estado
-                        WHERE id_recoleccion = :id_registro");
-                        $querySheets->bindParam(":id_registro", $id_recoleccion);
-                        $querySheets->execute();
-                        $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
+                            $querySheets = $connection->prepare("SELECT recoleccion_relleno.*, estados.estado
+                                FROM recoleccion_relleno
+                                INNER JOIN estados ON recoleccion_relleno.id_estado = estados.id_estado
+                                WHERE id_recoleccion = :id_registro");
+                            $querySheets->bindParam(":id_registro", $id_recoleccion);
+                            $querySheets->execute();
+                            $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
 
-                        $datos = [
-                            'id_registro' => $id_recoleccion,
-                            'fecha_fin' => $fecha_final,
-                            'hora_fin' => $hora_finalizacion,
-                            'kilometraje_final'=> $kilometraje_final,
-                            'horometro_final'=> $horometro_final,
-                            'observaciones' => $observaciones,
-                            'id_estado' => $sheets['estado'],
-                            'galones' => $galones,
-                            'fecha_actualizacion' => $fecha_actualizacion,
-                            'imagen_km_final' => $imagenRuta,
-                            'tipo_operacion' => 'actualizacion'
-                        ];
+                            $datos = [
+                                'id_registro' => $id_recoleccion,
+                                'fecha_fin' => $fecha_final,
+                                'hora_fin' => $hora_finalizacion,
+                                'kilometraje_final'=> $kilometraje_final,
+                                'horometro_final'=> $horometro_final,
+                                'observaciones' => $observaciones,
+                                'id_estado' => $sheets['estado'],
+                                'galones' => $galones,
+                                'fecha_actualizacion' => $fecha_actualizacion,
+                                'imagen_km_final' => $imagenRuta,
+                                'tipo_operacion' => 'actualizacion'
+                            ];
 
-                        enviarRelleno($datos);
-                            showErrorOrSuccessAndRedirect("success", "Actualizacion Exitosa", "Los datos se han actualizado correctamente", "index.php");
+                            // Envío a Google Sheets
+                            enviarRelleno($datos);
+
+                            showErrorOrSuccessAndRedirect("success", "Actualización Exitosa", "Los datos se han actualizado correctamente", "index.php");
                             exit();
                         } else {
-                            showErrorOrSuccessAndRedirect("error", "Error de Actualizacion", "Error al momento de actualizar los datos, por favor intentalo nuevamente", "pendientes.php");
+                            showErrorOrSuccessAndRedirect("error", "Error de Actualización", "Error al momento de actualizar los datos, por favor intentalo nuevamente", "pendientes.php");
                             exit();
                         }
                     }
                 }
             }
         } catch (\Throwable $th) {
-            showErrorOrSuccessAndRedirect("error", "Error de Actualizacion", "Error al momento de actualizar los datos, por favor intentalo nuevamente", "pendientes.php");
+            showErrorOrSuccessAndRedirect("error", "Error de Actualización", "Error al momento de actualizar los datos, por favor intentalo nuevamente", "pendientes.php");
             exit();
         }
     }
 }
-
 
 ?>
