@@ -179,7 +179,7 @@
                                 </ul>
                             </li>
                             <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                                <a href="mecanica_vehiculo.php" class="menu-link">
                                     <div data-i18n="Misc">Mec. Vehiculo Compactador</div>
                                 </a>
 

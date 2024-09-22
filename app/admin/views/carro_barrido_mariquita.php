@@ -13,7 +13,7 @@ $carro_barridos = $query->fetchAll(PDO::FETCH_ASSOC);
     <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Bootstrap modals -->
         <div class="card mb-4">
-            <h2 class="card-header font-bold">Lista Disposicion Veh. Compactador Mariquita</h2>
+            <h2 class="card-header font-bold">Lista Carro Barrido Mariquita</h2>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12 mt-3">
@@ -39,32 +39,32 @@ $carro_barridos = $query->fetchAll(PDO::FETCH_ASSOC);
                             </thead>
                             <tbody>
                                 <?php foreach ($carro_barridos as $carro_barrido) { ?>
-                                <tr>
-                                    <td class="custom-table-th">
-                                        <form method="GET" class="mt-2" action="editar_lista_carro_barrido.php">
-                                            <input type="hidden" name="id_registro_barrido"
-                                                value="<?php echo $carro_barrido['id_registro_barrido'] ?>">
-                                            <button class="btn btn-success"
-                                                onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                type="submit">
-                                                <i class="bx bx-refresh" title="Actualizar"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['id_registro_barrido'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['estado'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['actividad'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['nombres'] ?> -
-                                        <?php echo $carro_barrido['apellidos'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['documento'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['ciudad'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['fecha_inicio'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['fecha_fin'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['hora_inicio'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['hora_fin'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['peso'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['observaciones'] ?></td>
-                                </tr>
+                                    <tr>
+                                        <td class="custom-table-th">
+                                            <form method="GET" class="mt-2" action="editar_lista_carro_barrido.php">
+                                                <input type="hidden" name="id_registro_barrido"
+                                                    value="<?php echo $carro_barrido['id_registro_barrido'] ?>">
+                                                <button class="btn btn-success"
+                                                    onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                    type="submit">
+                                                    <i class="bx bx-refresh" title="Actualizar"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['id_registro_barrido'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['estado'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['actividad'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['nombres'] ?> -
+                                            <?php echo $carro_barrido['apellidos'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['documento'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['ciudad'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['fecha_inicio'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['fecha_fin'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['hora_inicio'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['hora_fin'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['peso'] ?></td>
+                                        <td class="custom-table-th"><?php echo $carro_barrido['observaciones'] ?></td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>

@@ -13,7 +13,7 @@ $carro_barridos = $query->fetchAll(PDO::FETCH_ASSOC);
     <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Bootstrap modals -->
         <div class="card mb-4">
-            <h2 class="card-header font-bold">Lista Disposicion Veh. Compactador Sevilla</h2>
+            <h2 class="card-header font-bold">Lista Carro Barrido Sevilla</h2>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12 mt-3">
