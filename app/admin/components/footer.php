@@ -147,7 +147,6 @@
                 });
             });
         });
-
         // Creamos el arreglo para guardar las unidades seleccionadas
         let unidadesSeleccionadas = JSON.parse(localStorage.getItem('unidadesSeleccionadas')) || [];
         // creamos el arreglo para almacenar las fichas de formacion
