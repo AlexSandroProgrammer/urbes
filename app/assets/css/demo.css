@@ -133,3 +133,7 @@ select.custom-select {
 .btn-nones {
   display: none;
 }
+
+.custom-table-th {
+  min-width: 150px;
+}

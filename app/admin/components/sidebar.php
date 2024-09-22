@@ -133,8 +133,13 @@
                                         </ul>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="areas_publicas.php" class="menu-link menu-toggle">
+                                        <a href="areas_publicas_mariquita.php" class="menu-link">
                                             <div data-i18n="Misc">Areas Publicas</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="carro_barrido_mariquita.php" class="menu-link">
+                                            <div data-i18n="Misc">Carro Barrido</div>
                                         </a>
                                     </li>
                                 </ul>
@@ -160,6 +165,16 @@
                                                 </a>
                                             </li>
                                         </ul>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="areas_publicas_sevilla.php" class="menu-link">
+                                            <div data-i18n="Misc">Areas Publicas</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="carro_barrido_sevilla.php" class="menu-link">
+                                            <div data-i18n="Misc">Carro Barrido</div>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
