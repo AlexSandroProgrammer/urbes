@@ -125,12 +125,20 @@
                                                     <div data-i18n="Misc">Recoleccion</div>
                                                 </a>
                                             </li>
+                                            <li class="menu-item">
+                                                <a href="lista_disposicion_mariquita.php" class="menu-link">
+                                                    <div data-i18n="Misc">Disposicion</div>
+                                                </a>
+                                            </li>
                                         </ul>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="areas_publicas.php" class="menu-link menu-toggle">
+                                            <div data-i18n="Misc">Areas Publicas</div>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
-                        </ul>
-                        <ul class="menu-sub">
                             <li class="menu-item">
                                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                                     <div data-i18n="Misc">Sevilla</div>
@@ -146,9 +154,20 @@
                                                     <div data-i18n="Misc">Recoleccion</div>
                                                 </a>
                                             </li>
+                                            <li class="menu-item">
+                                                <a href="lista_disposicion_sevilla.php" class="menu-link">
+                                                    <div data-i18n="Misc">Disposicion</div>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link">
+                                    <div data-i18n="Misc">Mec. Vehiculo Compactador</div>
+                                </a>
+
                             </li>
                         </ul>
                     </li>
