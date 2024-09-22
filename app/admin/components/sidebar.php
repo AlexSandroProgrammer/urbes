@@ -67,7 +67,6 @@
         header("Location:../../");
         exit();
     }
-
     // validamos que el usuario sea administrador para ver la pagina
     if ($documentoSession['id_tipo_usuario'] !== 1) {
         // redireccionamos al login si el usuario no es administrador
