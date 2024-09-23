@@ -101,7 +101,7 @@ if (isset($_GET['stmp'])) {
                                     <label class="form-label" for="documento">Número de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <input type="text" minlength="6" maxlength="10" class="form-control ps-2"
                                             readonly required id="documento"
                                             value="<?= htmlspecialchars($carroBarrido['documento']); ?>"
@@ -153,9 +153,9 @@ if (isset($_GET['stmp'])) {
                                     <label class="form-label" for="fecha_fin">Fecha Finalización</label>
                                     <div class="input-group input-group-merge">
                                         <span id="fecha_fin_span" class="input-group-text"><i
-                                                class="fas fa-calendar"></i></span>
-                                        <input type="date" required class="form-control ps-2" name="fecha_fin" id="fecha_fin"
-                                            readonly value="<?= $today; ?>" />
+                                                class="fas fa-calendar-day"></i></span>
+                                        <input type="date" required class="form-control ps-2" name="fecha_fin"
+                                            id="fecha_fin" readonly value="<?= $today; ?>" />
                                     </div>
                                 </div>
 
@@ -223,7 +223,7 @@ if (isset($_GET['stmp'])) {
                                     <a href="index.php" class="btn btn-danger">Cancelar</a>
                                     <input type="submit" class="btn btn-primary" value="Registrar">
                                     <input type="hidden" class="btn btn-info" value="formFinishSweepingCart"
-                                    name="MM_formFinishSweepingCart"></input>
+                                        name="MM_formFinishSweepingCart"></input>
                                     <input type="hidden" name="id_registro"
                                         value="<?= htmlspecialchars($carroBarrido['id_registro_barrido']); ?>">
                                 </div>

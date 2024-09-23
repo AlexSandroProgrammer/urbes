@@ -53,7 +53,7 @@ if ($tipo_usuario != 4) {
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-calendar"></i></span>
+                                                class="fas fa-calendar-day"></i></span>
                                         <input type="date" required class="form-control" name="fecha_inicio"
                                             id="fecha_inicio" min="<?php echo $today; ?>" max="<?php echo $today; ?>"
                                             value="<?php echo $today; ?>" />
@@ -72,21 +72,21 @@ if ($tipo_usuario != 4) {
                                     </div>
                                 </div>
                                 <script>
-                                    // Función para actualizar la hora en el campo de hora_inicio
-                                    function actualizarHora() {
-                                        // Obtener la hora actual
-                                        const ahora = new Date();
-                                        // Formatear la hora en formato HH:MM (24 horas)
-                                        const horas = String(ahora.getHours()).padStart(2, '0');
-                                        const minutos = String(ahora.getMinutes()).padStart(2, '0');
+                                // Función para actualizar la hora en el campo de hora_inicio
+                                function actualizarHora() {
+                                    // Obtener la hora actual
+                                    const ahora = new Date();
+                                    // Formatear la hora en formato HH:MM (24 horas)
+                                    const horas = String(ahora.getHours()).padStart(2, '0');
+                                    const minutos = String(ahora.getMinutes()).padStart(2, '0');
 
-                                        // Actualizar el valor del input con la hora formateada
-                                        document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
-                                    }
-                                    // Actualizar la hora cada segundo
-                                    setInterval(actualizarHora, 1000);
-                                    // Llamar a la función inmediatamente para establecer la hora inicial
-                                    actualizarHora();
+                                    // Actualizar el valor del input con la hora formateada
+                                    document.getElementById('hora_inicio').value = `${horas}:${minutos}`;
+                                }
+                                // Actualizar la hora cada segundo
+                                setInterval(actualizarHora, 1000);
+                                // Llamar a la función inmediatamente para establecer la hora inicial
+                                actualizarHora();
                                 </script>
 
 
@@ -95,7 +95,7 @@ if ($tipo_usuario != 4) {
                                     <label class="form-label" for="documento">Número de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text">
-                                            <i class="fas fa-user"></i>
+                                            <i class="fas fa-id-card"></i>
                                         </span>
                                         <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this)"
                                             onkeypress="return multiplenumber(event);" class="form-control " readonly

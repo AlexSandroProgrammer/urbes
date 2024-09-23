@@ -65,7 +65,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-calendar-day"></i></span>
                                         <input type="date" required readonly="readonly" class="form-control"
                                             value="<?= $data['fecha_inicio'] ?>" id="fecha_inicio" />
                                     </div>
@@ -77,7 +77,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="fecha_final">Fecha Final</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-calenday-day"></i></span>
                                         <input type="date" required readonly="readonly" class="form-control"
                                             value="<?= $fecha_final ?>" name="fecha_final" id="fecha_final" />
                                     </div>
@@ -100,7 +100,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="documento">CONDUCTOR ENCARGADO DE REGISTRO</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <input type="text" minlength="6" maxlength="10" readonly="readonly"
                                             value="<?= $data['documento'] ?>" class="form-control" required
                                             id="documento" placeholder="Ingresa tu numero de documento" />
@@ -114,7 +114,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="hora_inicio">Hora Inicio de Recolección</label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
-                                            <i class="fas fa-truck"></i>
+                                            <i class="fas fa-clock"></i>
                                         </span>
                                         <input type="time" readonly="readonly" required
                                             value="<?= $data['hora_inicio'] ?>" class="form-control" id="hora_inicio" />
@@ -125,7 +125,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="hora_finalizacion">Hora Fin de Recolección</label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_finalizacion_span" class="input-group-text">
-                                            <i class="fas fa-truck"></i>
+                                            <i class="fas fa-clock"></i>
                                         </span>
                                         <input type="time" readonly="readonly" required class="form-control"
                                             name="hora_finalizacion" id="hora_finalizacion" />
@@ -163,7 +163,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="kilometraje">Kilometraje Inicial</label>
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-road"></i></span>
                                         <input type="number" value="<?= $data['km_inicio'] ?>" readonly="readonly"
                                             required class="form-control" id="kilometraje"
                                             placeholder="Ingresar kilometraje" />
@@ -176,7 +176,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                         Final</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-camera"></i></span>
                                         <input type="file" accept="image/*" class="form-control"
                                             name="foto_kilometraje_final" id="foto_kilometraje_final"
                                             onchange="validarImagen()" />
@@ -222,7 +222,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="kilometraje_final">Kilometraje Final</label>
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-road"></i></span>
                                         <input type="number" minlength="1" maxlength="10"
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="kilometraje_final" id="kilometraje_final"
@@ -234,7 +234,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="horometro">Horometro Inicial</label>
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-clock"></i></span>
                                         <input type="number" minlength="1" maxlength="10" required
                                             onkeypress="return(multiplenumber(event));"
                                             value="<?= $data['horometro_inicio'] ?>" readonly="readonly"
@@ -246,7 +246,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label class="form-label" for="horometro_final">Horometro Final</label>
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-clock"></i></span>
                                         <input type="number" minlength="1" maxlength="10" required
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             id="horometro_final" name="horometro_final"
@@ -256,7 +256,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label for="ciudad" class="form-label">Ciudad de Recoleccion</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
                                         <input type="text" class="form-control" id="ciudad" name="ciudad"
                                             placeholder="Ingresar ciudad" readonly="readonly"
                                             value="<?= $data['ciudad'] ?>" />
@@ -266,7 +266,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label for="observaciones" class="form-label">Observaciones</label>
                                     <div class="input-group input-group-merge">
                                         <span id="observaciones-2" class="input-group-text">
-                                            <i class="fas fa-truck"></i>
+                                            <i class="fas fa-weight-hanging"></i>
                                         </span>
                                         <textarea class="form-control" id="observaciones" rows="5" name="observaciones"
                                             placeholder="Ingresar observación"></textarea>

@@ -56,7 +56,7 @@ $id_city = $user['id_ciudad'];
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-calendar"></i></span>
+                                                class="fas fa-calendar-day"></i></span>
                                         <input type="date" readonly required class="form-control" name="fecha_inicio"
                                             id="fecha_inicio" min="<?php echo $today; ?>" max="<?php echo $today; ?>"
                                             value="<?php echo $today; ?>" />
@@ -128,10 +128,11 @@ $id_city = $user['id_ciudad'];
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
                                             name="" id="ciudad" readonly value="<?php echo $user['ciudad']; ?>"
                                             placeholder="Ingresa la ciudad" />
-                                        
+
                                     </div>
-                                    <input type="hidden"  class="form-control" name="id_ciudad" id="id_ciudad"
-                                            value="<?php echo htmlspecialchars($id_city); ?>" placeholder="Ingresa la ciudad" />
+                                    <input type="hidden" class="form-control" name="id_ciudad" id="id_ciudad"
+                                        value="<?php echo htmlspecialchars($id_city); ?>"
+                                        placeholder="Ingresa la ciudad" />
 
                                 </div>
 

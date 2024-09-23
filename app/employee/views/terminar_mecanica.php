@@ -89,7 +89,7 @@ $vehiculo =  $Register['placa'] . ' ' . $Register['vehiculo'];
                                     <label class="form-label" for="documento">Número de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text">
-                                            <i class="fas fa-user"></i>
+                                            <i class="fas fa-id-card"></i>
                                         </span>
                                         <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this)"
                                             onkeypress="return multiplenumber(event);" class="form-control ps-2 "
@@ -129,7 +129,7 @@ $vehiculo =  $Register['placa'] . ' ' . $Register['vehiculo'];
                                     <label class="form-label" for="fecha_inicio">Fecha Finalizacion</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-calendar"></i></span>
+                                                class="fas fa-calendar-day"></i></span>
                                         <input type="date" required class="form-control" name="fecha_fin" id="fecha_fin"
                                             readonly min="<?php echo $today; ?>" max="<?php echo $today; ?>"
                                             value="<?php echo $today; ?>" />

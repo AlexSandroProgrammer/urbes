@@ -60,7 +60,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-calendar"></i></span>
+                                                class="fas fa-calendar-day"></i></span>
                                         <input type="date" required class="form-control" name="fecha_inicio"
                                             id="fecha_inicio" min="<?php echo $today; ?>" max="<?php echo $today; ?>"
                                             value="<?php echo $today; ?>" />
@@ -102,7 +102,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="documento">Número de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text">
-                                            <i class="fas fa-user"></i>
+                                            <i class="fas fa-id-card"></i>
                                         </span>
                                         <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this)"
                                             onkeypress="return multiplenumber(event);" class="form-control " readonly
@@ -130,7 +130,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                         <span id="nombres_span" class="input-group-text"><i
                                                 class="fas fa-city"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="nombres" id="ciudad" readonly value="<?php echo $user['ciudad']; ?>"
+                                            name="ciudad" id="ciudad" readonly value="<?php echo $user['ciudad']; ?>"
                                             placeholder="Ingresa la ciudad" />
                                         <input type="hidden" name="id_ciudad" id="id_ciudad"
                                             value="<?php echo htmlspecialchars($id_city); ?>"

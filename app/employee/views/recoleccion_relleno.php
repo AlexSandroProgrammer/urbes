@@ -45,7 +45,7 @@ if ($tipo_usuario != 4) {
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-calendar-day"></i></span>
                                         <input type="date" required readonly class="form-control"
                                             value="<?= $fecha_inicio ?>" name="fecha_inicio" id="fecha_inicio" />
                                     </div>
@@ -83,7 +83,7 @@ if ($tipo_usuario != 4) {
                                     <label class="form-label" for="documento">CONDUCTOR ENCARGADO DE REGISTRO</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <input type="text" minlength="6" maxlength="10" readonly
                                             value="<?= $documento ?>" class="form-control" required id="documento"
                                             name="documento" placeholder="Ingresa tu numero de documento" />
@@ -97,7 +97,7 @@ if ($tipo_usuario != 4) {
                                     <label class="form-label" for="hora_inicio">Hora Inicio</label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
-                                            <i class="fas fa-truck"></i>
+                                            <i class="fas fa-clock"></i>
                                         </span>
                                         <input type="time" readonly required class="form-control" name="hora_inicio"
                                             id="hora_inicio" />
@@ -125,7 +125,7 @@ if ($tipo_usuario != 4) {
                                         Inicial</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-camera"></i></span>
                                         <input type="file" accept="image/*" required class="form-control"
                                             name="foto_kilometraje" id="foto_kilometraje" onchange="validarImagen()" />
 
@@ -173,7 +173,7 @@ if ($tipo_usuario != 4) {
                                     <label class="form-label" for="kilometraje">Kilometraje Inicial</label>
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-road"></i></span>
                                         <input type="number" minlength="1" maxlength="10" required
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="kilometraje" id="kilometraje" placeholder="Ingresar kilometraje" />
@@ -184,7 +184,7 @@ if ($tipo_usuario != 4) {
                                     <label class="form-label" for="horometro">Horometro</label>
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
-                                                class="fas fa-truck"></i></span>
+                                                class="fas fa-clock"></i></span>
                                         <input type="number" minlength="1" maxlength="10" required
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="horometro" id="horometro" placeholder="Ingresar horometro" />
@@ -193,7 +193,7 @@ if ($tipo_usuario != 4) {
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label for="ciudad" class="form-label">Ciudad</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-truck"></i></span>
+                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
                                         <select class="form-select" name="ciudad" required>
                                             <option value="">Seleccionar Ciudad...</option>
                                             <?php
