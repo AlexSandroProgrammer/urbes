@@ -32,7 +32,9 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <th class="custom-table-th">Vehiculo</th>
                                     <th class="custom-table-th">Ciudad</th>
                                     <th class="custom-table-th">Fecha Inicio</th>
+                                    <th class="custom-table-th">Hora Inicio</th>
                                     <th class="custom-table-th">Fecha Fin</th>
+                                    <th class="custom-table-th">Hora Fin</th>
                                     <th class="custom-table-th">Km Inicial</th>
                                     <th class="custom-table-th">Foto Km Inicial</th>
                                     <th class="custom-table-th">Km Final</th>
@@ -77,7 +79,9 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <td><?php echo $disposicion['ciudad'] ?></td>
                                     </td>
                                     <td><?php echo $disposicion['fecha_inicio'] ?></td>
+                                    <td><?php echo $disposicion['hora_inicio'] ?></td>
                                     <td><?php echo $disposicion['fecha_fin'] ?></td>
+                                    <td><?php echo $disposicion['hora_finalizacion'] ?></td>
                                     <td><?php echo $disposicion['km_inicio'] ?></td>
                                     <?php if (isset($disposicion['foto_kilometraje_inicial']) && !empty($disposicion['foto_kilometraje_inicial'])) { ?>
                                     <td class="avatar">

@@ -2,11 +2,43 @@
 
 $titlePage = "Lista Carro de Barrido Sevilla";
 require_once("../components/sidebar.php");
-// CONSULTA PARA LLAMAR TODAS LAS DISPOSICION DE SEVILLA
-$query = $connection->prepare("SELECT cb.*, e.estado, ac.actividad, u.documento, u.nombres, u.apellidos, c.ciudad FROM carro_barrido AS cb INNER JOIN actividades AS ac ON cb.id_actividad = ac.id_actividad INNER JOIN usuarios AS u ON cb.documento = u.documento INNER JOIN estados AS e ON cb.id_estado = e.id_estado INNER JOIN ciudades AS c ON cb.ciudad = c.id_ciudad WHERE cb.ciudad = 2");
+
+// CONSULTA PARA LLAMAR TODAS LAS DISPOSICIONES DE SEVILLA
+$query = $connection->prepare("
+    SELECT 
+        cb.*, 
+        e.estado, 
+        ac.actividad, 
+        u.documento, 
+        u.nombres, 
+        u.apellidos, 
+        c.ciudad AS ciudad_carro, 
+        GROUP_CONCAT(z.zona, '..', cz.ciudad SEPARATOR '__') AS zonas_rutas
+    FROM 
+        carro_barrido AS cb
+    INNER JOIN 
+        detalle_zonas AS dz ON dz.id_registro = cb.id_registro_barrido
+    INNER JOIN 
+        zonas AS z ON dz.id_zona = z.id_zona
+    INNER JOIN 
+        ciudades AS cz ON z.id_ciudad = cz.id_ciudad -- Ciudad de la zona
+    INNER JOIN 
+        actividades AS ac ON cb.id_actividad = ac.id_actividad
+    INNER JOIN 
+        usuarios AS u ON cb.documento = u.documento
+    INNER JOIN 
+        estados AS e ON cb.id_estado = e.id_estado
+    INNER JOIN 
+        ciudades AS c ON cb.ciudad = c.id_ciudad -- Ciudad del carro de barrido
+    WHERE 
+        cb.ciudad = 2
+    GROUP BY 
+        cb.id_registro_barrido
+");
 $query->execute();
 $carro_barridos = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!-- Content wrapper -->
 <div class="content-wrapper">
     <!-- Content -->
@@ -28,53 +60,82 @@ $carro_barridos = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <th class="custom-table-th">Actividad</th>
                                     <th class="custom-table-th">Empleado</th>
                                     <th class="custom-table-th">Documento</th>
-                                    <th class="custom-table-th">Ciudad</th>
+                                    <th class="custom-table-th">Ciudad del Carro</th>
                                     <th class="custom-table-th">Fecha Inicio</th>
                                     <th class="custom-table-th">Fecha Fin</th>
                                     <th class="custom-table-th">Hora Inicio</th>
                                     <th class="custom-table-th">Hora Fin</th>
+                                    <th class="custom-table-th">Zonas y Ciudades</th>
                                     <th class="custom-table-th">Peso</th>
                                     <th class="custom-table-th">Observaciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($carro_barridos as $carro_barrido) { ?>
-                                    <tr>
-                                        <td class="custom-table-th">
-                                            <form method="GET" class="mt-2" action="editar_lista_carro_barrido.php">
-                                                <input type="hidden" name="id_registro_barrido"
-                                                    value="<?php echo $carro_barrido['id_registro_barrido'] ?>">
-                                                <button class="btn btn-success"
-                                                    onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                    type="submit">
-                                                    <i class="bx bx-refresh" title="Actualizar"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['id_registro_barrido'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['estado'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['actividad'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['nombres'] ?> -
-                                            <?php echo $carro_barrido['apellidos'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['documento'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['ciudad'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['fecha_inicio'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['fecha_fin'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['hora_inicio'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['hora_fin'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['peso'] ?></td>
-                                        <td class="custom-table-th"><?php echo $carro_barrido['observaciones'] ?></td>
-                                    </tr>
+                                <tr>
+                                    <td class="custom-table-th">
+                                        <form method="GET" class="mt-2" action="editar_lista_carro_barrido.php">
+                                            <input type="hidden" name="id_registro_barrido"
+                                                value="<?php echo $carro_barrido['id_registro_barrido'] ?>">
+                                            <button class="btn btn-success"
+                                                onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                type="submit">
+                                                <i class="bx bx-refresh" title="Actualizar"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['id_registro_barrido'] ?></td>
+                                    <td>
+                                        <?php if ($carro_barrido['id_estado'] == 5) {
+                                            echo '<span class="badge badge-success">Finalizado</span>';
+                                        } else {
+                                            echo '<span class="badge badge-danger">Pendiente</span>';
+                                        } ?>
+                                    </td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['actividad'] ?></td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['nombres'] ?> -
+                                        <?php echo $carro_barrido['apellidos'] ?></td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['documento'] ?></td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['ciudad_carro'] ?></td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['fecha_inicio'] ?></td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['fecha_fin'] ?></td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['hora_inicio'] ?></td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['hora_fin'] ?></td>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="custom-table-th">Zona</th>
+                                                    <th class="custom-table-th">Ciudad de la Zona</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                // Descomponer las zonas concatenadas y mostrarlas en la tabla
+                                                foreach (explode("__", $carro_barrido['zonas_rutas']) as $zona_concatenada) {
+                                                    $zona = explode("..", $zona_concatenada);
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $zona[0]; // Nombre de la zona ?></td>
+                                                    <td><?php echo $zona[1]; // Ciudad de la zona ?></td>
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['peso'] ?></td>
+                                    <td class="custom-table-th"><?php echo $carro_barrido['observaciones'] ?></td>
+                                </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <?php
-    require_once("../components/footer.php")
+    require_once("../components/footer.php");
     ?>
+</div>
