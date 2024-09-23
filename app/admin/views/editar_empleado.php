@@ -37,7 +37,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label for="tipo_documento" class="form-label">Tipo de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="tipo_documento-2" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <select class="form-select" autofocus name="tipo_documento" id="tipo_documento"
                                             required>
                                             <option value="<?php echo $employeeGetId['tipo_documento'] ?>">
@@ -91,7 +91,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="celular">Numero de Celular</label>
                                     <div class="input-group input-group-merge">
                                         <span id="celular_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-mobile-alt"></i></span>
                                         <input type="text" required onkeypress="return(multiplenumber(event));"
                                             minlength="10" maxlength="10"
                                             value="<?php echo $employeeGetId['celular'] ?>" class="form-control"

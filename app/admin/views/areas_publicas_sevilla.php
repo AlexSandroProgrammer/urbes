@@ -1,6 +1,6 @@
 <?php
 
-$titlePage = "Lista Disposicion Sevilla";
+$titlePage = "Lista Areas Publicas Sevilla";
 require_once("../components/sidebar.php");
 // CONSULTA PARA LLAMAR TODAS LAS DISPOSICION DE SEVILLA
 $query = $connection->prepare("SELECT ap.*, e.estado, l.labor, u.documento, u.nombres, u.apellidos, c.ciudad FROM areas_publicas AS ap INNER JOIN labores AS l ON ap.id_labor = l.id_labor INNER JOIN usuarios AS u ON ap.documento = u.documento INNER JOIN estados AS e ON ap.id_estado = e.id_estado INNER JOIN ciudades AS c ON ap.id_ciudad = c.id_ciudad WHERE ap.id_ciudad = 2");
@@ -13,7 +13,7 @@ $areas_publicas = $query->fetchAll(PDO::FETCH_ASSOC);
     <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Bootstrap modals -->
         <div class="card mb-4">
-            <h2 class="card-header font-bold">Lista Disposicion Veh. Compactador Sevilla</h2>
+            <h2 class="card-header font-bold">Lista Areas Publicas Sevilla</h2>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12 mt-3">
@@ -57,6 +57,8 @@ $areas_publicas = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <td class="custom-table-th"><?php echo $area_publica['ciudad'] ?></td>
                                     <td class="custom-table-th"><?php echo $area_publica['fecha_inicio'] ?></td>
                                     <td class="custom-table-th"><?php echo $area_publica['fecha_finalizacion'] ?></td>
+                                    <td class="custom-table-th"><?php echo $area_publica['hora_inicio'] ?></td>
+                                    <td class="custom-table-th"><?php echo $area_publica['hora_finalizacion'] ?></td>
                                     <td class="custom-table-th"><?php echo $area_publica['observaciones'] ?></td>
                                 </tr>
                                 <?php } ?>
