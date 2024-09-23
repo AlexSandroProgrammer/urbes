@@ -95,7 +95,7 @@ require_once("../components/sidebar.php");
                                             <option value="">Seleccionar Estado...</option>
                                             <?php
                                             // CONSUMO DE DATOS DE LOS PROCESOS
-                                            $estados_query = $connection->prepare("SELECT * FROM estados");
+                                            $estados_query = $connection->prepare("SELECT * FROM estados WHERE id_estado != 4 AND id_estado != 5");
                                             $estados_query->execute();
                                             $estados_se = $estados_query->fetchAll(PDO::FETCH_ASSOC);
                                             // Verificar si no hay datos
