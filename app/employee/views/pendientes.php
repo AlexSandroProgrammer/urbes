@@ -1,5 +1,5 @@
 <?php
-$titlePage = "Bienvenido Usuario";
+$titlePage = "Pendientes";
 require_once("../components/navbar.php");
 if ($documentoSession) {
     $documento = $documentoSession['documento'];

@@ -1,5 +1,5 @@
 <?php
-$titlePage = "Registro Vehiculo Compactador";
+$titlePage = "Registro Carro Barrido";
 require_once("../components/navbar.php");
 $today = date('Y-m-d');
 

@@ -91,7 +91,7 @@ if (isset($_GET['id_registro'])) {
                                     <label for="placa" class="form-label">Vehiculo</label>
                                     <div class="input-group input-group-merge">
                                         <span id="placa-icon" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-truck"></i></span>
                                         <select class="form-select" name="id_vehiculo" required>
                                             <option value="<?php echo $mecanica['placa'] ?>">
                                                 <?php echo $mecanica['placa'] ?> - <?php echo $mecanica['vehiculo'] ?>
@@ -123,7 +123,7 @@ if (isset($_GET['id_registro'])) {
                                     <label for="fecha_fin" class="form-label">Fecha de Finalización</label>
                                     <div class="input-group input-group-merge">
                                         <span id="fecha_fin-icon" class="input-group-text"><i
-                                                class="fas fa-calendar"></i></span>
+                                                class="fas fa-calendar-day"></i></span>
                                         <input type="date" class="form-control" name="fecha_fin"
                                             value="<?php echo $mecanica['fecha_fin'] ?>" />
                                     </div>
@@ -162,7 +162,7 @@ if (isset($_GET['id_registro'])) {
                                 </div>
 
                                 <div class="mt-4">
-                                    <a href="areas_publicas_mariquita.php" class="btn btn-danger">Cancelar</a>
+                                    <a href="index.php" class="btn btn-danger">Cancelar</a>
                                     <input type="submit" class="btn btn-primary" value="Actualizar">
                                     <input type="hidden" class="btn btn-info" value="FormMecanica"
                                         name="MM_FormMecanica"></input>

@@ -1,5 +1,5 @@
 <?php
-$titlePage = "Editar Empleado";
+$titlePage = "Editar socio";
 require_once("../components/sidebar.php");
 if (isNotEmpty([$_GET['id_partner-edit'], $_GET['ruta']])) {
     $id_partner = $_GET['id_partner-edit'];
@@ -37,7 +37,7 @@ if (isNotEmpty([$_GET['id_partner-edit'], $_GET['ruta']])) {
                                     <label for="tipo_documento" class="form-label">Tipo de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="tipo_documento-2" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <select class="form-select" autofocus name="tipo_documento" id="tipo_documento"
                                             required>
                                             <option value="<?php echo $partnerGetId['tipo_documento'] ?>">
@@ -53,7 +53,7 @@ if (isNotEmpty([$_GET['id_partner-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="documento">Numero de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <input type="text" class="form-control"
                                             onkeypress="return(multiplenumber(event));"
                                             value="<?php echo $partnerGetId['documento'] ?>" readonly minlength="10"
@@ -91,7 +91,7 @@ if (isNotEmpty([$_GET['id_partner-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="celular">Numero de Celular</label>
                                     <div class="input-group input-group-merge">
                                         <span id="celular_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-phone"></i></span>
                                         <input type="text" required onkeypress="return(multiplenumber(event));"
                                             minlength="10" maxlength="10" value="<?php echo $partnerGetId['celular'] ?>"
                                             class="form-control" name="celular" id="celular"
@@ -101,7 +101,8 @@ if (isNotEmpty([$_GET['id_partner-edit'], $_GET['ruta']])) {
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="estado" class="form-label">Estado Usuario</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="estado-2" class="input-group-text"><i
+                                                class="fas fa-check-circle"></i></span>
                                         <select class="form-select" name="estado" required>
                                             <option value="<?php echo $partnerGetId['id_estado'] ?>">
                                                 <?php echo $partnerGetId['estado'] ?>
@@ -129,7 +130,7 @@ if (isNotEmpty([$_GET['id_partner-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="password">Contraseña</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-lock"></i></span>
                                         <input type="text" required minlength="5" value="<?php echo $password ?>"
                                             maxlength="100" class="form-control" name="password" id="password"
                                             placeholder="Ingresar contraseña" />

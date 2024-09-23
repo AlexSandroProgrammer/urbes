@@ -24,7 +24,7 @@ require_once("../components/sidebar.php");
                                     <label for="tipo_documento" class="form-label">Tipo de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="tipo_documento-2" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <select class="form-select" autofocus name="tipo_documento" id="tipo_documento"
                                             required>
                                             <option value="">Seleccionar tipo de documento...</option>
@@ -39,11 +39,11 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="documento">Numero de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="number" minlength="6" maxlength="10" oninput="maxlengthNumber(this);"
-                                            onkeypress="return(multiplenumber(event));" class="form-control" required
-                                            id="documento" name="documento" placeholder="Ingresa tu numero de documento"
-                                            autofocus />
+                                                class="fas fa-id-card"></i></span>
+                                        <input type="number" minlength="6" maxlength="10"
+                                            oninput="maxlengthNumber(this);" onkeypress="return(multiplenumber(event));"
+                                            class="form-control" required id="documento" name="documento"
+                                            placeholder="Ingresa tu numero de documento" autofocus />
                                     </div>
                                 </div>
                                 <!-- nombres -->
@@ -72,7 +72,7 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="celular">Numero de Celular</label>
                                     <div class="input-group input-group-merge">
                                         <span id="celular_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-phone"></i></span>
                                         <input type="text" required type="text" minlength="10" maxlength="10"
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="celular" id="celular" placeholder="Ingresar numero de celular" />
@@ -82,7 +82,8 @@ require_once("../components/sidebar.php");
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="estado" class="form-label">Estado Inicial</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="estado-2" class="input-group-text"><i
+                                                class="fas fa-check-circle"></i></span>
                                         <select class="form-select" name="estado" required>
                                             <option value="">Seleccionar Estado...</option>
                                             <?php
@@ -108,7 +109,7 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="password">Contraseña</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-lock"></i></span>
                                         <input type="password" required minlength="5" maxlength="30"
                                             class="form-control" name="password" id="password"
                                             placeholder="Ingresar por favor la contraseña" />

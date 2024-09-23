@@ -1,5 +1,5 @@
 <?php
-$titlePage = "Actualizacion de Poda de Arboles";
+$titlePage = "Actualizacion areas pubicas";
 require_once("../components/navbar.php");
 $today = date('Y-m-d');
 

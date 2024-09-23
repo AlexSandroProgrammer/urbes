@@ -164,7 +164,7 @@ if (isset($_GET['id_registro_barrido'])) {
                                 </div>
 
                                 <div class="mt-4">
-                                    <a href="areas_publicas_mariquita.php" class="btn btn-danger">Cancelar</a>
+                                    <a href="index.php" class="btn btn-danger">Cancelar</a>
                                     <input type="submit" class="btn btn-primary" value="Actualizar">
                                     <input type="hidden" class="btn btn-info" value="FormCarroBarrido"
                                         name="MM_FormCarroBarrido"></input>

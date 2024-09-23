@@ -53,7 +53,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="documento">Numero de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <input type="text" class="form-control"
                                             onkeypress="return(multiplenumber(event));"
                                             value="<?php echo $employeeGetId['documento'] ?>" readonly minlength="10"
@@ -101,7 +101,8 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="estado" class="form-label">Estado Usuario</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="estado-2" class="input-group-text"><i
+                                                class="fas fa-user-check"></i></span>
                                         <select class="form-select" name="estado" required>
                                             <option value="<?php echo $employeeGetId['id_estado'] ?>">
                                                 <?php echo $employeeGetId['estado'] ?>
@@ -128,7 +129,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="rh">RH</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="rh_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="rh_span" class="input-group-text"><i class="fas fa-tint"></i></span>
                                         <input type="text" required minlength="2" maxlength="100"
                                             value="<?php echo $employeeGetId['rh']  ?>" class="form-control" name="rh"
                                             id="rh" placeholder="Ingresar RH del empleado" />
@@ -138,7 +139,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="ciudad" class="form-label">Ciudad</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
                                         <select class="form-select" name="ciudad" required>
                                             <option value="<?php echo $employeeGetId['id_ciudad'] ?>">
                                                 <?php echo $employeeGetId['ciudad'] ?></option>
@@ -165,7 +166,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="password">Contraseña</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-lock"></i></span>
                                         <input type="text" required minlength="5" value="<?php echo $password  ?>"
                                             maxlength="100" class="form-control" name="password" id="password"
                                             placeholder="Ingresar contraseña" />
@@ -177,7 +178,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="nombre_familiar">Nombre Familiar</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_familiar_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-users"></i></span>
                                         <input type="text" required minlength="2"
                                             value="<?php echo $employeeGetId['nombre_familiar'] ?>" maxlength="100"
                                             class="form-control" name="nombre_familiar" id="nombre_familiar"
@@ -189,7 +190,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="celular_familiar">Celular Familiar</label>
                                     <div class="input-group input-group-merge">
                                         <span id="celular_familiar_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-phone"></i></span>
                                         <input type="text" required minlength="2"
                                             value="<?php echo $employeeGetId['celular_familiar'] ?>"
                                             onkeypress="return(multiplenumber(event));" minlength="10" maxlength="10"
@@ -202,7 +203,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="parentezco_familiar">Parentezco Familiar</label>
                                     <div class="input-group input-group-merge">
                                         <span id="parentezco_familiar_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-users"></i></span>
                                         <input type="text" required minlength="2"
                                             value="<?php echo $employeeGetId['parentezco_familiar'] ?>" maxlength="100"
                                             class="form-control" name="parentezco_familiar" id="parentezco_familiar"
@@ -214,7 +215,8 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="eps">EPS</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="eps_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="eps_span" class="input-group-text"><i
+                                                class="fas fa-heartbeat"></i></span>
                                         <input type="text" required minlength="2"
                                             value="<?php echo $employeeGetId['eps'] ?>" maxlength="100"
                                             class="form-control" name="eps" id="eps"
@@ -225,7 +227,8 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="arl">ARL</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="arl_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="arl_span" class="input-group-text"><i
+                                                class="fas fa-shield-alt"></i></span>
                                         <input type="text" required minlength="2"
                                             value="<?php echo $employeeGetId['arl'] ?>" maxlength="100"
                                             class="form-control" name="arl" id="arl"
@@ -237,7 +240,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio Contrato</label>
                                     <div class="input-group input-group-merge">
                                         <span id="fecha_inicio_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-calendar"></i></span>
                                         <input type="date" required value="<?php echo $employeeGetId['fecha_inicio'] ?>"
                                             class="form-control" name="fecha_inicio" id="fecha_inicio" />
                                     </div>
@@ -247,7 +250,7 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                     <label class="form-label" for="fecha_fin">Fecha Fin Contrato</label>
                                     <div class="input-group input-group-merge">
                                         <span id="fecha_fin_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-calendar"></i></span>
                                         <input type="date" required value="<?php echo $employeeGetId['fecha_fin'] ?>"
                                             class="form-control" name="fecha_fin" id="fecha_fin" />
                                     </div>
@@ -256,7 +259,8 @@ if (isNotEmpty([$_GET['id_employee-edit'], $_GET['ruta']])) {
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="estado" class="form-label">Tipo de rol</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="estado-2" class="input-group-text"><i
+                                                class="fas fa-user-tag"></i></span>
                                         <select class="form-select" name="tipo_rol" required>
                                             <option value="<?php echo $employeeGetId['id_tipo_usuario'] ?>">
                                                 <?php echo $employeeGetId['tipo_usuario'] ?></option>
