@@ -24,7 +24,7 @@ require_once("../components/sidebar.php");
                                     <label for="tipo_documento" class="form-label">Tipo de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="tipo_documento-2" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-id-card"></i></span>
                                         <select class="form-select" autofocus name="tipo_documento" id="tipo_documento"
                                             required>
                                             <option value="">Seleccionar tipo de documento...</option>
@@ -38,7 +38,7 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="documento">Numero de Documento</label>
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-address-card"></i></span>
                                         <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this);"
                                             onkeypress="return(multiplenumber(event));" class="form-control" required
                                             id="documento" name="documento" placeholder="Ingresa tu numero de documento"
@@ -71,7 +71,7 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="celular">Numero de Celular</label>
                                     <div class="input-group input-group-merge">
                                         <span id="celular_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-mobile-alt"></i></span>
                                         <input type="text" required type="text" minlength="10" maxlength="10"
                                             onkeypress="return(multiplenumber(event));" class="form-control"
                                             name="celular" id="celular" placeholder="Ingresar numero de celular" />
@@ -81,7 +81,7 @@ require_once("../components/sidebar.php");
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="rh">RH</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="rh_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="rh_span" class="input-group-text"><i class="fas fa-tint"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
                                             name="rh" id="rh" placeholder="Ingresar RH del empleado" />
                                     </div>
@@ -90,7 +90,8 @@ require_once("../components/sidebar.php");
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="estado" class="form-label">Estado Inicial</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="estado-2" class="input-group-text"><i
+                                                class="fas fa-toggle-on"></i></span>
                                         <select class="form-select" name="estado" required>
                                             <option value="">Seleccionar Estado...</option>
                                             <?php
@@ -115,7 +116,7 @@ require_once("../components/sidebar.php");
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="ciudad" class="form-label">Ciudad</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
                                         <select class="form-select" name="ciudad" required>
                                             <option value="">Seleccionar Ciudad...</option>
                                             <?php
@@ -141,21 +142,21 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="password">Contraseña</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-key"></i></span>
                                         <input type="password" required minlength="5" maxlength="30"
                                             class="form-control" name="password" id="password"
                                             placeholder="Ingresar por favor la contraseña" />
 
                                     </div>
                                 </div>
-                                <h6 class="py-3 fw-bold"> <i class="bx bx-user"></i> DATOS DEL FAMILIAR</h6>
+                                <h6 class="py-3 fw-bold"> <i class="bx bx-group"></i> DATOS DEL FAMILIAR</h6>
 
                                 <!-- numero de celular -->
                                 <div class="mb-3 col-12 col-lg-6">
-                                    <label class="form-label" for="celular_familiar">Numer de Celular Familiar</label>
+                                    <label class="form-label" for="celular_familiar">Numero de Celular Familiar</label>
                                     <div class="input-group input-group-merge">
                                         <span id="celular_familiar_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-mobile-alt "></i></span>
                                         <input type="text" required type="text"
                                             onkeypress="return(multiplenumber(event));" minlength="10" maxlength="10"
                                             class="form-control" name="celular_familiar" id="celular_familiar"
@@ -167,7 +168,7 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="nombre_familiar">Nombre Familiar</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombresfamiliar_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-user-friends"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
                                             name="nombre_familiar" id="nombre_familiar"
                                             placeholder="Ingresar nombres completos" />
@@ -178,7 +179,7 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="parentezco_familiar">Parentezco Familiar</label>
                                     <div class="input-group input-group-merge">
                                         <span id="parentezco_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-user-friends"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
                                             name="parentezco_familiar" id="parentezco_familiar"
                                             placeholder="Ingresar parentezco del familiar" />
@@ -190,7 +191,7 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio Contrato</label>
                                     <div class="input-group input-group-merge">
                                         <span id="fecha_inicio_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
+                                                class="fas fa-calendar"></i></span>
                                         <input type="date" required class="form-control" name="fecha_inicio"
                                             id="fecha_inicio" />
                                     </div>
@@ -200,16 +201,16 @@ require_once("../components/sidebar.php");
                                     <label class="form-label" for="fecha_fin">Fecha Fin Contrato</label>
                                     <div class="input-group input-group-merge">
                                         <span id="fecha_fin_span" class="input-group-text"><i
-                                                class="fas fa-user"></i></span>
-                                        <input type="date" required class="form-control" name="fecha_fin"
-                                            id="fecha_fin" />
+                                                class="fas fa-calendar"></i></span>
+                                        <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" />
                                     </div>
                                 </div>
                                 <!-- nombre de la eps -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="eps">Nombre Eps</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="eps_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="eps_span" class="input-group-text"><i
+                                                class="fas fa-plus-square"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
                                             name="eps" id="eps" placeholder="Ingresar nombre de la EPS" />
                                     </div>
@@ -218,7 +219,8 @@ require_once("../components/sidebar.php");
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="arl">Nombre Arl</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="arl_span" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="arl_span" class="input-group-text"><i
+                                                class="fas fa-shield-alt"></i></span>
                                         <input type="text" required minlength="2" maxlength="100" class="form-control"
                                             name="arl" id="arl" placeholder="Ingresar nombre de la ARL" />
                                     </div>
@@ -227,12 +229,13 @@ require_once("../components/sidebar.php");
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label for="estado" class="form-label">Tipo de rol</label>
                                     <div class="input-group input-group-merge">
-                                        <span id="estado-2" class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span id="estado-2" class="input-group-text"><i
+                                                class="fas fa-user-shield"></i></span>
                                         <select class="form-select" name="tipo_rol" required>
                                             <option value="">Seleccionar Tipo de Usuario...</option>
                                             <?php
                                             // CONSUMO DE DATOS DE LOS PROCESOS
-                                            $types_query = $connection->prepare("SELECT * FROM tipo_usuario");
+                                            $types_query = $connection->prepare("SELECT * FROM tipo_usuario WHERE id_tipo_usuario = 3 || id_tipo_usuario = 4");
                                             $types_query->execute();
                                             $types = $types_query->fetchAll(PDO::FETCH_ASSOC);
                                             // Verificar si no hay datos

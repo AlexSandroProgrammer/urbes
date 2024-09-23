@@ -83,49 +83,49 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
                                         $fecha_fin = DateTime::createFromFormat('Y-m-d', $empleado['fecha_fin'])->format('d/m/Y');
                                     }
                                 ?>
-                                    <tr>
-                                        <td>
-                                            <form method="GET" actionz="">
-                                                <input type="hidden" name="id_employee-delete"
-                                                    value="<?= $empleado['documento'] ?>">
-                                                <input type="hidden" name="ruta" value="empleados_activos.php">
-                                                <button class="btn btn-danger mt-2"
-                                                    onclick="return confirm('¿Desea eliminar el registro seleccionado?');"
-                                                    type="submit">
-                                                    <i class="bx bx-trash" title="Eliminar"></i>
-                                                </button>
-                                            </form>
-                                            <form method="GET" class="mt-2" action="editar_empleado.php">
-                                                <input type="hidden" name="id_employee-edit"
-                                                    value="<?= $empleado['documento'] ?>">
-                                                <input type="hidden" name="ruta" value="empleados_activos.php">
-                                                <button class="btn btn-success"
-                                                    onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                    type="submit">
-                                                    <i class="bx bx-refresh" title="Actualizar"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td><?php echo $empleado['tipo_documento'] ?></td>
-                                        <td><?php echo $empleado['documento'] ?></td>
-                                        <td><?php echo $empleado['nombres'] ?></td>
-                                        <td><?php echo $empleado['apellidos'] ?></td>
-                                        <td><?php echo $empleado['celular'] ?></td>
-                                        <td><?php echo $password ?></td>
-                                        <td><?php echo $empleado['ciudad'] ?></td>
-                                        <td><?php echo $empleado['eps'] ?></td>
-                                        <td><?php echo $empleado['arl'] ?></td>
-                                        <td><?php echo $empleado['rh'] ?></td>
-                                        <td><?php echo $fecha_inicio ?></td>
-                                        <td><?php echo $fecha_fin ?></td>
-                                        <td><?php echo $empleado['nombre_familiar'] ?></td>
-                                        <td><?php echo $empleado['celular_familiar'] ?></td>
-                                        <td><?php echo $empleado['parentezco_familiar'] ?></td>
-                                        <td><?php echo $empleado['tipo_usuario'] ?></td>
-                                        <td><?php echo $empleado['estado'] ?></td>
-                                        <td><?php echo $empleado['fecha_registro'] ?></td>
-                                        <td><?php echo $empleado['fecha_actualizacion'] ?></td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <form method="GET" actionz="">
+                                            <input type="hidden" name="id_employee-delete"
+                                                value="<?= $empleado['documento'] ?>">
+                                            <input type="hidden" name="ruta" value="empleados_activos.php">
+                                            <button class="btn btn-danger mt-2"
+                                                onclick="return confirm('¿Desea eliminar el registro seleccionado?');"
+                                                type="submit">
+                                                <i class="bx bx-trash" title="Eliminar"></i>
+                                            </button>
+                                        </form>
+                                        <form method="GET" class="mt-2" action="editar_empleado.php">
+                                            <input type="hidden" name="id_employee-edit"
+                                                value="<?= $empleado['documento'] ?>">
+                                            <input type="hidden" name="ruta" value="empleados_activos.php">
+                                            <button class="btn btn-success"
+                                                onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                type="submit">
+                                                <i class="bx bx-refresh" title="Actualizar"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td><?php echo $empleado['tipo_documento'] ?></td>
+                                    <td><?php echo $empleado['documento'] ?></td>
+                                    <td><?php echo $empleado['nombres'] ?></td>
+                                    <td><?php echo $empleado['apellidos'] ?></td>
+                                    <td><?php echo $empleado['celular'] ?></td>
+                                    <td><?php echo $password ?></td>
+                                    <td><?php echo $empleado['ciudad'] ?></td>
+                                    <td><?php echo $empleado['eps'] ?></td>
+                                    <td><?php echo $empleado['arl'] ?></td>
+                                    <td><?php echo $empleado['rh'] ?></td>
+                                    <td><?php echo $fecha_inicio ?></td>
+                                    <td><?php echo $fecha_fin ?></td>
+                                    <td><?php echo $empleado['nombre_familiar'] ?></td>
+                                    <td><?php echo $empleado['celular_familiar'] ?></td>
+                                    <td><?php echo $empleado['parentezco_familiar'] ?></td>
+                                    <td><?php echo $empleado['tipo_usuario'] ?></td>
+                                    <td><?php echo $empleado['estado'] ?></td>
+                                    <td><?php echo $empleado['fecha_registro'] ?></td>
+                                    <td><?php echo $empleado['fecha_actualizacion'] ?></td>
+                                </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
