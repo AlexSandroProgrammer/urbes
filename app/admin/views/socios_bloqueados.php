@@ -2,11 +2,11 @@
 $titlePage = "Lista Socios Bloqueados";
 require_once("../components/sidebar.php");
 // arreglo con ids de la consulta
-$array_keys = [2, 2];
+$array_keys = [1, 2];
 //*  CONSULTA PARA CONSUMIR LOS DATOS DE LOS SOCIOS BLOQUEADOS
 $listaSocios = $connection->prepare("SELECT * FROM usuarios INNER JOIN tipo_usuario ON usuarios.id_tipo_usuario = tipo_usuario.id_tipo_usuario INNER JOIN estados ON usuarios.id_estado = estados.id_estado WHERE usuarios.id_tipo_usuario = :id_tipo_usuario AND usuarios.id_estado = :id_estado");
-$listaSocios->bindParam(":id_tipo_usuario", $array_keys[1]);
-$listaSocios->bindParam(":id_estado", $array_keys[0]);
+$listaSocios->bindParam(":id_tipo_usuario", $array_keys[0]);
+$listaSocios->bindParam(":id_estado", $array_keys[1]);
 $listaSocios->execute();
 $socios = $listaSocios->fetchAll(PDO::FETCH_ASSOC);
 ?>
