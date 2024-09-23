@@ -44,8 +44,8 @@ $mecanica_vehiculos = $query->fetchAll(PDO::FETCH_ASSOC);
                                 <?php foreach ($mecanica_vehiculos as $mecanica_vehiculo) { ?>
                                 <tr>
                                     <td class="custom-table-th">
-                                        <form method="GET" class="mt-2" action="editar_lista_mecanica_vehiculo.php">
-                                            <input type="hidden" name="id_registro_barrido"
+                                        <form method="GET" class="mt-2" action="editar_lista_mecanica.php">
+                                            <input type="hidden" name="id_registro"
                                                 value="<?php echo $mecanica_vehiculo['id_registro'] ?>">
                                             <button class="btn btn-success"
                                                 onclick="return confirm('¿Desea actualizar el registro seleccionado?');"

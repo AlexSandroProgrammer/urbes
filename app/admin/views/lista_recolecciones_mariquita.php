@@ -38,7 +38,6 @@ GROUP BY
     vehiculo_compactador.id_registro_veh_compactador 
 ORDER BY 
     vehiculo_compactador.id_registro_veh_compactador");
-
 $recolecciones = $query->fetchAll(PDO::FETCH_OBJ);
 
 ?>
