@@ -1,22 +1,16 @@
 <?php
-$titlePage = "Editar Área Pública";
+$titlePage = "Editar Carro de Barrido";
 require_once("../components/sidebar.php");
 
-if (isset($_GET['id_registro'])) {
-    $id_registro = $_GET['id_registro'];
+if (isset($_GET['id_registro_barrido'])) {
+    $id_registro_barrido = $_GET['id_registro_barrido'];
 
-    // Consulta para obtener los datos del área pública por ID
-    $getAreaPublicaById = $connection->prepare("SELECT ap.*, e.estado, l.labor, u.nombres, u.apellidos, u.documento, c.ciudad
-        FROM areas_publicas AS ap
-        INNER JOIN labores AS l ON ap.id_labor = l.id_labor
-        INNER JOIN usuarios AS u ON ap.documento = u.documento
-        INNER JOIN estados AS e ON ap.id_estado = e.id_estado
-        INNER JOIN ciudades AS c ON ap.id_ciudad = c.id_ciudad
-        WHERE ap.id_registro = :id_registro");
-    $getAreaPublicaById->bindParam(":id_registro", $id_registro);
-    $getAreaPublicaById->execute();
-    $areaPublica = $getAreaPublicaById->fetch(PDO::FETCH_ASSOC);
-    if ($areaPublica) {
+    // Consulta para obtener los datos del Carro de Barrido por ID
+    $getCarrobarridoById = $connection->prepare("SELECT cb.*, e.estado, ac.actividad, u.documento, u.nombres, u.apellidos, c.ciudad, cb.ciudad AS id_ciudad_seleccionda FROM carro_barrido AS cb INNER JOIN actividades AS ac ON cb.id_actividad = ac.id_actividad INNER JOIN usuarios AS u ON cb.documento = u.documento INNER JOIN estados AS e ON cb.id_estado = e.id_estado INNER JOIN ciudades AS c ON cb.ciudad = c.id_ciudad WHERE cb.id_registro_barrido = :id_registro_barrido");
+    $getCarrobarridoById->bindParam(":id_registro_barrido", $id_registro_barrido);
+    $getCarrobarridoById->execute();
+    $carrobarrido = $getCarrobarridoById->fetch(PDO::FETCH_ASSOC);
+    if ($carrobarrido) {
 ?>
         <!-- Content wrapper -->
         <div class="content-wrapper">
@@ -27,53 +21,33 @@ if (isset($_GET['id_registro'])) {
                     <div class="col-xl">
                         <div class="card mb-4">
                             <div class="card-header justify-content-between align-items-center">
-                                <h3 class="fw-bold py-2">Editar Área Pública - ID: <?php echo $areaPublica['id_registro'] ?>
+                                <h3 class="fw-bold py-2">Editar Carro de Barrido - ID:
+                                    <?php echo $carrobarrido['id_registro_barrido'] ?>
                                 </h3>
-                                <h6 class="mb-0">Por favor edita los datos necesarios del área pública.</h6>
+                                <h6 class="mb-0">Por favor edita los datos necesarios del Carro de Barrido.</h6>
                             </div>
                             <div class="card-body">
-                                <form action="" name="FormUpdatePublic" method="POST" enctype="multipart/form-data"
+                                <form action="" name="FormCarroBarrido" method="POST" enctype="multipart/form-data"
                                     autocomplete="off">
                                     <div class="row">
-                                        <input type="hidden" name="id_registro" value="<?php echo $id_registro ?>">
-
+                                        <input type="hidden" name="id_registro_barrido"
+                                            value="<?php echo $id_registro_barrido ?>">
                                         <!-- Estado -->
-                                        <h6 class="mb-3 fw-bold"><i class="bx bx-map"></i> Datos del Área Pública</h6>
+                                        <h6 class="mb-3 fw-bold"><i class="bx bx-map"></i> Datos del Carro de Barrido</h6>
                                         <div class="mb-3 col-12 col-lg-6">
                                             <label for="estado" class="form-label">Estado</label>
                                             <div class="input-group input-group-merge">
                                                 <span id="estado-icon" class="input-group-text"><i
                                                         class="fas fa-check-circle"></i></span>
-                                                <select class="form-select" name="estado" required>
-                                                    <option value="<?php echo $areaPublica['id_estado'] ?>">
-                                                        <?php echo $areaPublica['estado'] ?></option>
+                                                <select class="form-select" name="id_estado" required>
+                                                    <option value="<?php echo $carrobarrido['id_estado'] ?>">
+                                                        <?php echo $carrobarrido['estado'] ?></option>
                                                     <?php
                                                     $listEstados = $connection->prepare("SELECT * FROM estados WHERE id_estado = 4 OR id_estado = 5");
                                                     $listEstados->execute();
                                                     $estados = $listEstados->fetchAll(PDO::FETCH_ASSOC);
                                                     foreach ($estados as $estado) {
                                                         echo "<option value='{$estado['id_estado']}'>{$estado['estado']}</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Labor -->
-                                        <div class="mb-3 col-12 col-lg-6">
-                                            <label for="labor" class="form-label">Labor</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="labor-icon" class="input-group-text"><i
-                                                        class="fas fa-tasks"></i></span>
-                                                <select class="form-select" name="labor" required>
-                                                    <option value="<?php echo $areaPublica['id_labor'] ?>">
-                                                        <?php echo $areaPublica['labor'] ?></option>
-                                                    <?php
-                                                    $listLabores = $connection->prepare("SELECT * FROM labores WHERE id_labor = 6 OR id_labor = 7 OR id_labor = 8");
-                                                    $listLabores->execute();
-                                                    $labores = $listLabores->fetchAll(PDO::FETCH_ASSOC);
-                                                    foreach ($labores as $labor) {
-                                                        echo "<option value='{$labor['id_labor']}'>{$labor['labor']}</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -87,8 +61,8 @@ if (isset($_GET['id_registro'])) {
                                                 <span id="documento-icon" class="input-group-text"><i
                                                         class="fas fa-user"></i></span>
                                                 <select class="form-select" name="documento" required>
-                                                    <option value="<?php echo $areaPublica['documento'] ?>">
-                                                        <?php echo $areaPublica['nombres'] . ' ' . $areaPublica['apellidos'] ?>
+                                                    <option value="<?php echo $carrobarrido['documento'] ?>">
+                                                        <?php echo $carrobarrido['nombres'] . ' ' . $carrobarrido['apellidos'] ?>
                                                     </option>
                                                     <?php
                                                     $listUsuarios = $connection->prepare("SELECT * FROM usuarios WHERE id_tipo_usuario = 3");
@@ -109,8 +83,8 @@ if (isset($_GET['id_registro'])) {
                                                 <span id="ciudad-icon" class="input-group-text"><i
                                                         class="fas fa-city"></i></span>
                                                 <select class="form-select" name="ciudad" required>
-                                                    <option value="<?php echo $areaPublica['id_ciudad'] ?>">
-                                                        <?php echo $areaPublica['ciudad'] ?></option>
+                                                    <option value="<?php echo $carrobarrido['id_ciudad_seleccionda'] ?>">
+                                                        <?php echo $carrobarrido['ciudad'] ?></option>
                                                     <?php
                                                     $listCiudades = $connection->prepare("SELECT * FROM ciudades");
                                                     $listCiudades->execute();
@@ -130,18 +104,18 @@ if (isset($_GET['id_registro'])) {
                                                 <span id="fecha_inicio-icon" class="input-group-text"><i
                                                         class="fas fa-calendar"></i></span>
                                                 <input type="date" class="form-control" name="fecha_inicio"
-                                                    value="<?php echo $areaPublica['fecha_inicio'] ?>" required />
+                                                    value="<?php echo $carrobarrido['fecha_inicio'] ?>" required />
                                             </div>
                                         </div>
 
                                         <!-- Fecha Finalización -->
                                         <div class="mb-3 col-12 col-lg-6">
-                                            <label for="fecha_finalizacion" class="form-label">Fecha de Finalización</label>
+                                            <label for="fecha_fin" class="form-label">Fecha de Finalización</label>
                                             <div class="input-group input-group-merge">
-                                                <span id="fecha_finalizacion-icon" class="input-group-text"><i
+                                                <span id="fecha_fin-icon" class="input-group-text"><i
                                                         class="fas fa-calendar"></i></span>
-                                                <input type="date" class="form-control" name="fecha_finalizacion"
-                                                    value="<?php echo $areaPublica['fecha_finalizacion'] ?>" />
+                                                <input type="date" class="form-control" name="fecha_fin"
+                                                    value="<?php echo $carrobarrido['fecha_fin'] ?>" />
                                             </div>
                                         </div>
 
@@ -152,7 +126,7 @@ if (isset($_GET['id_registro'])) {
                                                 <span id="hora_inicio-icon" class="input-group-text"><i
                                                         class="fas fa-clock"></i></span>
                                                 <input type="time" class="form-control" name="hora_inicio"
-                                                    value="<?php echo $areaPublica['hora_inicio'] ?>" required />
+                                                    value="<?php echo $carrobarrido['hora_inicio'] ?>" required />
                                             </div>
                                         </div>
 
@@ -163,7 +137,7 @@ if (isset($_GET['id_registro'])) {
                                                 <span id="hora_finalizacion-icon" class="input-group-text"><i
                                                         class="fas fa-clock"></i></span>
                                                 <input type="time" class="form-control" name="hora_fin"
-                                                    value="<?php echo $areaPublica['hora_finalizacion'] ?>" />
+                                                    value="<?php echo $carrobarrido['hora_fin'] ?>" />
                                             </div>
                                         </div>
 
@@ -174,7 +148,7 @@ if (isset($_GET['id_registro'])) {
                                                 <span id="peso-icon" class="input-group-text"><i
                                                         class="fas fa-weight-hanging"></i></span>
                                                 <input type="number" class="form-control" name="peso"
-                                                    value="<?php echo $areaPublica['peso'] ?>" required />
+                                                    value="<?php echo $carrobarrido['peso'] ?>" required />
                                             </div>
                                         </div>
 
@@ -185,15 +159,15 @@ if (isset($_GET['id_registro'])) {
                                                 <span id="observaciones-icon" class="input-group-text"><i
                                                         class="fas fa-comment-alt"></i></span>
                                                 <textarea class="form-control" name="observaciones" rows="3"
-                                                    placeholder="Escriba observaciones..."><?php echo $areaPublica['observaciones'] ?></textarea>
+                                                    placeholder="Escriba observaciones..."><?php echo $carrobarrido['observaciones'] ?></textarea>
                                             </div>
                                         </div>
 
                                         <div class="mt-4">
                                             <a href="areas_publicas_mariquita.php" class="btn btn-danger">Cancelar</a>
                                             <input type="submit" class="btn btn-primary" value="Actualizar">
-                                            <input type="hidden" class="btn btn-info" value="FormUpdatePublic"
-                                                name="MM_FormUpdatePublic"></input>
+                                            <input type="hidden" class="btn btn-info" value="FormCarroBarrido"
+                                                name="MM_FormCarroBarrido"></input>
                                         </div>
                                     </div>
                                 </form>
@@ -206,9 +180,9 @@ if (isset($_GET['id_registro'])) {
     <?php
         require_once("../components/footer.php");
     } else {
-        showErrorOrSuccessAndRedirect("error", "Error de ruta", "Los datos del área pública no fueron encontrados", "lista_areas_publicas.php");
+        showErrorOrSuccessAndRedirect("error", "Error de ruta", "Los datos del Carro de Barrido no fueron encontrados", "lista_areas_publicas.php");
     }
 } else {
-    showErrorOrSuccessAndRedirect("error", "Error de ruta", "Los datos del área pública no fueron encontrados", "lista_areas_publicas.php");
+    showErrorOrSuccessAndRedirect("error", "Error de ruta", "Los datos del Carro de Barrido no fueron encontrados", "lista_areas_publicas.php");
 }
     ?>
