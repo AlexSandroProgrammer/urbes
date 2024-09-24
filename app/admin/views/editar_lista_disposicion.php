@@ -50,6 +50,7 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                         <form method="POST" name="FormUpDispocision" enctype="multipart/form-data" autocomplete="off">
                             <input type="hidden" name="id_registro_disposicion"
                                 value="<?= $disposicion['id_recoleccion'] ?>">
+                            <input type="hidden" name="MM_FormUpDispocision" value="FormUpDispocision">
 
                             <div class="row">
                                 <!-- Estado -->
@@ -90,12 +91,10 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="vehiculo">Vehículo</label>
                                     <select class="form-control" name="vehiculo">
                                         <?php
-                                        // Consulta para obtener todos los vehículos disponibles
                                         $queryVehiculos = $connection->prepare("SELECT placa, vehiculo FROM vehiculos");
                                         $queryVehiculos->execute();
                                         $vehiculos = $queryVehiculos->fetchAll(PDO::FETCH_ASSOC);
 
-                                        // Mostrar las opciones en el select
                                         foreach ($vehiculos as $vehiculo) {
                                             $selected = $disposicion['placa'] == $vehiculo['placa'] ? 'selected' : '';
                                             echo "<option value='{$vehiculo['placa']}' $selected>{$vehiculo['placa']} - {$vehiculo['vehiculo']}</option>";
@@ -109,12 +108,10 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="ciudad">Ciudad</label>
                                     <select class="form-control" name="ciudad">
                                         <?php
-                                        // Consulta para obtener todas las ciudades disponibles
                                         $queryCiudades = $connection->prepare("SELECT id_ciudad, ciudad FROM ciudades");
                                         $queryCiudades->execute();
                                         $ciudades = $queryCiudades->fetchAll(PDO::FETCH_ASSOC);
 
-                                        // Mostrar las opciones en el select
                                         foreach ($ciudades as $ciudad) {
                                             $selected = $disposicion['ciudad'] == $ciudad['ciudad'] ? 'selected' : '';
                                             echo "<option value='{$ciudad['id_ciudad']}' $selected>{$ciudad['ciudad']}</option>";
@@ -126,36 +123,61 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                 <!-- Fecha Inicio -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
-                                    <input type="date" class="form-control" name="fecha_inicio"
-                                        value="<?= $disposicion['fecha_inicio'] ?>" required />
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
+                                        <input type="date" class="form-control" name="fecha_inicio"
+                                            value="<?= $disposicion['fecha_inicio'] ?>" required />
+                                    </div>
                                 </div>
 
                                 <!-- Hora Inicio -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="hora_inicio">Hora Inicio</label>
-                                    <input type="time" class="form-control" name="hora_inicio"
-                                        value="<?= $disposicion['hora_inicio'] ?>" required />
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                                        <input type="time" class="form-control" name="hora_inicio"
+                                            value="<?= $disposicion['hora_inicio'] ?>" required />
+                                    </div>
                                 </div>
 
                                 <!-- Fecha Fin -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="fecha_fin">Fecha Fin</label>
-                                    <input type="date" class="form-control" name="fecha_fin"
-                                        value="<?= $disposicion['fecha_fin'] ?>" required />
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
+                                        <input type="date" class="form-control" name="fecha_fin"
+                                            value="<?= $disposicion['fecha_fin'] ?>" required />
+                                    </div>
                                 </div>
 
                                 <!-- Hora Fin -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="hora_fin">Hora Fin</label>
-                                    <input type="time" class="form-control" name="hora_fin"
-                                        value="<?= $disposicion['hora_finalizacion'] ?>" required />
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                                        <input type="time" class="form-control" name="hora_fin"
+                                            value="<?= $disposicion['hora_finalizacion'] ?>" required />
+                                    </div>
                                 </div>
 
                                 <!-- Kilometraje Inicial -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="km_inicio">Kilometraje Inicial</label>
-                                    <input type="number" class="form-control" name="km_inicio"
-                                        value="<?= $disposicion['km_inicio'] ?>" required />
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-road"></i></span>
+                                        <input type="number" class="form-control" name="km_inicio"
+                                            value="<?= $disposicion['km_inicio'] ?>" required />
+                                    </div>
+                                </div>
+
+                                <!-- Horómetro Inicial -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="horometro_inicio">Horómetro Inicial</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-tachometer-alt"></i></span>
+                                        <input type="number" class="form-control" name="horometro_inicio"
+                                            value="<?= $disposicion['horometro_inicio'] ?>" required />
+                                    </div>
                                 </div>
 
                                 <!-- Foto Kilometraje Inicial -->
@@ -163,7 +185,7 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="foto_km_inicio">Foto Kilometraje Inicial</label>
                                     <input type="file" class="form-control" name="foto_km_inicio" accept="image/*" />
                                     <?php if (!empty($disposicion['foto_kilometraje_inicial'])): ?>
-                                    <img src="../assets/images/<?= $disposicion['foto_kilometraje_inicial'] ?>"
+                                    <img src="../../employee/assets/images/<?= $disposicion['foto_kilometraje_inicial'] ?>"
                                         alt="Kilometraje Inicial" class="img-fluid mt-2" style="max-width: 150px;">
                                     <?php endif; ?>
                                 </div>
@@ -171,8 +193,21 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                 <!-- Kilometraje Final -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="km_fin">Kilometraje Final</label>
-                                    <input type="number" class="form-control" name="km_fin"
-                                        value="<?= $disposicion['km_fin'] ?>" required />
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-road"></i></span>
+                                        <input type="number" class="form-control" name="km_fin"
+                                            value="<?= $disposicion['km_fin'] ?>" required />
+                                    </div>
+                                </div>
+
+                                <!-- Horómetro Final -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="horometro_fin">Horómetro Final</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-tachometer-alt"></i></span>
+                                        <input type="number" class="form-control" name="horometro_fin"
+                                            value="<?= $disposicion['horometro_fin'] ?>" required />
+                                    </div>
                                 </div>
 
                                 <!-- Foto Kilometraje Final -->
@@ -180,7 +215,7 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="foto_km_fin">Foto Kilometraje Final</label>
                                     <input type="file" class="form-control" name="foto_km_fin" accept="image/*" />
                                     <?php if (!empty($disposicion['foto_kilometraje_final'])): ?>
-                                    <img src="../assets/images/<?= $disposicion['foto_kilometraje_final'] ?>"
+                                    <img src="../../employee/assets/images/<?= $disposicion['foto_kilometraje_final'] ?>"
                                         alt="Kilometraje Final" class="img-fluid mt-2" style="max-width: 150px;">
                                     <?php endif; ?>
                                 </div>
@@ -188,16 +223,34 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                 <!-- Toneladas -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="toneladas">Toneladas</label>
-                                    <input type="number" step="0.01" class="form-control" name="toneladas"
-                                        value="<?= $disposicion['toneladas'] ?>" required />
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-weight"></i></span>
+                                        <input type="number" step="0.01" class="form-control" name="toneladas"
+                                            value="<?= $disposicion['toneladas'] ?>" required />
+                                    </div>
+                                </div>
+
+                                <!-- Galones -->
+                                <div class="mb-3 col-12 col-lg-6">
+                                    <label class="form-label" for="galones">Galones</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-gas-pump"></i></span>
+                                        <input type="number" step="0.01" class="form-control" name="galones"
+                                            value="<?= $disposicion['galones'] ?>" required />
+                                    </div>
+                                </div>
+
+                                <!-- Observaciones -->
+                                <div class="mb-3 col-12">
+                                    <label class="form-label" for="observaciones">Observaciones</label>
+                                    <textarea class="form-control" name="observaciones"
+                                        rows="3"><?= $disposicion['observaciones'] ?></textarea>
                                 </div>
 
                                 <!-- Botón de Actualización -->
                                 <div class="mt-4">
                                     <a href="index.php" class="btn btn-danger">Cancelar</a>
                                     <button type="submit" class="btn btn-primary">Actualizar</button>
-                                    <input type="hidden" class="btn btn-info" value="FormUpDispocision"
-                                        name="MM_FormUpDispocision"></input>
                                 </div>
 
                             </div>
@@ -208,4 +261,5 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
         </div>
     </div>
 </div>
+
 <!-- / Content -->

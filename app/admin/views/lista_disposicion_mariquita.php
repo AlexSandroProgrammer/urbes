@@ -85,16 +85,16 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <td><?php echo $disposicion['km_inicio'] ?></td>
                                     <?php if (isset($disposicion['foto_kilometraje_inicial']) && !empty($disposicion['foto_kilometraje_inicial'])) { ?>
                                     <td class="avatar">
-                                        <img src="../assets/images/<?php echo $disposicion['foto_kilometraje_inicial'] ?>"
+                                        <img src="../../employee/assets/images/<?php echo $disposicion['foto_kilometraje_inicial'] ?>"
                                             alt class="w-px-100 h-px-100 rounded-circle" />
                                         <button class="btn btn-primary mt-2 view-photo-btn"
-                                            data-photo="../assets/images/<?php echo $disposicion['foto_kilometraje_inicial'] ?>">
+                                            data-photo="../../employee/assets/images/<?php echo $disposicion['foto_kilometraje_inicial'] ?>">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </td>
                                     <?php } else { ?>
                                     <td class="avatar">
-                                        <img src="../assets/images/perfil_sin_foto.jpg" alt
+                                        <img src="../../employee/assets/images/perfil_sin_foto.jpg" alt
                                             class="w-px-100 mb-3 h-px-100 rounded-circle" />
                                         <p>Sin foto</p>
                                     </td>
@@ -102,10 +102,10 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <td><?php echo $disposicion['km_fin'] ?></td>
                                     <?php if (isset($disposicion['foto_kilometraje_final']) && !empty($disposicion['foto_kilometraje_final'])) { ?>
                                     <td class="avatar">
-                                        <img src="../assets/images/<?php echo $disposicion['foto_kilometraje_final'] ?>"
+                                        <img src="../../employee/assets/images/<?php echo $disposicion['foto_kilometraje_final'] ?>"
                                             alt class="w-px-100 h-px-100 rounded-circle" />
                                         <button class="btn btn-primary mt-2 view-photo-btn"
-                                            data-photo="../assets/images/<?php echo $disposicion['foto_kilometraje_final'] ?>">
+                                            data-photo="../../employee/assets/images/<?php echo $disposicion['foto_kilometraje_final'] ?>">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </td>
