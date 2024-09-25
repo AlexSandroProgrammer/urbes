@@ -46,7 +46,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formUpdateDisposicion">
+                            name="formUpdateDisposicion" onsubmit="disableSubmitButton(this);">>
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Hola(a)
                                     <?= $nombre_completo ?>, te invitamos a terminar de rellanar al registro del
@@ -57,7 +57,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-calendar-day"></i></span>
-                                        <input type="date" required readonly="readonly" class="form-control"
+                                        <input type="date" required readonly="readonly" class="form-control ps-2"
                                             value="<?= $data['fecha_inicio'] ?>" id="fecha_inicio" />
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-calendar-day"></i></span>
-                                        <input type="date" required readonly="readonly" class="form-control"
+                                        <input type="date" required readonly="readonly" class="form-control ps-2"
                                             value="<?= $fecha_final ?>" name="fecha_final" id="fecha_final" />
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="vehiculo-2" class="input-group-text"><i
                                                 class="fas fa-truck"></i></span>
-                                        <input type="text" required readonly="readonly" class="form-control"
+                                        <input type="text" required readonly="readonly" class="form-control ps-2"
                                             value="<?= $data['vehiculo'] ?> <?= $data['placa'] ?>" id="vehiculo" />
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                         <span id="documento-icon" class="input-group-text"><i
                                                 class="fas fa-id-card"></i></span>
                                         <input type="text" minlength="6" maxlength="10" readonly="readonly"
-                                            value="<?= $data['documento'] ?>" class="form-control" required
+                                            value="<?= $data['documento'] ?>" class="form-control ps-2" required
                                             id="documento" placeholder="Ingresa tu numero de documento" />
                                     </div>
                                 </div>
@@ -107,7 +107,8 @@ if (isNotEmpty([$_GET['stmp']])) {
                                             <i class="fas fa-clock"></i>
                                         </span>
                                         <input type="time" readonly="readonly" required
-                                            value="<?= $data['hora_inicio'] ?>" class="form-control" id="hora_inicio" />
+                                            value="<?= $data['hora_inicio'] ?>" class="form-control ps-2"
+                                            id="hora_inicio" />
                                     </div>
                                 </div>
                                 <!-- hora_finalizacion -->
@@ -117,7 +118,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                         <span id="hora_finalizacion_span" class="input-group-text">
                                             <i class="fas fa-clock"></i>
                                         </span>
-                                        <input type="time" readonly="readonly" required class="form-control"
+                                        <input type="time" readonly="readonly" required class="form-control ps-2"
                                             name="hora_finalizacion" id="hora_finalizacion" />
                                     </div>
                                 </div>
@@ -154,8 +155,8 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="text" value="<?= $data['km_inicio'] ?>" readonly="readonly"
-                                            required class="form-control" id="kilometraje"
+                                        <input type="number" value="<?= $data['km_inicio'] ?>" readonly="readonly"
+                                            class="form-control ps-2" id="kilometraje"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
                                 </div>
@@ -167,55 +168,20 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-camera"></i></span>
-                                        <input type="file" accept="image/*" class="form-control"
-                                            name="foto_kilometraje_final" id="foto_kilometraje_final"
-                                            onchange="validarImagen()" />
+                                        <input type="file" accept="image/*" class="form-control ps-2"
+                                            name="foto_kilometraje_final" id="foto_kilometraje_final" />
 
                                     </div>
                                 </div>
-                                <script>
-                                function validarImagen() {
-                                    const inputFile = document.getElementById('foto_kilometraje_final');
-                                    const file = inputFile.files[0];
-                                    if (file) {
-                                        const fileType = file.type;
-                                        const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
-                                        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                                        const maxSize = 5; // Tamaño máximo en MB
-                                        // Validar el tipo de archivo
-                                        if (!validImageTypes.includes(fileType)) {
-                                            swal.fire({
-                                                title: 'Error',
-                                                text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
-                                                icon: 'error',
-                                                confirmButtonText: 'Aceptar'
-                                            });
-                                            inputFile.value = ''; // Limpiar el input si el archivo no es válido
-                                            return;
-                                        }
-                                        // Validar el tamaño del archivo
-                                        if (fileSize > maxSize) {
-                                            swal.fire({
-                                                title: 'Error',
-                                                text: 'El tamaño de la imagen no debe exceder los 5 MB.',
-                                                icon: 'error',
-                                                confirmButtonText: 'Aceptar'
-                                            });
-                                            inputFile.value = ''; // Limpiar el input si el archivo es muy grande
-                                            return;
-                                        }
-                                    }
-                                }
-                                </script>
+
                                 <!-- kilometraje -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label class="form-label" for="kilometraje_final">Kilometraje Final</label>
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="text" minlength="1" maxlength="10"
-                                            onkeypress="return(multiplenumber(event));" class="form-control"
-                                            name="kilometraje_final" id="kilometraje_final"
+                                        <input type="number" step="0.01" min="0" maxlength="10"
+                                            class="form-control ps-2" name="kilometraje_final" id="kilometraje_final"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
                                 </div>
@@ -225,10 +191,9 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" required
-                                            onkeypress="return(multiplenumber(event));"
+                                        <input type="number" step="0.01" min="0"
                                             value="<?= $data['horometro_inicio'] ?>" readonly="readonly"
-                                            class="form-control" id="horometro" placeholder="Ingresar horometro" />
+                                            class="form-control ps-2" id="horometro" placeholder="Ingresar horometro" />
                                     </div>
                                 </div>
                                 <!-- horometro final -->
@@ -237,8 +202,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" required
-                                            onkeypress="return(multiplenumber(event));" class="form-control"
+                                        <input type="number" step="0.01" min="0" required class="form-control ps-2"
                                             id="horometro_final" name="horometro_final"
                                             placeholder="Ingresar horometro final" />
                                     </div>
@@ -247,7 +211,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <label for="ciudad" class="form-label">Ciudad de Recoleccion</label>
                                     <div class="input-group input-group-merge">
                                         <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
-                                        <input type="text" class="form-control" id="ciudad" name="ciudad"
+                                        <input type="text" class="form-control ps-2" id="ciudad" name="ciudad"
                                             placeholder="Ingresar ciudad" readonly="readonly"
                                             value="<?= $data['ciudad'] ?>" />
                                     </div>
@@ -258,7 +222,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-weight"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" class="form-control"
+                                        <input type="number" step="0.01" min="0" class="form-control ps-2"
                                             name="toneladas" id="toneladas" placeholder="Ingresar tonelada" />
                                     </div>
                                 </div>
@@ -268,20 +232,29 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-gas-pump"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" class="form-control"
+                                        <input type="number" step="0.01" min="0" class="form-control ps-2"
                                             name="galones" id="galones" placeholder="Ingresar galones" />
                                     </div>
                                 </div>
-                                <div class="mb-3 col-12 col-lg-6 col-xl-8">
-                                    <label for="observaciones" class="form-label">Observaciones</label>
-                                    <div class="input-group input-group-merge">
-                                        <span id="observaciones-2" class="input-group-text">
-                                            <i class="fas fa-weight-hanging"></i>
-                                        </span>
-                                        <textarea class="form-control" id="observaciones" rows="5" name="observaciones"
-                                            placeholder="Ingresar observación"></textarea>
+                                <!-- observaciones -->
+                                <div class="mb-3 col-12 d-flex justify-content-center">
+                                    <div class="col-12 col-lg-6">
+                                        <div class="text-center mt-3">
+                                            <label class="form-label" for="observaciones">Novedades y
+                                                Observaciones</label>
+                                        </div>
+                                        <div class="input-group input-group-merge">
+                                            <span id="observaciones-icon" class="input-group-text">
+                                                <i class="fas fa-weight-hanging"></i>
+                                            </span>
+                                            <textarea minlength="0" maxlength="500" class="form-control ps-2" required
+                                                id="observaciones" name="observaciones"
+                                                placeholder="Ingresa las novedades y observaciones aquí" rows="3"
+                                                autofocus></textarea>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <input type="hidden" id="empleadosInput" name="empleados">
                                 <div class="mt-4">
                                     <!-- Botón de Cancelar -->

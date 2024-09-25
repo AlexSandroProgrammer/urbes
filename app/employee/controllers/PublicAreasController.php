@@ -254,12 +254,11 @@ if ((isset($_POST["MM_formRegisterWashing"])) && ($_POST["MM_formRegisterWashing
         showErrorOrSuccessAndRedirect("success", "Formulario Registrado", "Se ha registrado la etapa inicial del formulario, debes terminar de rellenar la información restante en el panel de formularios pendientes", "index.php");
         exit();
     } else {
-        showErrorOrSuccessAndRedirect("error", "Error de Registro", "Error al momento de registrar los datos, por favor inténtalo nuevamente.", "lavado.php");
+        showErrorOrSuccessAndRedirect("error", "Error de Registro", "Error al momento de registrar los datos, por favor inténtalo nuevamente.", "pendientes.php");
         exit();
     }
 }
 ?>
-
 
 <?php
 // * Método actualizar
@@ -268,19 +267,18 @@ if ((isset($_POST["MM_formFinishPublicAreas"])) && ($_POST["MM_formFinishPublicA
     // Variables de asignación de valores que se envían desde el formulario
     $fecha_fin     = $_POST['fecha_fin'];
     $hora_fin      = $_POST['hora_fin'];
-    $peso          = $_POST['peso'];
+    $peso          = isset($_POST['peso']) && $_POST['peso'] !== '' ? $_POST['peso'] : null; // Si está vacío, asignamos null
     $observacion   = $_POST['observacion'];
     $id_registro   = $_POST['id_registro']; // Este ID se envía desde el formulario
 
-    // Validamos que no hayamos recibido ningún dato vacío
+    // Validamos que no hayamos recibido ningún dato vacío (exceptuando peso)
     if (isEmpty([
         $fecha_fin,
         $hora_fin, 
-        $peso, 
         $observacion,
         $id_registro 
     ])) {
-        showErrorFieldsEmpty("terminar_form_areas_public.php");
+        showErrorFieldsEmpty("pendientes.php");
         exit();
     }
 
@@ -288,7 +286,7 @@ if ((isset($_POST["MM_formFinishPublicAreas"])) && ($_POST["MM_formFinishPublicA
         // Fecha actual
         $fecha_actualizacion = date('Y-m-d H:i:s');
         $id_estado = 5;
-       
+
         // Actualizar los datos en la base de datos
         $finishRegister = $connection->prepare("
             UPDATE areas_publicas 
@@ -304,11 +302,18 @@ if ((isset($_POST["MM_formFinishPublicAreas"])) && ($_POST["MM_formFinishPublicA
         // Vincular los parámetros
         $finishRegister->bindParam(':fecha_fin', $fecha_fin);
         $finishRegister->bindParam(':hora_fin', $hora_fin);
-        $finishRegister->bindParam(':peso', $peso);
+
+        // Si $peso es NULL, usamos bindValue con PDO::PARAM_NULL, si no, bindParam con el valor real
+        if ($peso === null) {
+            $finishRegister->bindValue(':peso', null, PDO::PARAM_NULL);
+        } else {
+            $finishRegister->bindParam(':peso', $peso);
+        }
+
         $finishRegister->bindParam(':observacion', $observacion);
         $finishRegister->bindParam(':fecha_actualizacion', $fecha_actualizacion);
         $finishRegister->bindParam(':id_estado', $id_estado);
-        $finishRegister->bindParam(':id_registro', $id_registro); // No se usa lastInsertId()
+        $finishRegister->bindParam(':id_registro', $id_registro);
         $finishRegister->execute();
 
         if ($finishRegister) {
@@ -328,7 +333,7 @@ if ((isset($_POST["MM_formFinishPublicAreas"])) && ($_POST["MM_formFinishPublicA
                 'id_registro' => $id_registro,
                 'fecha_fin' => $fecha_fin,
                 'hora_fin' => $hora_fin,
-                'peso' => $peso,
+                'peso' => $peso ?? 0, // Enviar 0 a Google Sheets si peso es NULL
                 'observacion' => $observacion,
                 'id_estado' => $sheets['estado'], // Estado actualizado
                 'fecha_actualizacion' => $fecha_actualizacion,
@@ -338,11 +343,11 @@ if ((isset($_POST["MM_formFinishPublicAreas"])) && ($_POST["MM_formFinishPublicA
             // Enviar datos a Google Sheets
             enviarAGoogleSheets($datos);
 
-            showErrorOrSuccessAndRedirect("success", "¡Perfecto!", "Los datos se han actualizado correctamente", "./index.php");
+            showErrorOrSuccessAndRedirect("success", "¡Perfecto!", "Los datos se han actualizado correctamente", "index.php");
             exit();
         }
     } catch (\Throwable $th) {
-        showErrorOrSuccessAndRedirect("error", "Error de actualización", "Error al momento de actualizar los datos.", "./index.php");
+        showErrorOrSuccessAndRedirect("error", "Error de actualización", "Error al momento de actualizar los datos.", "index.php");
         exit();
     }
 }

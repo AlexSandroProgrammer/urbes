@@ -141,7 +141,7 @@ if ((isset($_POST["MM_formFinishSweepingCart"])) && ($_POST["MM_formFinishSweepi
     // Variables de asignación de valores que se envían desde el formulario
     $fecha_fin     = $_POST['fecha_fin'];
     $hora_fin      = $_POST['hora_fin'];
-    $peso          = $_POST['peso'];
+    $peso          = isset($_POST['peso']) && $_POST['peso'] !== '' ? $_POST['peso'] : null; // Si está vacío, asignamos null
     $observacion   = $_POST['observacion'];
     $id_registro   = $_POST['id_registro'];
 
@@ -149,11 +149,10 @@ if ((isset($_POST["MM_formFinishSweepingCart"])) && ($_POST["MM_formFinishSweepi
     if (isEmpty([
         $fecha_fin,
         $hora_fin, 
-        $peso, 
         $observacion,
         $id_registro 
     ])) {
-        showErrorFieldsEmpty("terminar_carro_barrido.php");
+        showErrorFieldsEmpty("pendientes.php");
         exit();
     }
 
@@ -177,7 +176,12 @@ if ((isset($_POST["MM_formFinishSweepingCart"])) && ($_POST["MM_formFinishSweepi
         // Vincular los parámetros
         $finishRegister->bindParam(':fecha_fin', $fecha_fin);
         $finishRegister->bindParam(':hora_fin', $hora_fin);
-        $finishRegister->bindParam(':peso', $peso);
+         // Si $peso es NULL, usamos bindValue con PDO::PARAM_NULL, si no, bindParam con el valor real
+        if ($peso === null) {
+            $finishRegister->bindValue(':peso', null, PDO::PARAM_NULL);
+        } else {
+            $finishRegister->bindParam(':peso', $peso);
+        }
         $finishRegister->bindParam(':observacion', $observacion);
         $finishRegister->bindParam(':fecha_actualizacion', $fecha_actualizacion);
         $finishRegister->bindParam(':id_estado', $id_estado);
@@ -199,7 +203,7 @@ if ((isset($_POST["MM_formFinishSweepingCart"])) && ($_POST["MM_formFinishSweepi
             'id_registro' => $id_registro,
             'fecha_fin' => $fecha_fin,
             'hora_fin' => $hora_fin,
-            'peso' => $peso,
+            'peso' => $peso ?? 0,
             'observacion' => $observacion,
             'id_estado' => $sheets['estado'],
             'fecha_actualizacion' => $fecha_actualizacion,

@@ -51,7 +51,7 @@ $vehiculo =  $Register['placa'] . ' ' . $Register['vehiculo'];
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formFinishMechanics">
+                            name="formFinishMechanics" onsubmit="disableSubmitButton(this);">>
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
@@ -91,9 +91,9 @@ $vehiculo =  $Register['placa'] . ' ' . $Register['vehiculo'];
                                         <span id="documento-icon" class="input-group-text">
                                             <i class="fas fa-id-card"></i>
                                         </span>
-                                        <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this)"
-                                            onkeypress="return multiplenumber(event);" class="form-control ps-2 "
-                                            readonly required id="documento"
+                                        <input type="number" minlength="6" maxlength="10"
+                                            oninput="maxlengthNumber(this)" onkeypress="return multiplenumber(event);"
+                                            class="form-control ps-2 " readonly required id="documento"
                                             value="<?php echo htmlspecialchars($Register['documento']); ?>"
                                             name="documento" placeholder="Ingresa tu número de documento" autofocus />
                                     </div>

@@ -53,7 +53,7 @@ $labor = $Register['labor'];
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formFinishPublicAreas">
+                            name="formFinishPublicAreas" onsubmit="disableSubmitButton(this);">>
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
@@ -64,7 +64,7 @@ $labor = $Register['labor'];
                                     <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
-                                                class="fas fa-calendar-day"></i></span>
+                                                class="fas fa-calendar"></i></span>
                                         <input type="date" required readonly class="form-control ps-2"
                                             name="fecha_inicio" id="fecha_inicio"
                                             value="<?php echo htmlspecialchars($Register['fecha_inicio']); ?>" />
@@ -136,9 +136,9 @@ $labor = $Register['labor'];
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-calendar-day"></i></span>
-                                        <input type="date" required class="form-control" name="fecha_fin" id="fecha_fin"
-                                            readonly min="<?php echo $today; ?>" max="<?php echo $today; ?>"
-                                            value="<?php echo $today; ?>" />
+                                        <input type="date" required class="form-control ps-2" name="fecha_fin"
+                                            id="fecha_fin" readonly min="<?php echo $today; ?>"
+                                            max="<?php echo $today; ?>" value="<?php echo $today; ?>" />
                                     </div>
                                 </div>
                                 <!-- hora_fin -->
@@ -148,7 +148,7 @@ $labor = $Register['labor'];
                                         <span id="hora_inicio_span" class="input-group-text">
                                             <i class="fas fa-clock"></i>
                                         </span>
-                                        <input type="time" readonly required class="form-control" name="hora_fin"
+                                        <input type="time" readonly required class="form-control ps-2" name="hora_fin"
                                             id="hora_fin" />
                                     </div>
                                 </div>
@@ -177,9 +177,8 @@ $labor = $Register['labor'];
                                         <span id="documento-icon" class="input-group-text">
                                             <i class="fas fa-weight-hanging"></i>
                                         </span>
-                                        <input type="text" minlength="1" maxlength="10" class="form-control ps-2 "
-                                            required id="peso" name="peso" placeholder="Ingresa el peso de la poda"
-                                            autofocus />
+                                        <input type="number" step="0.01" min="0" class="form-control ps-2 " required
+                                            id="peso" name="peso" placeholder="Ingresa el peso de la poda" autofocus />
                                     </div>
                                 </div>
 

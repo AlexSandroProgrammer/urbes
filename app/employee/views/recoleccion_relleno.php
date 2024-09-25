@@ -34,7 +34,7 @@ if ($tipo_usuario != 4) {
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formRegisterRecoleccion" onsubmit="return validarEmpleados()">
+                            name="formRegisterRecoleccion" onsubmit="disableSubmitButton(this);">>
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
@@ -46,7 +46,7 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-calendar-day"></i></span>
-                                        <input type="date" required readonly class="form-control"
+                                        <input type="date" required readonly class="form-control ps-2"
                                             value="<?= $fecha_inicio ?>" name="fecha_inicio" id="fecha_inicio" />
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@ if ($tipo_usuario != 4) {
                                         <span id="documento-icon" class="input-group-text"><i
                                                 class="fas fa-id-card"></i></span>
                                         <input type="text" minlength="6" maxlength="10" readonly
-                                            value="<?= $documento ?>" class="form-control" required id="documento"
+                                            value="<?= $documento ?>" class="form-control ps-2" required id="documento"
                                             name="documento" placeholder="Ingresa tu numero de documento" />
                                     </div>
                                 </div>
@@ -99,8 +99,8 @@ if ($tipo_usuario != 4) {
                                         <span id="hora_inicio_span" class="input-group-text">
                                             <i class="fas fa-clock"></i>
                                         </span>
-                                        <input type="time" readonly required class="form-control" name="hora_inicio"
-                                            id="hora_inicio" />
+                                        <input type="time" readonly required class="form-control ps-2"
+                                            name="hora_inicio" id="hora_inicio" />
                                     </div>
                                 </div>
                                 <script>
@@ -126,56 +126,19 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-camera"></i></span>
-                                        <input type="file" accept="image/*" required class="form-control"
-                                            name="foto_kilometraje" id="foto_kilometraje" onchange="validarImagen()" />
+                                        <input type="file" accept="image/*" class="form-control ps-2"
+                                            name="foto_kilometraje" id="foto_kilometraje" />
 
                                     </div>
                                 </div>
-                                <script>
-                                function validarImagen() {
-                                    const inputFile = document.getElementById('foto_kilometraje');
-                                    const file = inputFile.files[0];
 
-                                    if (file) {
-                                        const fileType = file.type;
-                                        const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
-                                        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                                        const maxSize = 5; // Tamaño máximo en MB
-
-                                        // Validar el tipo de archivo
-                                        if (!validImageTypes.includes(fileType)) {
-                                            swal.fire({
-                                                title: 'Error',
-                                                text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
-                                                icon: 'error',
-                                                confirmButtonText: 'Aceptar'
-                                            });
-                                            inputFile.value = ''; // Limpiar el input si el archivo no es válido
-                                            return;
-                                        }
-
-                                        // Validar el tamaño del archivo
-                                        if (fileSize > maxSize) {
-                                            swal.fire({
-                                                title: 'Error',
-                                                text: 'El tamaño de la imagen no debe exceder los 5 MB.',
-                                                icon: 'error',
-                                                confirmButtonText: 'Aceptar'
-                                            });
-                                            inputFile.value = ''; // Limpiar el input si el archivo es muy grande
-                                            return;
-                                        }
-                                    }
-                                }
-                                </script>
                                 <!-- kilometraje -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label class="form-label" for="kilometraje">Kilometraje Inicial</label>
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="number" minlength="1" maxlength="10" required
-                                            onkeypress="return(multiplenumber(event));" class="form-control"
+                                        <input type="number" step="0.01" min="0" class="form-control ps-2"
                                             name="kilometraje" id="kilometraje" placeholder="Ingresar kilometraje" />
                                     </div>
                                 </div>
@@ -185,8 +148,7 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="number" minlength="1" maxlength="10" required
-                                            onkeypress="return(multiplenumber(event));" class="form-control"
+                                        <input type="number" step="0.01" min="0" required class="form-control ps-2"
                                             name="horometro" id="horometro" placeholder="Ingresar horometro" />
                                     </div>
                                 </div>

@@ -65,7 +65,7 @@ if (isset($_GET['stmp'])) {
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formFinishSweepingCart">
+                            name="formFinishSweepingCart" onsubmit="disableSubmitButton(this);">>
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del formulario de <?= $actividad ?>, te
@@ -193,8 +193,8 @@ if (isset($_GET['stmp'])) {
                                     <div class="input-group input-group-merge">
                                         <span id="peso_span" class="input-group-text"><i
                                                 class="fas fa-weight-hanging"></i></span>
-                                        <input type="text" minlength="1" maxlength="10" class="form-control ps-2"
-                                            required id="peso" name="peso" placeholder="Ingresa el peso Barrido" />
+                                        <input type="number" step="0.01" min="0" class="form-control ps-2" required
+                                            id="peso" name="peso" placeholder="Ingresa el peso Barrido" />
                                     </div>
                                 </div>
 

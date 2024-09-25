@@ -49,7 +49,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formRegisterSweepingCart">
+                            name="formRegisterSweepingCart" onsubmit="disableSubmitButton(this);">>
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
@@ -61,7 +61,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-calendar-day"></i></span>
-                                        <input type="date" required class="form-control" name="fecha_inicio"
+                                        <input type="date" required class="form-control ps-2" name="fecha_inicio"
                                             id="fecha_inicio" min="<?php echo $today; ?>" max="<?php echo $today; ?>"
                                             value="<?php echo $today; ?>" />
                                     </div>
@@ -74,8 +74,8 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                         <span id="hora_inicio_span" class="input-group-text">
                                             <i class="fas fa-clock"></i>
                                         </span>
-                                        <input type="time" readonly required class="form-control" name="hora_inicio"
-                                            id="hora_inicio" />
+                                        <input type="time" readonly required class="form-control ps-2"
+                                            name="hora_inicio" id="hora_inicio" />
                                     </div>
                                 </div>
                                 <script>
@@ -105,9 +105,10 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                             <i class="fas fa-id-card"></i>
                                         </span>
                                         <input type="text" minlength="6" maxlength="10" oninput="maxlengthNumber(this)"
-                                            onkeypress="return multiplenumber(event);" class="form-control " readonly
-                                            required id="documento" value="<?php echo htmlspecialchars($documento); ?>"
-                                            name="documento" placeholder="Ingresa tu número de documento" autofocus />
+                                            onkeypress="return multiplenumber(event);" class="form-control ps-2 "
+                                            readonly required id="documento"
+                                            value="<?php echo htmlspecialchars($documento); ?>" name="documento"
+                                            placeholder="Ingresa tu número de documento" autofocus />
                                     </div>
                                 </div>
                                 <!-- nombres -->
@@ -116,8 +117,8 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="input-group input-group-merge">
                                         <span id="nombres_span" class="input-group-text"><i
                                                 class="fas fa-user"></i></span>
-                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="nombres" id="nombres" disabled
+                                        <input type="text" required minlength="2" maxlength="100"
+                                            class="form-control ps-2" name="nombres" id="nombres" disabled
                                             value="<?php echo ($nombre_completo); ?>"
                                             placeholder="Ingresar nombres completos" />
                                     </div>
@@ -129,9 +130,9 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="input-group input-group-merge">
                                         <span id="nombres_span" class="input-group-text"><i
                                                 class="fas fa-city"></i></span>
-                                        <input type="text" required minlength="2" maxlength="100" class="form-control"
-                                            name="city" id="ciudad" readonly value="<?php echo $user['ciudad']; ?>"
-                                            placeholder="Ingresa la ciudad" />
+                                        <input type="text" required minlength="2" maxlength="100"
+                                            class="form-control ps-2" name="city" id="ciudad" readonly
+                                            value="<?php echo $user['ciudad']; ?>" placeholder="Ingresa la ciudad" />
                                         <input type="hidden" name="ciudad" id="id_ciudad"
                                             value="<?php echo htmlspecialchars($id_city); ?>" />
                                     </div>
@@ -148,8 +149,8 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                         <div class="col-md-6 col-lg-4 mb-2">
                                             <div class="d-flex align-items-center">
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" name="zonas[]"
-                                                        id="rutas" value="<?= $zona['id_zona'] ?>">
+                                                    <input required class="form-check-input" type="checkbox"
+                                                        name="zonas[]" id="rutas" value="<?= $zona['id_zona'] ?>">
                                                     <label class="form-check-label ms-2" for="rutas">
                                                         <?= htmlspecialchars($zona['zona']) ?>
                                                     </label>

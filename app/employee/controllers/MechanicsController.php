@@ -120,7 +120,7 @@ if ((isset($_POST["MM_formFinishMechanics"])) && ($_POST["MM_formFinishMechanics
         $mantenimiento,
         $id_registro 
     ])) {
-        showErrorFieldsEmpty("terminar_mecanica.php");
+        showErrorFieldsEmpty("pendientes.php");
         exit();
     }
 
@@ -186,4 +186,3 @@ if ((isset($_POST["MM_formFinishMechanics"])) && ($_POST["MM_formFinishMechanics
     }
 }
 ?>
-
