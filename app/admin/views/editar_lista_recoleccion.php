@@ -136,14 +136,15 @@ if (isNotEmpty([$_GET['id_registro']])) {
                                         <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                             <label class="form-label" for="foto_kilometraje">Foto del Kilometraje
                                                 Inicial</label>
+
                                             <div class="input-group input-group-merge text-center">
                                                 <img src="../assets/images/<?= $data['foto_kilometraje_inicial'] ?>" width="150"
                                                     alt="No se encontro foto del kilometraje inicial">
                                             </div>
                                         </div>
                                         <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                            <label class="form-label" for="foto_kilometraje_inicial">Foto del Kilometraje
-                                                Inicial</label>
+                                            <label class="form-label" for="foto_kilometraje_inicial">Cambiar Foto
+                                                Kilometraje Inicial</label>
                                             <div class="input-group input-group-merge">
                                                 <span id="nombre_area-span" class="input-group-text"><i
                                                         class="fas fa-camera"></i></span>
@@ -207,6 +208,52 @@ if (isNotEmpty([$_GET['id_registro']])) {
                                             }
                                         }
                                     </script>
+                                    <?php
+                                    // validamos si tiene imagen o no
+                                    if (isNotEmpty([$data['foto_kilometraje_final']])) {
+                                    ?>
+                                        <!-- foto_kilometraje final -->
+                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                            <label class="form-label" for="foto_kilometraje">Foto del Kilometraje
+                                                Final</label>
+                                            <div class="input-group input-group-merge text-center">
+
+                                                <img src="../assets/images/<?= $data['foto_kilometraje_final'] ?>" width="150"
+                                                    alt="No se encontro foto del kilometraje final">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                            <label class="form-label" for="foto_kilometraje_final">Foto del Kilometraje
+                                                Final</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="nombre_area-span" class="input-group-text"><i
+                                                        class="fas fa-camera"></i></span>
+                                                <input type="file" accept="image/*" class="form-control"
+                                                    name="foto_kilometraje_final" id="foto_kilometraje_final"
+                                                    onchange="validarImagenKmFinal()" />
+                                            </div>
+                                        </div>
+                                    <?php
+                                    } else {
+                                        // si no hay imagen, generamos el input para subir una nueva
+                                        // para esto necesitamos el id del input que contiene la imagen
+                                        // en este caso es "foto_kilometraje_final"
+                                    ?>
+                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                            <p class="text-danger">No se adjunto ninguna imagen de kilometraje final</p>
+                                            <label class="form-label" for="foto_kilometraje_final">Foto del Kilometraje
+                                                Final</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="nombre_area-span" class="input-group-text"><i
+                                                        class="fas fa-camera"></i></span>
+                                                <input type="file" accept="image/*" class="form-control"
+                                                    name="foto_kilometraje_final" id="foto_kilometraje_final"
+                                                    onchange="validarImagenKmFinal()" />
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
                                     <!-- kilometraje inicial -->
                                     <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                         <label class="form-label" for="kilometraje">Kilometraje Inicial</label>
@@ -217,21 +264,8 @@ if (isNotEmpty([$_GET['id_registro']])) {
                                                 class="form-control" id="kilometraje" placeholder="Ingresar kilometraje" />
                                         </div>
                                     </div>
-
-                                    <!-- foto_kilometraje final -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="foto_kilometraje_final">Foto del Kilometraje
-                                            Final</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="nombre_area-span" class="input-group-text"><i
-                                                    class="fas fa-camera"></i></span>
-                                            <input type="file" accept="image/*" class="form-control"
-                                                name="foto_kilometraje_final" id="foto_kilometraje_final"
-                                                onchange="validarImagen()" />
-                                        </div>
-                                    </div>
                                     <script>
-                                        function validarImagen() {
+                                        function validarImagenKmFinal() {
                                             const inputFile = document.getElementById('foto_kilometraje_final');
                                             const file = inputFile.files[0];
                                             if (file) {
@@ -271,8 +305,8 @@ if (isNotEmpty([$_GET['id_registro']])) {
                                             <span id="kilometraje_span" class="input-group-text"><i
                                                     class="fas fa-road"></i></span>
                                             <input type="number" minlength="1" maxlength="10"
-                                                onkeypress="return(multiplenumber(event));" class="form-control"
-                                                name="kilometraje_final" id="kilometraje_final"
+                                                onkeypress="return(multiplenumber(event));" value="<?= $data['km_fin'] ?>"
+                                                class="form-control" name="kilometraje_final" id="kilometraje_final"
                                                 placeholder="Ingresar kilometraje" />
                                         </div>
                                     </div>
@@ -295,7 +329,8 @@ if (isNotEmpty([$_GET['id_registro']])) {
                                             <span id="horometro_span" class="input-group-text"><i
                                                     class="fas fa-clock"></i></span>
                                             <input type="number" minlength="1" maxlength="10" required
-                                                onkeypress="return(multiplenumber(event));" class="form-control"
+                                                onkeypress="return(multiplenumber(event));"
+                                                value="<?= $data['horometro_fin'] ?>" class="form-control"
                                                 id="horometro_final" name="horometro_final"
                                                 placeholder="Ingresar horometro final" />
                                         </div>
@@ -334,7 +369,6 @@ if (isNotEmpty([$_GET['id_registro']])) {
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
-
                                     </div>
                                     <input type="hidden" id="empleadosInput" name="empleados">
                                     <div class="mt-4">
@@ -342,7 +376,7 @@ if (isNotEmpty([$_GET['id_registro']])) {
                                         <a href="index.php" class="btn btn-danger" id="cancelarBtn">
                                             Cancelar
                                         </a>
-                                        <input type="submit" class="btn btn-primary" value="Registrar"></input>
+                                        <input type="submit" class="btn btn-primary" value="Actualizar"></input>
                                         <input type="hidden" class="btn btn-info" value="formUpdateRecoleccion"
                                             name="MM_formUpdateRecoleccion"></input>
                                     </div>
