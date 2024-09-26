@@ -149,8 +149,8 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                         <div class="col-md-6 col-lg-4 mb-2">
                                             <div class="d-flex align-items-center">
                                                 <div class="form-check form-switch">
-                                                    <input required class="form-check-input" type="checkbox"
-                                                        name="zonas[]" id="rutas" value="<?= $zona['id_zona'] ?>">
+                                                    <input class="form-check-input" type="checkbox" name="zonas[]"
+                                                        id="rutas" value="<?= $zona['id_zona'] ?>">
                                                     <label class="form-check-label ms-2" for="rutas">
                                                         <?= htmlspecialchars($zona['zona']) ?>
                                                     </label>

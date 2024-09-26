@@ -1,6 +1,8 @@
 <?php
 $titlePage = "Lista de Vehiculos de Operacion";
 require_once("../components/sidebar.php");
+
+// Consulta para obtener todos los vehículos
 $getVehiculos = $connection->prepare("SELECT * FROM vehiculos");
 $getVehiculos->execute();
 $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
@@ -14,9 +16,9 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
             <h2 class="card-header font-bold">Lista de Vehiculos de Operacion</h2>
             <div class="card-body">
                 <div class="row gy-3 mb-3">
-                    <!-- Default Modal -->
+                    <!-- Botón para abrir el modal de registrar -->
                     <div class="col-lg-2 col-md-6">
-                        <!-- Button trigger modal -->
+                        <!-- Botón trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#formVehiculos">
                             <i class="fas fa-layer-group"></i> Registrar
@@ -34,42 +36,67 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <label class="form-label" for="placa">Placa</label>
+                                            <label class="form-label mb-3" for="placa">Placa</label>
                                             <div class="input-group input-group-merge">
                                                 <span id="nombre_area-span" class="input-group-text"><i
-                                                        class="fas fa-layer-group"></i> </span>
+                                                        class="fas fa-layer-group"></i></span>
                                                 <input type="text" required minlength="2" maxlength="20" autofocus
                                                     class="form-control" name="placa" id="placa"
                                                     placeholder="Ingrese la placa del vehiculo" />
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="ciudad">Nombre del vehiculo</label>
-                                                <div class="input-group input-group-merge">
-                                                    <span id="nombre_area-span" class="input-group-text"><i
-                                                            class="fas fa-layer-group"></i> </span>
-                                                    <input type="text" required minlength="2" maxlength="100" autofocus
-                                                        class="form-control" name="vehiculo" id="vehiculo"
-                                                        placeholder="Ingrese el vehiculo" />
-                                                </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label mb-3" for="vehiculo">Vehiculo</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="nombre_area-span" class="input-group-text"><i
+                                                        class="fas fa-layer-group"></i></span>
+                                                <input type="text" required minlength="2" maxlength="20" autofocus
+                                                    class="form-control" name="vehiculo" id="vehiculo"
+                                                    placeholder="Ingrese el nombre del vehiculo" />
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                                Cancelar
-                                            </button>
-                                            <input type="submit" class="btn btn-primary" value="Registrar"></input>
-                                            <input type="hidden" class="btn btn-info" value="formRegisterCar"
-                                                name="MM_formRegisterCar"></input>
+
+                                        <div class="mb-3">
+                                            <label class="form-label mb-3" for="soat">Fecha Vencimiento SOAT</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="nombre_area-span" class="input-group-text"><i
+                                                        class="fas fa-layer-group"></i></span>
+                                                <input type="date" required minlength="2" maxlength="100" autofocus
+                                                    class="form-control" name="fecha_soat" id="soat"
+                                                    placeholder="Ingrese el vehiculo" />
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label mb-3" for="tecno">Fecha vencimiento
+                                                Tecnomecanica</label>
+                                            <div class="input-group input-group-merge">
+                                                <span id="nombre_area-span" class="input-group-text"><i
+                                                        class="fas fa-layer-group"></i></span>
+                                                <input type="date" required minlength="2" maxlength="100" autofocus
+                                                    class="form-control" name="fecha_tecno" id="tecno"
+                                                    placeholder="Ingrese el vehiculo" />
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <input type="submit" class="btn btn-primary" value="Registrar"></input>
+                                        <input type="hidden" class="btn btn-info" value="formRegisterCar"
+                                            name="MM_formRegisterCar"></input>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
                 <?php
                 if (!empty($_GET["placa"])) {
                     $placa = $_GET["placa"];
-                    // CONSUMO DE DATOS DE LOS PROCESOS
+                    // Consulta del vehículo por placa
                     $queryCar = $connection->prepare("SELECT * FROM vehiculos WHERE placa = :placa");
                     $queryCar->bindParam(":placa", $placa);
                     $queryCar->execute();
@@ -80,11 +107,7 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col-xl">
                         <div class="card mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Actualizacion datos del vehiculo
-                                    <?php echo $selectCar['placa']?>
-                                    <?php echo $selectCar['vehiculo']?>
-
-                                </h5>
+                                <h5 class="mb-0">Actualizacion datos del vehiculo <?php echo $selectCar['placa'] ?></h5>
                             </div>
                             <div class="card-body">
                                 <form action="" method="POST" autocomplete="off" name="formUpdateCar">
@@ -99,7 +122,6 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                                                 aria-describedby="placa-help" />
                                         </div>
                                     </div>
-
                                     <div class="mb-3">
                                         <label class="form-label" for="vehiculo">Nombre del Vehículo</label>
                                         <div class="input-group input-group-merge">
@@ -111,76 +133,95 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                                                 aria-describedby="nombre-vehiculo-help" />
                                         </div>
                                     </div>
-
-
+                                    <div class="mb-3">
+                                        <label class="form-label" for="soat">fecha Vencimiento SOAT</label>
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-calendar-day"></i></span>
+                                            <input type="date" minlength="4" maxlength="70" autofocus
+                                                class="form-control" required name="fecha_soat" id="soat"
+                                                placeholder="Ingresa el nombre del vehículo"
+                                                value="<?php echo $selectCar['fecha_soat'] ?>"
+                                                aria-describedby="nombre-vehiculo-help" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="tecno">fecha Vencimiento Tecnomecanica</label>
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-calendar-day"></i></span>
+                                            <input type="date" minlength="4" maxlength="70" autofocus
+                                                class="form-control" required name="fecha_tecno" id="tecno"
+                                                placeholder="Ingresa el nombre del vehículo"
+                                                value="<?php echo $selectCar['fecha_tecno'] ?>"
+                                                aria-describedby="nombre-vehiculo-help" />
+                                        </div>
+                                    </div>
+                                    <input type="hidden" class="form-control" id="placa" name="placa"
+                                        value="<?php echo $selectCar['placa'] ?>" />
+                                    <div class="modal-footer">
+                                        <a class="btn btn-danger" href="vehiculos.php">Cancelar</a>
+                                        <input type="submit" class="btn btn-primary" value="Actualizar"></input>
+                                        <input type="hidden" class="btn btn-info" value="formUpdateCar"
+                                            name="MM_formUpdateCar"></input>
+                                    </div>
+                                </form>
                             </div>
-                            <input type="hidden" class="form-control" id="placa" name="placa"
-                                value="<?php echo $selectCar['placa']  ?>" />
-                            <div class="modal-footer">
-                                <a class="btn btn-danger" href="vehiculos.php">
-                                    Cancelar
-                                </a>
-                                <input type="submit" class="btn btn-primary" value="Actualizar"></input>
-                                <input type="hidden" class="btn btn-info" value="formUpdateCar"
-                                    name="MM_formUpdateCar"></input>
-                            </div>
-                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?php
+                <?php
                     } else {
-                        showErrorOrSuccessAndRedirect("error", "Registro no encontrado", "El registro que buscas no esta registrado.", "vehiculos.php");
+                        showErrorOrSuccessAndRedirect("error", "Registro no encontrado", "El registro que buscas no está registrado.", "vehiculos.php");
                         exit();
                     }
                 }
                 ?>
-            <div class="row">
-                <div class="col-lg-12 mt-3">
-                    <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered top-table" cellspacing="0"
-                            width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Acciones</th>
-                                    <th>Placa</th>
-                                    <th>vehiculo</th>
-                                    <th>Fecha Registro</th>
-                                    <th>Fecha Actualizacion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    foreach($vehiculos as $car) {
-                                    ?>
-                                <tr>
-                                    <td>
-                                        <form method="GET" class="mt-2" action="vehiculos.php">
-                                            <input type="hidden" name="placa" value="<?= $car['placa'] ?>">
-                                            <button class="btn btn-success"
-                                                onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                type="submit">
-                                                <i class="bx bx-refresh" title="Actualizar"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <td><?php echo $car['placa'] ?></td>
-                                    <td><?php echo $car['vehiculo'] ?></td>
-                                    <td><?php echo $car['fecha_registro'] ?></td>
-                                    <td><?php echo $car['fecha_actualizacion'] ?></td>
-                                </tr>
-                                <?php
-                                    }
-                                    ?>
-                            </tbody>
-                        </table>
+                <!-- Tabla de Vehiculos -->
+                <div class="row">
+                    <div class="col-lg-12 mt-3">
+                        <div class="table-responsive">
+                            <table id="example" class="table table-striped  table-bordered" cellspacing="0"
+                                width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Acciones</th>
+                                        <th>Placa</th>
+                                        <th>Vehículo</th>
+                                        <th>Ven SOAT</th>
+                                        <th>Ven TECNO</th>
+                                        <th>Fecha Registro</th>
+                                        <th>Fecha Actualización</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($vehiculos as $car) { ?>
+                                    <tr>
+                                        <td>
+                                            <form method="GET" class="mt-2" action="vehiculos.php">
+                                                <input type="hidden" name="placa" value="<?= $car['placa'] ?>">
+                                                <button class="btn btn-success"
+                                                    onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
+                                                    type="submit">
+                                                    <i class="bx bx-refresh" title="Actualizar"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td><?php echo $car['placa'] ?></td>
+                                        <td><?php echo $car['vehiculo'] ?></td>
+                                        <td><?php echo $car['fecha_soat'] ?></td>
+                                        <td><?php echo $car['fecha_tecno'] ?></td>
+                                        <td><?php echo $car['fecha_registro'] ?></td>
+                                        <td><?php echo $car['fecha_actualizacion'] ?></td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <?php
+require_once("../components/footer.php");
+?>
 </div>
-<?php
-    require_once("../components/footer.php")
-    ?>

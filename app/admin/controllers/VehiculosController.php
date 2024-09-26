@@ -4,9 +4,11 @@ if ((isset($_POST["MM_formRegisterCar"])) && ($_POST["MM_formRegisterCar"] == "f
     // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE ACTIVIDAD
     $placa = $_POST['placa'];
     $vehiculo = $_POST['vehiculo'];
+    $soat = $_POST['fecha_soat'];
+    $tecno = $_POST['fecha_tecno'];
 
     // validamos que no hayamos recibido ningun dato vacio
-    if (isEmpty([$placa, $vehiculo] )) {
+    if (isEmpty([$placa, $vehiculo,$soat,$tecno] )) {
         showErrorFieldsEmpty("Vehiculos.php");
         exit();
     }
@@ -25,9 +27,11 @@ if ((isset($_POST["MM_formRegisterCar"])) && ($_POST["MM_formRegisterCar"] == "f
         // cargamos la fecha y hora actual del registro
         $fecha_registro = date('Y-m-d H:i:s');
         // Inserta los datos en la base de datos
-        $registerCar = $connection->prepare("INSERT INTO vehiculos(placa, vehiculo, fecha_registro) VALUES(:placa,:vehiculo, :fecha_registro)");
+        $registerCar = $connection->prepare("INSERT INTO vehiculos(placa, vehiculo,fecha_soat, fecha_tecno fecha_registro) VALUES(:placa,:vehiculo,:soat,:tecno :fecha_registro)");
         $registerCar->bindParam(':placa', $placa);
         $registerCar->bindParam(':vehiculo', $vehiculo);
+        $registerCar->bindParam(':soat', $soat);
+        $registerCar->bindParam(':tecno', $tecno);
         $registerCar->bindParam(':fecha_registro', $fecha_registro);
         $registerCar->execute();
         if ($registerCar) {
@@ -46,10 +50,12 @@ if (isset($_POST["MM_formUpdateCar"]) && $_POST["MM_formUpdateCar"] === "formUpd
     // VARIABLES DE ASIGNACION DE VALORES QUE SE ENVIA DEL FORMULARIO REGISTRO DE ACTIVIDAD
     $vehiculo = $_POST['vehiculo'];
     $placa = $_POST['placa'];
+    $soat = $_POST['fecha_soat'];
+    $tecno = $_POST['fecha_tecno'];
     $placaUpdate = $_POST['placaUpdate'];
 
     // Validamos que no haya datos vacíos
-    if (empty($vehiculo) || empty($placa) || empty($placaUpdate)) {
+    if (empty($vehiculo) || empty($placa) || empty($placaUpdate) || empty($tecno) || empty($soat))  {
         showErrorFieldsEmpty("vehiculos.php");
         exit();
     }
@@ -69,9 +75,12 @@ if (isset($_POST["MM_formUpdateCar"]) && $_POST["MM_formUpdateCar"] === "formUpd
 
     $fecha_actualizacion = date('Y-m-d H:i:s');
     // Actualizamos los datos en la base de datos
-    $updateCar = $connection->prepare("UPDATE vehiculos SET vehiculo = :vehiculo, placa = :placaUpdate, fecha_actualizacion = :fecha_actualizacion WHERE placa = :placa");
+    $updateCar = $connection->prepare("UPDATE vehiculos SET vehiculo = :vehiculo, placa = :placaUpdate, fecha_soat = :soat ,fecha_tecno = :tecno, fecha_actualizacion = :fecha_actualizacion WHERE placa = :placa");
     $updateCar->bindParam(':vehiculo', $vehiculo);
     $updateCar->bindParam(':placaUpdate', $placaUpdate);
+    $updateCar->bindParam(':soat', $soat);
+    $updateCar->bindParam(':tecno', $tecno);
+    
     $updateCar->bindParam(':fecha_actualizacion', $fecha_actualizacion);
     $updateCar->bindParam(':placa', $placa);
     $updateCar->execute();

@@ -1,6 +1,21 @@
 <?php
 $titlePage = "Panel de Administrador";
 require_once("../components/sidebar.php");
+
+
+
+// Obtener vehículos desde la base de datos que tengan fechas de vencimiento
+$queryVehiculos = $connection->prepare("SELECT placa, vehiculo, fecha_soat, fecha_tecno FROM vehiculos");
+$queryVehiculos->execute();
+$vehiculos = $queryVehiculos->fetchAll(PDO::FETCH_ASSOC);
+
+// Función para calcular días restantes
+function calcularDiasRestantes($fecha_vencimiento) {
+    $fecha_actual = new DateTime();
+    $fecha_vencimiento = new DateTime($fecha_vencimiento);
+    $diferencia = $fecha_actual->diff($fecha_vencimiento);
+    return $diferencia->days * ($fecha_vencimiento > $fecha_actual ? 1 : -1); // Si la fecha ya pasó, devuelve negativo
+}
 ?>
 <!-- Content wrapper -->
 <div class="content-wrapper">
@@ -31,13 +46,39 @@ require_once("../components/sidebar.php");
                     </div>
                 </div>
             </div>
+
+            <!-- Alertas de vehículos con fechas cercanas de vencimiento -->
+            <?php
+            foreach ($vehiculos as $vehiculo) {
+                $dias_restantes_soat = calcularDiasRestantes($vehiculo['fecha_soat']);
+                $dias_restantes_tecno = calcularDiasRestantes($vehiculo['fecha_tecno']);
+
+                // Mostrar alerta si faltan 15 días o menos para el vencimiento del SOAT o Tecnomecánica
+                if ($dias_restantes_soat <= 15 && $dias_restantes_soat > 0) {
+                    echo "
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                        <strong>Alerta de SOAT:</strong> El vehículo con placa <strong>{$vehiculo['placa']}</strong> le quedan <strong>{$dias_restantes_soat} días</strong> para el vencimiento del SOAT.
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                }
+                if ($dias_restantes_tecno <= 15 && $dias_restantes_tecno > 0) {
+                    echo "
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                        <strong>Alerta de Tecnomecánica:</strong> El vehículo con placa <strong>{$vehiculo['placa']}</strong> le quedan <strong>{$dias_restantes_tecno} días</strong> para el vencimiento de la Tecnomecánica.
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                }
+            }
+            ?>
+
+            <!-- Resto del contenido -->
             <!-- Order Statistics -->
             <div class="col-md-6 col-lg-12 col-xl-6 order-0 mb-4">
                 <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                         <div class="card-title mb-0">
                             <h5 class="m-0 me-2">Empleados</h5>
-                            <small class="text-muted">Estadisticas Generales</small>
+                            <small class="text-muted">Estadísticas Generales</small>
                         </div>
                     </div>
                     <div class="card-body mt-3">
@@ -78,20 +119,46 @@ require_once("../components/sidebar.php");
                     </div>
                 </div>
             </div>
+
+            <!-- Estadísticas de Administradores -->
             <div class="col-md-6 col-lg-12 col-xl-6 order-0 mb-4">
                 <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                         <div class="card-title mb-0">
                             <h5 class="m-0 me-2">Administradores</h5>
-                            <small class="text-muted">Estadisticas Generales</small>
+                            <small class="text-muted">Estadísticas Generales</small>
                         </div>
                     </div>
                     <div class="card-body mt-3">
                         <ul class="p-0 m-0">
                             <?php
-                            countStatesUsers("conteoSociosActivos", "usuarios", "Activos", "Socios Activos", "1", "success", "1");
-                            countStatesUsers("conteoSociosBloqueados", "usuarios", "Bloqueados", "Socios Bloqueados", "2", "warning", "2");
-                            countStatesUsers("conteoSociosEliminados", "usuarios", "Eliminados", "Socios Eliminados", "3", "danger", "2");
+                            countStatesUsers(
+                                "conteoSociosActivos",
+                                "usuarios",
+                                "Activos",
+                                "Socios Activos",
+                                "1",
+                                "success",
+                                "1"
+                            );
+                            countStatesUsers(
+                                "conteoSociosBloqueados",
+                                "usuarios",
+                                "Bloqueados",
+                                "Socios Bloqueados",
+                                "2",
+                                "warning",
+                                "2"
+                            );
+                            countStatesUsers(
+                                "conteoSociosEliminados",
+                                "usuarios",
+                                "Eliminados",
+                                "Socios Eliminados",
+                                "3",
+                                "danger",
+                                "2"
+                            );
                             ?>
                         </ul>
                         <div class="text-center"><a href="socios_activos.php" class="btn btn-outline-primary">Ver
@@ -100,29 +167,16 @@ require_once("../components/sidebar.php");
                     </div>
                 </div>
             </div>
+
+            <!-- Más estadísticas y contenido -->
             <?php
-            // card para mostrar cantidad de estados
-            // cardStadicts("conteoTiposUsuarios", "tipo_usuario", "tipo_usuario.php", "Tipos Usuarios");
             cardStadicts("conteo", "estados", "estados.php", "Estados");
-            // card para mostrar cantidad de unidades
-
-            ?>
-
-
-
-            <?php
-            // card para mostrar cantidad de ciudades
-            // cardStadicts("conteoTiposUsuarios", "tipo_usuario", "tipo_usuario.php", "Tipos Usuarios");
             cardStadicts("conteo", "ciudades", "ciudades.php", "Ciudades");
-            // card para mostrar cantidad de unidades
-
             ?>
-
         </div>
-
-
     </div>
 
     <?php
     require_once("../components/footer.php")
     ?>
+</div>
