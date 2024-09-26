@@ -82,7 +82,7 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                 <!-- Documento -->
                                 <div class="mb-3 col-12 col-lg-6">
                                     <label class="form-label" for="documento">Documento</label>
-                                    <input type="text" class="form-control" name="documento"
+                                    <input type="number" class="form-control" name="documento"
                                         value="<?= $disposicion['documento'] ?>" readonly />
                                 </div>
 
@@ -165,7 +165,7 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="km_inicio">Kilometraje Inicial</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa fa-road"></i></span>
-                                        <input type="number" class="form-control" name="km_inicio"
+                                        <input type="number" step="0.01" class="form-control" name="km_inicio"
                                             value="<?= $disposicion['km_inicio'] ?>" required />
                                     </div>
                                 </div>
@@ -175,7 +175,7 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="horometro_inicio">Horómetro Inicial</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa fa-tachometer-alt"></i></span>
-                                        <input type="number" class="form-control" name="horometro_inicio"
+                                        <input type="number" step="0.01" class="form-control" name="horometro_inicio"
                                             value="<?= $disposicion['horometro_inicio'] ?>" required />
                                     </div>
                                 </div>
@@ -195,7 +195,7 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="km_fin">Kilometraje Final</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa fa-road"></i></span>
-                                        <input type="number" class="form-control" name="km_fin"
+                                        <input type="number" step="0.01" class="form-control" name="km_fin"
                                             value="<?= $disposicion['km_fin'] ?>" required />
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@ $disposicion = $queryDisposicion->fetch(PDO::FETCH_ASSOC);
                                     <label class="form-label" for="horometro_fin">Horómetro Final</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa fa-tachometer-alt"></i></span>
-                                        <input type="number" class="form-control" name="horometro_fin"
+                                        <input type="number" step=0.01 class="form-control" name="horometro_fin"
                                             value="<?= $disposicion['horometro_fin'] ?>" required />
                                     </div>
                                 </div>

@@ -43,14 +43,7 @@ if (isset($_GET['id_registro'])) {
                                         <select class="form-select" name="id_estado" required>
                                             <option value="<?php echo $mecanica['id_estado'] ?>">
                                                 <?php echo $mecanica['estado'] ?></option>
-                                            <?php
-                                                    $listEstados = $connection->prepare("SELECT * FROM estados WHERE id_estado = 4 OR id_estado = 5");
-                                                    $listEstados->execute();
-                                                    $estados = $listEstados->fetchAll(PDO::FETCH_ASSOC);
-                                                    foreach ($estados as $estado) {
-                                                        echo "<option value='{$estado['id_estado']}'>{$estado['estado']}</option>";
-                                                    }
-                                                    ?>
+
                                         </select>
                                     </div>
                                 </div>
@@ -65,14 +58,7 @@ if (isset($_GET['id_registro'])) {
                                             <option value="<?php echo $mecanica['documento'] ?>">
                                                 <?php echo $mecanica['nombres'] . ' ' . $mecanica['apellidos'] ?>
                                             </option>
-                                            <?php
-                                                    $listUsuarios = $connection->prepare("SELECT * FROM usuarios WHERE id_tipo_usuario = 4");
-                                                    $listUsuarios->execute();
-                                                    $usuarios = $listUsuarios->fetchAll(PDO::FETCH_ASSOC);
-                                                    foreach ($usuarios as $usuario) {
-                                                        echo "<option value='{$usuario['documento']}'>{$usuario['nombres']} {$usuario['apellidos']}</option>";
-                                                    }
-                                                    ?>
+
                                         </select>
                                     </div>
                                 </div>

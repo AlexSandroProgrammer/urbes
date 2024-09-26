@@ -82,17 +82,17 @@ $zonas_seleccionadas = explode('__', $carro_barrido['zonas_seleccionadas']);
                                     <label class="form-label">Selecciona las Zonas:</label>
                                     <div class="row">
                                         <?php foreach ($zonas as $zona): ?>
-                                            <div class="col-md-6 col-lg-4 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" name="zonas[]"
-                                                            value="<?= $zona['id_zona'] ?>"
-                                                            <?= in_array($zona['id_zona'], $zonas_seleccionadas) ? 'checked' : '' ?>>
-                                                        <label
-                                                            class="form-check-label ms-2"><?= htmlspecialchars($zona['zona']) ?></label>
-                                                    </div>
+                                        <div class="col-md-6 col-lg-4 mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="zonas[]"
+                                                        value="<?= $zona['id_zona'] ?>"
+                                                        <?= in_array($zona['id_zona'], $zonas_seleccionadas) ? 'checked' : '' ?>>
+                                                    <label
+                                                        class="form-check-label ms-2"><?= htmlspecialchars($zona['zona']) ?></label>
                                                 </div>
                                             </div>
+                                        </div>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>

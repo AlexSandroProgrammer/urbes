@@ -61,7 +61,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-calendar-day"></i></span>
-                                        <input type="date" required class="form- ps-2 ps-2" name="fecha_inicio"
+                                        <input type="date" required class="form-control ps-2" name="fecha_inicio"
                                             id="fecha_inicio" min="<?php echo $today; ?>" max="<?php echo $today; ?>"
                                             value="<?php echo $today; ?>" />
                                     </div>

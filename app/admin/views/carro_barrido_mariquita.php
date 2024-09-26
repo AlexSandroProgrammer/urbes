@@ -100,9 +100,13 @@ $carro_barridos = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <td class="custom-table-th"><?php echo $carro_barrido['documento'] ?></td>
                                     <td class="custom-table-th"><?php echo $carro_barrido['ciudad_carro'] ?></td>
                                     <td class="custom-table-th"><?php echo $carro_barrido['fecha_inicio'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['fecha_fin'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($carro_barrido['fecha_fin']) ? $carro_barrido['fecha_fin'] : 'No hay registros'; ?>
+                                    </td>
                                     <td class="custom-table-th"><?php echo $carro_barrido['hora_inicio'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['hora_fin'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($carro_barrido['hora_fin']) ? $carro_barrido['hora_fin'] : 'No hay registros'; ?>
+                                    </td>
                                     <td>
                                         <table class="table table-bordered">
                                             <thead>
@@ -125,8 +129,13 @@ $carro_barridos = $query->fetchAll(PDO::FETCH_ASSOC);
                                             </tbody>
                                         </table>
                                     </td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['peso'] ?></td>
-                                    <td class="custom-table-th"><?php echo $carro_barrido['observaciones'] ?></td>
+
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($carro_barrido['peso']) ? $carro_barrido['peso'] : 'No hay registros'; ?>
+                                    </td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($carro_barrido['observaciones']) ? $carro_barrido['observaciones'] : 'No hay registros'; ?>
+                                    </td>
                                 </tr>
                                 <?php } ?>
                             </tbody>

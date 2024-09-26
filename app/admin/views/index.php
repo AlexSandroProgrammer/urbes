@@ -82,20 +82,20 @@ require_once("../components/sidebar.php");
                 <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                         <div class="card-title mb-0">
-                            <h5 class="m-0 me-2">Socios</h5>
+                            <h5 class="m-0 me-2">Administradores</h5>
                             <small class="text-muted">Estadisticas Generales</small>
                         </div>
                     </div>
                     <div class="card-body mt-3">
                         <ul class="p-0 m-0">
                             <?php
-                            countStatesUsers("conteoSociosActivos", "usuarios", "Activos", "Socios Activos", "1", "success", "2");
+                            countStatesUsers("conteoSociosActivos", "usuarios", "Activos", "Socios Activos", "1", "success", "1");
                             countStatesUsers("conteoSociosBloqueados", "usuarios", "Bloqueados", "Socios Bloqueados", "2", "warning", "2");
                             countStatesUsers("conteoSociosEliminados", "usuarios", "Eliminados", "Socios Eliminados", "3", "danger", "2");
                             ?>
                         </ul>
                         <div class="text-center"><a href="socios_activos.php" class="btn btn-outline-primary">Ver
-                                Socios</a>
+                                Administradores</a>
                         </div>
                     </div>
                 </div>
@@ -108,8 +108,8 @@ require_once("../components/sidebar.php");
 
             ?>
 
-     
-        
+
+
             <?php
             // card para mostrar cantidad de ciudades
             // cardStadicts("conteoTiposUsuarios", "tipo_usuario", "tipo_usuario.php", "Tipos Usuarios");

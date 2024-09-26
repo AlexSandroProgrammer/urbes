@@ -26,11 +26,15 @@ $areas_publicas = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <th class="custom-table-th">ID</th>
                                     <th class="custom-table-th">Estado</th>
                                     <th class="custom-table-th">Labor</th>
-                                    <th class="custom-table-th">Conductor Asignado</th>
+                                    <th class="custom-table-th">Nombre Empleado</th>
                                     <th class="custom-table-th">Documento</th>
                                     <th class="custom-table-th">Ciudad</th>
                                     <th class="custom-table-th">Fecha Inicio</th>
+                                    <th class="custom-table-th">Hora Inicio</th>
                                     <th class="custom-table-th">Fecha Fin</th>
+                                    <th class="custom-table-th">Hora Fin</th>
+                                    <th class="custom-table-th">Peso</th>
+
                                     <th class="custom-table-th">Observaciones</th>
                                 </tr>
                             </thead>
@@ -56,10 +60,20 @@ $areas_publicas = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <td class="custom-table-th"><?php echo $area_publica['documento'] ?></td>
                                     <td class="custom-table-th"><?php echo $area_publica['ciudad'] ?></td>
                                     <td class="custom-table-th"><?php echo $area_publica['fecha_inicio'] ?></td>
-                                    <td class="custom-table-th"><?php echo $area_publica['fecha_finalizacion'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($area_publica['fecha_finalizacion']) ? $area_publica['fecha_finalizacion'] : 'No hay registros'; ?>
+                                    </td>
                                     <td class="custom-table-th"><?php echo $area_publica['hora_inicio'] ?></td>
-                                    <td class="custom-table-th"><?php echo $area_publica['hora_finalizacion'] ?></td>
-                                    <td class="custom-table-th"><?php echo $area_publica['observaciones'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($area_publica['hora_finalizacion']) ? $area_publica['hora_finalizacion'] : 'No hay registros'; ?>
+                                    </td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($area_publica['peso']) ? $area_publica['peso'] : 'No hay registros'; ?>
+                                    </td>
+
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($area_publica['observaciones']) ? $area_publica['observaciones'] : 'No hay registros'; ?>
+                                    </td>
                                 </tr>
                                 <?php } ?>
                             </tbody>

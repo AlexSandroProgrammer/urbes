@@ -68,13 +68,17 @@ $mecanica_vehiculos = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <td class="custom-table-th"><?php echo $mecanica_vehiculo['labor_mantenimiento'] ?>
                                     </td>
                                     <td class="custom-table-th"><?php echo $mecanica_vehiculo['fecha_inicio'] ?></td>
-                                    <td class="custom-table-th"><?php echo $mecanica_vehiculo['fecha_fin'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($mecanica_vehiculo['fecha_fin']) ? $mecanica_vehiculo['fecha_fin'] : 'No hay registros'; ?>
+                                    </td>
                                     <td class="custom-table-th"><?php echo $mecanica_vehiculo['hora_inicio'] ?></td>
-                                    <td class="custom-table-th"><?php echo $mecanica_vehiculo['hora_finalizacion'] ?>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($mecanica_vehiculo['hora_finalizacion']) ? $mecanica_vehiculo['hora_finalizacion'] : 'No hay registros'; ?>
                                     </td>
                                     <td class="custom-table-th"><?php echo $mecanica_vehiculo['fecha_registro'] ?>
                                     </td>
-                                    <td class="custom-table-th"><?php echo $mecanica_vehiculo['fecha_actualizacion'] ?>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($mecanica_vehiculo['fecha_actualizacion']) ? $mecanica_vehiculo['fecha_actualizacion'] : 'No hay registros'; ?>
                                     </td>
                                     <td class="custom-table-th"><?php echo $mecanica_vehiculo['observaciones'] ?></td>
                                 </tr>

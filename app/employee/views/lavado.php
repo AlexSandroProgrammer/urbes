@@ -57,9 +57,9 @@ $id_city = $user['id_ciudad'];
                                     <div class="input-group input-group-merge">
                                         <span id="nombre_area-span" class="input-group-text"><i
                                                 class="fas fa-calendar-day"></i></span>
-                                        <input type="date" readonly required class="form- ps-2" name="fecha_inicio"
-                                            id="fecha_inicio" min="<?php echo $today; ?>" max="<?php echo $today; ?>"
-                                            value="<?php echo $today; ?>" />
+                                        <input type="date" readonly required class="form-control ps-2"
+                                            name="fecha_inicio" id="fecha_inicio" min="<?php echo $today; ?>"
+                                            max="<?php echo $today; ?>" value="<?php echo $today; ?>" />
                                     </div>
                                 </div>
 

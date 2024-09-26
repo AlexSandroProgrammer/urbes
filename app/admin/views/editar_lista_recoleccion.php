@@ -27,381 +27,380 @@ if (isNotEmpty([$_GET['id_registro']])) {
     }
 
 ?>
-    <!-- Content wrapper -->
-    <div class="content-wrapper">
-        <!-- Content -->
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Basic Layout -->
-            <div class="row">
-                <div class="col-xl">
-                    <div class="card mb-4">
-                        <div class="card-header mt-3 justify-content-between align-items-center text-center">
-                            <h3 class="fw-bold">EDITAR DATOS VEHICULO COMPACTADOR</h3>
-                            <h3 class="fw-bold">ID: <?= $data['id_registro_veh_compactador'] ?> - Labor:
-                                <?= $data['labor'] ?> </h3>
-                        </div>
-                        <div class="card-body">
-                            <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                                name="formUpdateRecoleccion">
-                                <div class="row">
-                                    <input type="hidden" name="id_registro_veh_compactador"
-                                        value="<?= $data['id_registro_veh_compactador'] ?>">
-                                    <!-- fecha_inicio -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="nombre_area-span" class="input-group-text"><i
-                                                    class="fas fa-calendar-day"></i></span>
-                                            <input type="date" required class="form-control"
-                                                value="<?= $data['fecha_inicio'] ?>" id="fecha_inicio" />
-                                        </div>
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Basic Layout -->
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <div class="card-header mt-3 justify-content-between align-items-center text-center">
+                        <h3 class="fw-bold">EDITAR DATOS VEHICULO COMPACTADOR</h3>
+                        <h3 class="fw-bold">ID: <?= $data['id_registro_veh_compactador'] ?> - Labor:
+                            <?= $data['labor'] ?> </h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
+                            name="formUpdateRecoleccion">
+                            <div class="row">
+                                <input type="hidden" name="id_registro_veh_compactador"
+                                    value="<?= $data['id_registro_veh_compactador'] ?>">
+                                <!-- fecha_inicio -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="fecha_inicio">Fecha Inicio</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-calendar-day"></i></span>
+                                        <input type="date" required class="form-control"
+                                            value="<?= $data['fecha_inicio'] ?>" id="fecha_inicio" />
                                     </div>
+                                </div>
 
-                                    <input type="hidden" name="id_registro_veh_compactador"
-                                        value="<?= $data['id_registro_veh_compactador'] ?>">
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="fecha_final">Fecha Final</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="nombre_area-span" class="input-group-text"><i
-                                                    class="fas fa-calendar-day"></i></span>
-                                            <input type="date" required class="form-control"
-                                                value="<?= $data['fecha_fin'] ?>" name="fecha_final" id="fecha_final" />
-                                        </div>
+                                <input type="hidden" name="id_registro_veh_compactador"
+                                    value="<?= $data['id_registro_veh_compactador'] ?>">
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="fecha_final">Fecha Final</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-calendar-day"></i></span>
+                                        <input type="date" required class="form-control"
+                                            value="<?= $data['fecha_fin'] ?>" name="fecha_final" id="fecha_final" />
                                     </div>
-                                    <!-- equipo de transporte -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label for="vehiculo" class="form-label">Equipo de Transporte</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="vehiculo-2" class="input-group-text"><i
-                                                    class="fas fa-truck"></i></span>
-                                            <input type="text" required class="form-control"
-                                                value="<?= $data['vehiculo'] ?> <?= $data['placa'] ?>" id="vehiculo" />
-                                        </div>
+                                </div>
+                                <!-- equipo de transporte -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label for="vehiculo" class="form-label">Equipo de Transporte</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="vehiculo-2" class="input-group-text"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input type="text" required class="form-control"
+                                            value="<?= $data['vehiculo'] ?> <?= $data['placa'] ?>" id="vehiculo" />
                                     </div>
+                                </div>
 
-                                    <!-- numero de documento -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="documento">CONDUCTOR ENCARGADO DE REGISTRO</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="documento-icon" class="input-group-text"><i
-                                                    class="fas fa-id-card"></i></span>
-                                            <input type="text" minlength="6" maxlength="10"
-                                                value="<?= $data['documento'] ?>" class="form-control" required
-                                                id="documento" placeholder="Ingresa tu numero de documento" />
-                                        </div>
+                                <!-- numero de documento -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="documento">CONDUCTOR ENCARGADO DE REGISTRO</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="documento-icon" class="input-group-text"><i
+                                                class="fas fa-id-card"></i></span>
+                                        <input type="text" minlength="6" maxlength="10"
+                                            value="<?= $data['documento'] ?>" class="form-control" required
+                                            id="documento" placeholder="Ingresa tu numero de documento" />
                                     </div>
-                                    <!-- hora_inicio -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="hora_inicio">Hora Inicio de Recolección</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="hora_inicio_span" class="input-group-text">
-                                                <i class="fas fa-clock"></i>
-                                            </span>
-                                            <input type="time" required value="<?= $data['hora_inicio'] ?>"
-                                                class="form-control" id="hora_inicio" />
-                                        </div>
+                                </div>
+                                <!-- hora_inicio -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="hora_inicio">Hora Inicio de Recolección</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="hora_inicio_span" class="input-group-text">
+                                            <i class="fas fa-clock"></i>
+                                        </span>
+                                        <input type="time" required value="<?= $data['hora_inicio'] ?>"
+                                            class="form-control" id="hora_inicio" />
                                     </div>
-                                    <!-- hora_finalizacion -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="hora_finalizacion">Hora Fin de Recolección</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="hora_finalizacion_span" class="input-group-text">
-                                                <i class="fas fa-clock"></i>
-                                            </span>
-                                            <input type="time" required class="form-control" name="hora_finalizacion"
-                                                id="hora_finalizacion" />
-                                        </div>
+                                </div>
+                                <!-- hora_finalizacion -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="hora_finalizacion">Hora Fin de Recolección</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="hora_finalizacion_span" class="input-group-text">
+                                            <i class="fas fa-clock"></i>
+                                        </span>
+                                        <input type="time" required class="form-control" name="hora_finalizacion"
+                                            id="hora_finalizacion" />
                                     </div>
-                                    <script>
-                                        // Función para actualizar la hora en el campo de hora_finalizacion
-                                        function actualizarHora() {
-                                            // Obtener la hora actual
-                                            const ahora = new Date();
-                                            // Formatear la hora en formato HH:MM (24 horas)
-                                            const horas = String(ahora.getHours()).padStart(2, '0');
-                                            const minutos = String(ahora.getMinutes()).padStart(2, '0');
-                                            // Actualizar el valor del input con la hora formateada
-                                            document.getElementById('hora_finalizacion').value = `${horas}:${minutos}`;
-                                        }
-                                        // Actualizar la hora cada segundo
-                                        setInterval(actualizarHora, 1000);
-                                        // Llamar a la función inmediatamente para establecer la hora inicial
-                                        actualizarHora();
-                                    </script>
-                                    <?php
+                                </div>
+                                <script>
+                                // Función para actualizar la hora en el campo de hora_finalizacion
+                                function actualizarHora() {
+                                    // Obtener la hora actual
+                                    const ahora = new Date();
+                                    // Formatear la hora en formato HH:MM (24 horas)
+                                    const horas = String(ahora.getHours()).padStart(2, '0');
+                                    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+                                    // Actualizar el valor del input con la hora formateada
+                                    document.getElementById('hora_finalizacion').value = `${horas}:${minutos}`;
+                                }
+                                // Actualizar la hora cada segundo
+                                setInterval(actualizarHora, 1000);
+                                // Llamar a la función inmediatamente para establecer la hora inicial
+                                actualizarHora();
+                                </script>
+                                <?php
                                     // validamos si tiene imagen o no
                                     if (isNotEmpty([$data['foto_kilometraje_inicial']])) {
                                     ?>
-                                        <!-- foto_kilometraje inicial -->
-                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                            <label class="form-label" for="foto_kilometraje">Foto del Kilometraje
-                                                Inicial</label>
+                                <!-- foto_kilometraje inicial -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="foto_kilometraje">Foto del Kilometraje
+                                        Inicial</label>
 
-                                            <div class="input-group input-group-merge text-center">
-                                                <img src="../assets/images/<?= $data['foto_kilometraje_inicial'] ?>" width="150"
-                                                    alt="No se encontro foto del kilometraje inicial">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                            <label class="form-label" for="foto_kilometraje_inicial">Cambiar Foto
-                                                Kilometraje Inicial</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="nombre_area-span" class="input-group-text"><i
-                                                        class="fas fa-camera"></i></span>
-                                                <input type="file" accept="image/*" class="form-control"
-                                                    name="foto_kilometraje_inicial" id="foto_kilometraje_inicial"
-                                                    onchange="validarImagenKmInicial()" />
-                                            </div>
-                                        </div>
-                                    <?php
+                                    <div class="input-group input-group-merge text-center">
+                                        <img src="../assets/images/<?= $data['foto_kilometraje_inicial'] ?>" width="150"
+                                            alt="No se encontro foto del kilometraje inicial">
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="foto_kilometraje_inicial">Cambiar Foto
+                                        Kilometraje Inicial</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-camera"></i></span>
+                                        <input type="file" accept="image/*" class="form-control"
+                                            name="foto_kilometraje_inicial" id="foto_kilometraje_inicial"
+                                            onchange="validarImagenKmInicial()" />
+                                    </div>
+                                </div>
+                                <?php
                                     } else {
                                         // si no hay imagen, generamos el input para subir una nueva
                                         // para esto necesitamos el id del input que contiene la imagen
                                         // en este caso es "foto_kilometraje_inicial"
                                     ?>
-                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                            <p class="text-danger">No se adjunto ninguna imagen de kilometraje inicial</p>
-                                            <label class="form-label" for="foto_kilometraje_inicial">Foto del Kilometraje
-                                                Inicial</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="nombre_area-span" class="input-group-text"><i
-                                                        class="fas fa-camera"></i></span>
-                                                <input type="file" accept="image/*" class="form-control"
-                                                    name="foto_kilometraje_inicial" id="foto_kilometraje_inicial"
-                                                    onchange="validarImagenKmInicial()" />
-                                            </div>
-                                        </div>
-                                    <?php
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <p class="text-danger">No se adjunto ninguna imagen de kilometraje inicial</p>
+                                    <label class="form-label" for="foto_kilometraje_inicial">Foto del Kilometraje
+                                        Inicial</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-camera"></i></span>
+                                        <input type="file" accept="image/*" class="form-control"
+                                            name="foto_kilometraje_inicial" id="foto_kilometraje_inicial"
+                                            onchange="validarImagenKmInicial()" />
+                                    </div>
+                                </div>
+                                <?php
                                     }
                                     ?>
-                                    <script>
-                                        function validarImagenKmInicial() {
-                                            const inputFile = document.getElementById('foto_kilometraje_inicial');
-                                            const file = inputFile.files[0];
-                                            if (file) {
-                                                const fileType = file.type;
-                                                const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
-                                                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                                                const maxSize = 5; // Tamaño máximo en MB
-                                                // Validar el tipo de archivo
-                                                if (!validImageTypes.includes(fileType)) {
-                                                    swal.fire({
-                                                        title: 'Error',
-                                                        text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
-                                                        icon: 'error',
-                                                        confirmButtonText: 'Aceptar'
-                                                    });
-                                                    inputFile.value = ''; // Limpiar el input si el archivo no es válido
-                                                    return;
-                                                }
-                                                // Validar el tamaño del archivo
-                                                if (fileSize > maxSize) {
-                                                    swal.fire({
-                                                        title: 'Error',
-                                                        text: 'El tamaño de la imagen no debe exceder los 5 MB.',
-                                                        icon: 'error',
-                                                        confirmButtonText: 'Aceptar'
-                                                    });
-                                                    inputFile.value = ''; // Limpiar el input si el archivo es muy grande
-                                                    return;
-                                                }
-                                            }
+                                <script>
+                                function validarImagenKmInicial() {
+                                    const inputFile = document.getElementById('foto_kilometraje_inicial');
+                                    const file = inputFile.files[0];
+                                    if (file) {
+                                        const fileType = file.type;
+                                        const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
+                                        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                                        const maxSize = 5; // Tamaño máximo en MB
+                                        // Validar el tipo de archivo
+                                        if (!validImageTypes.includes(fileType)) {
+                                            swal.fire({
+                                                title: 'Error',
+                                                text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
+                                                icon: 'error',
+                                                confirmButtonText: 'Aceptar'
+                                            });
+                                            inputFile.value = ''; // Limpiar el input si el archivo no es válido
+                                            return;
                                         }
-                                    </script>
-                                    <?php
+                                        // Validar el tamaño del archivo
+                                        if (fileSize > maxSize) {
+                                            swal.fire({
+                                                title: 'Error',
+                                                text: 'El tamaño de la imagen no debe exceder los 5 MB.',
+                                                icon: 'error',
+                                                confirmButtonText: 'Aceptar'
+                                            });
+                                            inputFile.value = ''; // Limpiar el input si el archivo es muy grande
+                                            return;
+                                        }
+                                    }
+                                }
+                                </script>
+                                <?php
                                     // validamos si tiene imagen o no
                                     if (isNotEmpty([$data['foto_kilometraje_final']])) {
                                     ?>
-                                        <!-- foto_kilometraje final -->
-                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                            <label class="form-label" for="foto_kilometraje">Foto del Kilometraje
-                                                Final</label>
-                                            <div class="input-group input-group-merge text-center">
+                                <!-- foto_kilometraje final -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="foto_kilometraje">Foto del Kilometraje
+                                        Final</label>
+                                    <div class="input-group input-group-merge text-center">
 
-                                                <img src="../assets/images/<?= $data['foto_kilometraje_final'] ?>" width="150"
-                                                    alt="No se encontro foto del kilometraje final">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                            <label class="form-label" for="foto_kilometraje_final">Foto del Kilometraje
-                                                Final</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="nombre_area-span" class="input-group-text"><i
-                                                        class="fas fa-camera"></i></span>
-                                                <input type="file" accept="image/*" class="form-control"
-                                                    name="foto_kilometraje_final" id="foto_kilometraje_final"
-                                                    onchange="validarImagenKmFinal()" />
-                                            </div>
-                                        </div>
-                                    <?php
+                                        <img src="../assets/images/<?= $data['foto_kilometraje_final'] ?>" width="150"
+                                            alt="No se encontro foto del kilometraje final">
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="foto_kilometraje_final">Foto del Kilometraje
+                                        Final</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-camera"></i></span>
+                                        <input type="file" accept="image/*" class="form-control"
+                                            name="foto_kilometraje_final" id="foto_kilometraje_final"
+                                            onchange="validarImagenKmFinal()" />
+                                    </div>
+                                </div>
+                                <?php
                                     } else {
                                         // si no hay imagen, generamos el input para subir una nueva
                                         // para esto necesitamos el id del input que contiene la imagen
                                         // en este caso es "foto_kilometraje_final"
                                     ?>
-                                        <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                            <p class="text-danger">No se adjunto ninguna imagen de kilometraje final</p>
-                                            <label class="form-label" for="foto_kilometraje_final">Foto del Kilometraje
-                                                Final</label>
-                                            <div class="input-group input-group-merge">
-                                                <span id="nombre_area-span" class="input-group-text"><i
-                                                        class="fas fa-camera"></i></span>
-                                                <input type="file" accept="image/*" class="form-control"
-                                                    name="foto_kilometraje_final" id="foto_kilometraje_final"
-                                                    onchange="validarImagenKmFinal()" />
-                                            </div>
-                                        </div>
-                                    <?php
-                                    }
-                                    ?>
-                                    <!-- kilometraje inicial -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="kilometraje">Kilometraje Inicial</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="kilometraje_span" class="input-group-text"><i
-                                                    class="fas fa-road"></i></span>
-                                            <input type="number" value="<?= $data['km_inicio'] ?>" required
-                                                class="form-control" id="kilometraje" placeholder="Ingresar kilometraje" />
-                                        </div>
-                                    </div>
-                                    <script>
-                                        function validarImagenKmFinal() {
-                                            const inputFile = document.getElementById('foto_kilometraje_final');
-                                            const file = inputFile.files[0];
-                                            if (file) {
-                                                const fileType = file.type;
-                                                const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
-                                                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                                                const maxSize = 5; // Tamaño máximo en MB
-                                                // Validar el tipo de archivo
-                                                if (!validImageTypes.includes(fileType)) {
-                                                    swal.fire({
-                                                        title: 'Error',
-                                                        text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
-                                                        icon: 'error',
-                                                        confirmButtonText: 'Aceptar'
-                                                    });
-                                                    inputFile.value = ''; // Limpiar el input si el archivo no es válido
-                                                    return;
-                                                }
-                                                // Validar el tamaño del archivo
-                                                if (fileSize > maxSize) {
-                                                    swal.fire({
-                                                        title: 'Error',
-                                                        text: 'El tamaño de la imagen no debe exceder los 5 MB.',
-                                                        icon: 'error',
-                                                        confirmButtonText: 'Aceptar'
-                                                    });
-                                                    inputFile.value = ''; // Limpiar el input si el archivo es muy grande
-                                                    return;
-                                                }
-                                            }
-                                        }
-                                    </script>
-                                    <!-- kilometraje -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="kilometraje_final">Kilometraje Final</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="kilometraje_span" class="input-group-text"><i
-                                                    class="fas fa-road"></i></span>
-                                            <input type="number" minlength="1" maxlength="10"
-                                                onkeypress="return(multiplenumber(event));" value="<?= $data['km_fin'] ?>"
-                                                class="form-control" name="kilometraje_final" id="kilometraje_final"
-                                                placeholder="Ingresar kilometraje" />
-                                        </div>
-                                    </div>
-                                    <!-- horometro -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="horometro">Horometro Inicial</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="horometro_span" class="input-group-text"><i
-                                                    class="fas fa-clock"></i></span>
-                                            <input type="number" minlength="1" maxlength="10" required
-                                                onkeypress="return(multiplenumber(event));"
-                                                value="<?= $data['horometro_inicio'] ?>" class="form-control" id="horometro"
-                                                placeholder="Ingresar horometro" />
-                                        </div>
-                                    </div>
-                                    <!-- horometro final -->
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label class="form-label" for="horometro_final">Horometro Final</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="horometro_span" class="input-group-text"><i
-                                                    class="fas fa-clock"></i></span>
-                                            <input type="number" minlength="1" maxlength="10" required
-                                                onkeypress="return(multiplenumber(event));"
-                                                value="<?= $data['horometro_fin'] ?>" class="form-control"
-                                                id="horometro_final" name="horometro_final"
-                                                placeholder="Ingresar horometro final" />
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                        <label for="ciudad" class="form-label">Ciudad de Recoleccion</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
-                                            <input type="text" class="form-control" id="ciudad" name="ciudad"
-                                                placeholder="Ingresar ciudad" value="<?= $data['ciudad'] ?>" />
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 col-12 col-lg-6 col-xl-8">
-                                        <label for="observaciones" class="form-label">Observaciones</label>
-                                        <div class="input-group input-group-merge">
-                                            <span id="observaciones-2" class="input-group-text">
-                                                <i class="fas fa-weight-hanging"></i>
-                                            </span>
-                                            <textarea class="form-control" id="observaciones" rows="5" name="observaciones"
-                                                placeholder="Ingresar observación"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <!-- Contenedor de los empleados -->
-                                    <div class="mb-3 col-12" id="empleados">
-                                        <!-- Mostrar la lista de empleados -->
-                                        <h5>Tripulacion Asignada</h5>
-                                        <ul class="list-group">
-                                            <?php foreach ($detalle as $employee): ?>
-                                                <li class="list-group-item">
-                                                    <strong>Nombre Completo:</strong>
-                                                    <?php echo htmlspecialchars($employee['nombres'] . ' ' . $employee['apellidos']); ?><br>
-                                                    <strong>Documento:</strong>
-                                                    <?php echo htmlspecialchars($employee['documento']); ?><br>
-
-                                                </li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </div>
-                                    <input type="hidden" id="empleadosInput" name="empleados">
-                                    <div class="mt-4">
-                                        <!-- Botón de Cancelar -->
-                                        <a href="index.php" class="btn btn-danger" id="cancelarBtn">
-                                            Cancelar
-                                        </a>
-                                        <input type="submit" class="btn btn-primary" value="Actualizar"></input>
-                                        <input type="hidden" class="btn btn-info" value="formUpdateRecoleccion"
-                                            name="MM_formUpdateRecoleccion"></input>
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <p class="text-danger">No se adjunto ninguna imagen de kilometraje final</p>
+                                    <label class="form-label" for="foto_kilometraje_final">Foto del Kilometraje
+                                        Final</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-camera"></i></span>
+                                        <input type="file" accept="image/*" class="form-control"
+                                            name="foto_kilometraje_final" id="foto_kilometraje_final"
+                                            onchange="validarImagenKmFinal()" />
                                     </div>
                                 </div>
-                            </form>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const cancelarBtn = document.getElementById('cancelarBtn');
-                                    // Escucha el evento click en el botón Cancelar
-                                    cancelarBtn.addEventListener('click', function(event) {
-                                        // Elimina la propiedad que desees del localStorage
-                                        localStorage.removeItem(
-                                            'empleados'
-                                        ); // Ajusta según el nombre de la propiedad a eliminar
+                                <?php
+                                    }
+                                    ?>
+                                <!-- kilometraje inicial -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="kilometraje">Kilometraje Inicial</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="kilometraje_span" class="input-group-text"><i
+                                                class="fas fa-road"></i></span>
+                                        <input type="number" step="0.01" value="<?= $data['km_inicio'] ?>" required
+                                            class="form-control ps-2" id="kilometraje"
+                                            placeholder="Ingresar kilometraje" />
+                                    </div>
+                                </div>
+                                <script>
+                                function validarImagenKmFinal() {
+                                    const inputFile = document.getElementById('foto_kilometraje_final');
+                                    const file = inputFile.files[0];
+                                    if (file) {
+                                        const fileType = file.type;
+                                        const fileSize = file.size / 1024 / 1024; // Convertir el tamaño de bytes a MB
+                                        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                                        const maxSize = 5; // Tamaño máximo en MB
+                                        // Validar el tipo de archivo
+                                        if (!validImageTypes.includes(fileType)) {
+                                            swal.fire({
+                                                title: 'Error',
+                                                text: 'Solo se permiten archivos de imagen (JPEG, PNG o JPG).',
+                                                icon: 'error',
+                                                confirmButtonText: 'Aceptar'
+                                            });
+                                            inputFile.value = ''; // Limpiar el input si el archivo no es válido
+                                            return;
+                                        }
+                                        // Validar el tamaño del archivo
+                                        if (fileSize > maxSize) {
+                                            swal.fire({
+                                                title: 'Error',
+                                                text: 'El tamaño de la imagen no debe exceder los 5 MB.',
+                                                icon: 'error',
+                                                confirmButtonText: 'Aceptar'
+                                            });
+                                            inputFile.value = ''; // Limpiar el input si el archivo es muy grande
+                                            return;
+                                        }
+                                    }
+                                }
+                                </script>
+                                <!-- kilometraje -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="kilometraje_final">Kilometraje Final</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="kilometraje_span" class="input-group-text"><i
+                                                class="fas fa-road"></i></span>
+                                        <input type="number" step="0.01" min="1" value="<?= $data['km_fin'] ?>"
+                                            class="form-control ps-2" name="kilometraje_final" id="kilometraje_final"
+                                            placeholder="Ingresar kilometraje" />
+                                    </div>
+                                </div>
+                                <!-- horometro -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="horometro">Horometro Inicial</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="horometro_span" class="input-group-text"><i
+                                                class="fas fa-clock"></i></span>
+                                        <input type="number" minlength="1" maxlength="10" required
+                                            onkeypress="return(multiplenumber(event));"
+                                            value="<?= $data['horometro_inicio'] ?>" class="form-control" id="horometro"
+                                            placeholder="Ingresar horometro" />
+                                    </div>
+                                </div>
+                                <!-- horometro final -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="horometro_final">Horometro Final</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="horometro_span" class="input-group-text"><i
+                                                class="fas fa-clock"></i></span>
+                                        <input type="number" step="0.01" min="0" required
+                                            value="<?= $data['horometro_fin'] ?>" class="form-control"
+                                            id="horometro_final" name="horometro_final"
+                                            placeholder="Ingresar horometro final" />
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label for="ciudad" class="form-label">Ciudad de Recoleccion</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
+                                        <input type="text" class="form-control" id="ciudad" name="ciudad"
+                                            placeholder="Ingresar ciudad" value="<?= $data['ciudad'] ?>" />
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 col-xl-8">
+                                    <label for="observaciones" class="form-label">Observaciones</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="observaciones-2" class="input-group-text">
+                                            <i class="fas fa-weight-hanging"></i>
+                                        </span>
+                                        <textarea class="form-control" id="observaciones" rows="5" name="observaciones"
+                                            placeholder="Ingresar observación"></textarea>
+                                    </div>
+                                </div>
 
-                                        window.location.href("index.php");
-                                    });
-                                });
-                            </script>
-                        </div>
+                                <!-- Contenedor de los empleados -->
+                                <div class="mb-3 col-12" id="empleados">
+                                    <!-- Mostrar la lista de empleados -->
+                                    <h5>Tripulacion Asignada</h5>
+                                    <ul class="list-group">
+                                        <?php foreach ($detalle as $employee): ?>
+                                        <li class="list-group-item">
+                                            <strong>Nombre Completo:</strong>
+                                            <?php echo htmlspecialchars($employee['nombres'] . ' ' . $employee['apellidos']); ?><br>
+                                            <strong>Documento:</strong>
+                                            <?php echo htmlspecialchars($employee['documento']); ?><br>
+
+                                        </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                                <input type="hidden" id="empleadosInput" name="empleados">
+                                <div class="mt-4">
+                                    <!-- Botón de Cancelar -->
+                                    <a href="index.php" class="btn btn-danger" id="cancelarBtn">
+                                        Cancelar
+                                    </a>
+                                    <input type="submit" class="btn btn-primary" value="Actualizar"></input>
+                                    <input type="hidden" class="btn btn-info" value="formUpdateRecoleccion"
+                                        name="MM_formUpdateRecoleccion"></input>
+                                </div>
+                            </div>
+                        </form>
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const cancelarBtn = document.getElementById('cancelarBtn');
+                            // Escucha el evento click en el botón Cancelar
+                            cancelarBtn.addEventListener('click', function(event) {
+                                // Elimina la propiedad que desees del localStorage
+                                localStorage.removeItem(
+                                    'empleados'
+                                ); // Ajusta según el nombre de la propiedad a eliminar
+
+                                window.location.href("index.php");
+                            });
+                        });
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
-        <?php
+    </div>
+    <?php
         require_once("../components/footer.php");
         ?>
     <?php

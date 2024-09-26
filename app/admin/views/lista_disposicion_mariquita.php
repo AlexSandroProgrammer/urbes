@@ -80,9 +80,15 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                     </td>
                                     <td><?php echo $disposicion['fecha_inicio'] ?></td>
                                     <td><?php echo $disposicion['hora_inicio'] ?></td>
-                                    <td><?php echo $disposicion['fecha_fin'] ?></td>
-                                    <td><?php echo $disposicion['hora_finalizacion'] ?></td>
-                                    <td><?php echo $disposicion['km_inicio'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($disposicion['fecha_fin']) ? $disposicion['fecha_fin'] : 'No hay registros'; ?>
+                                    </td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($disposicion['hora_finalizacion']) ? $disposicion['hora_finalizacion'] : 'No hay registros'; ?>
+                                    </td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($disposicion['km_inicio']) ? $disposicion['km_inicio'] : 'No hay registros'; ?>
+                                    </td>
                                     <?php if (isset($disposicion['foto_kilometraje_inicial']) && !empty($disposicion['foto_kilometraje_inicial'])) { ?>
                                     <td class="avatar">
                                         <img src="../../employee/assets/images/<?php echo $disposicion['foto_kilometraje_inicial'] ?>"
@@ -99,7 +105,9 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                         <p>Sin foto</p>
                                     </td>
                                     <?php } ?>
-                                    <td><?php echo $disposicion['km_fin'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($disposicion['km_fin']) ? $disposicion['km_fin'] : 'No hay registros'; ?>
+                                    </td>
                                     <?php if (isset($disposicion['foto_kilometraje_final']) && !empty($disposicion['foto_kilometraje_final'])) { ?>
                                     <td class="avatar">
                                         <img src="../../employee/assets/images/<?php echo $disposicion['foto_kilometraje_final'] ?>"
@@ -116,11 +124,19 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                         <p>Sin foto</p>
                                     </td>
                                     <?php } ?>
-                                    <td><?php echo $disposicion['toneladas'] ?></td>
-                                    <td><?php echo $disposicion['galones'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($disposicion['toneladas']) ? $disposicion['toneladas'] : 'No hay registros'; ?>
+                                    </td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($disposicion['galones']) ? $disposicion['galones'] : 'No hay registros'; ?>
+                                    </td>
                                     <td><?php echo $disposicion['horometro_inicio'] ?></td>
-                                    <td><?php echo $disposicion['horometro_fin'] ?></td>
-                                    <td><?php echo $disposicion['observaciones'] ?></td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($disposicion['horometro_fin']) ? $disposicion['horometro_fin'] : 'No hay registros'; ?>
+                                    </td>
+                                    <td class="custom-table-th">
+                                        <?php echo !empty($disposicion['observaciones']) ? $disposicion['observaciones'] : 'No hay registros'; ?>
+                                    </td>
                                 </tr>
                                 <?php
                                 }
