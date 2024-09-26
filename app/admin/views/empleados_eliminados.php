@@ -15,7 +15,7 @@ $empleados = $listaEmpleados->fetchAll(PDO::FETCH_ASSOC);
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card mb-4">
-            <h2 class="card-header font-bold"><?php echo $titlePage ?></h2>
+            <h2 class="card-header font-bold">Lista Empleados Eliminados</h2>
             <div class="card-body">
                 <div class="row gy-3 mb-3">
                     <!-- Default Modal -->
