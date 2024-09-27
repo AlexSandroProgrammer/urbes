@@ -21,6 +21,7 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <script src="../../js/functions.js"></script>
+
 </body>
 
 </html>
