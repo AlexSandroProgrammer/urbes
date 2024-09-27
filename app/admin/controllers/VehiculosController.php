@@ -27,7 +27,7 @@ if ((isset($_POST["MM_formRegisterCar"])) && ($_POST["MM_formRegisterCar"] == "f
         // cargamos la fecha y hora actual del registro
         $fecha_registro = date('Y-m-d H:i:s');
         // Inserta los datos en la base de datos
-        $registerCar = $connection->prepare("INSERT INTO vehiculos(placa, vehiculo,fecha_soat, fecha_tecno fecha_registro) VALUES(:placa,:vehiculo,:soat,:tecno :fecha_registro)");
+        $registerCar = $connection->prepare("INSERT INTO vehiculos(placa, vehiculo,fecha_soat, fecha_tecno, fecha_registro) VALUES(:placa,:vehiculo,:soat,:tecno, :fecha_registro)");
         $registerCar->bindParam(':placa', $placa);
         $registerCar->bindParam(':vehiculo', $vehiculo);
         $registerCar->bindParam(':soat', $soat);

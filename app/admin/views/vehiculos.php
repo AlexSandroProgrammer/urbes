@@ -175,6 +175,7 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                     }
                 }
                 ?>
+
                 <!-- Tabla de Vehiculos -->
                 <div class="row">
                     <div class="col-lg-12 mt-3">
@@ -196,12 +197,22 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                                     <?php foreach($vehiculos as $car) { ?>
                                     <tr>
                                         <td>
+                                            <!-- Botón para actualizar -->
                                             <form method="GET" class="mt-2" action="vehiculos.php">
                                                 <input type="hidden" name="placa" value="<?= $car['placa'] ?>">
                                                 <button class="btn btn-success"
                                                     onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
                                                     type="submit">
                                                     <i class="bx bx-refresh" title="Actualizar"></i>
+                                                </button>
+                                            </form>
+
+                                            <!-- Botón para eliminar -->
+                                            <form method="POST" class="mt-2" action="vehiculos.php"
+                                                onsubmit="return confirm('¿Estás seguro de eliminar el vehículo?');">
+                                                <input type="hidden" name="placa_eliminar" value="<?= $car['placa'] ?>">
+                                                <button class="btn btn-danger" type="submit">
+                                                    <i class="bx bx-trash" title="Eliminar"></i>
                                                 </button>
                                             </form>
                                         </td>
@@ -221,7 +232,20 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+
     <?php
 require_once("../components/footer.php");
-?>
-</div>
+
+// Manejar la eliminación
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['placa_eliminar'])) {
+    $placaEliminar = $_POST['placa_eliminar'];
+    // Consulta para eliminar el vehículo por su placa
+    $deleteCar = $connection->prepare("DELETE FROM vehiculos WHERE placa = :placa");
+    $deleteCar->bindParam(":placa", $placaEliminar);
+
+    if ($deleteCar->execute()) {
+        showErrorOrSuccessAndRedirect("success", "Vehículo eliminado", "El vehículo fue eliminado exitosamente.", "vehiculos.php");
+    } else {
+        showErrorOrSuccessAndRedirect("error", "Error", "Hubo un problema al eliminar el vehículo.", "vehiculos.php");
+    }
+}
