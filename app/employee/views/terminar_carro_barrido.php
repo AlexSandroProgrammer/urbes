@@ -65,7 +65,7 @@ if (isset($_GET['stmp'])) {
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formFinishSweepingCart" onsubmit="disableSubmitButton(this);">>
+                            name="formFinishSweepingCart" onsubmit="disableSubmitButton(this);">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del formulario de <?= $actividad ?>, te

@@ -13,3 +13,4 @@ require_once("../controllers/MecanicaController.php");
 require_once("../controllers/AreasPublicasController.php");
 require_once("../controllers/DisposicionController.php");
 require_once("../controllers/RecoleccionController.php");
+require_once("../controllers/EmpresaController.php");

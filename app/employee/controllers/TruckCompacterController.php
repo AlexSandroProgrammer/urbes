@@ -141,7 +141,7 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
         }
 
         // Consulta para obtener datos de la tabla vehiculo_compactador
-        $query = "SELECT vehiculo_compactador.*, labores.labor, vehiculos.placa, usuarios.documento, estados.estado, ciudades.ciudad
+        $query = "SELECT vehiculo_compactador.*, labores.labor, vehiculos.placa,usuarios.nombres, usuarios.apellidos, usuarios.documento, estados.estado, ciudades.ciudad
                   FROM vehiculo_compactador
                   INNER JOIN labores ON vehiculo_compactador.id_labor = labores.id_labor
                   INNER JOIN vehiculos ON vehiculo_compactador.id_vehiculo = vehiculos.placa
@@ -154,26 +154,29 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
         $execute->execute();
         $data = $execute->fetch(PDO::FETCH_ASSOC);
 
-        // Consulta para obtener la tripulación
-        $queryTripulacion = $connection->prepare("SELECT usuarios.documento
-                                                  FROM detalle_tripulacion
-                                                  INNER JOIN usuarios ON detalle_tripulacion.documento = usuarios.documento
-                                                  WHERE detalle_tripulacion.id_registro = :id_registro");
-        $queryTripulacion->bindParam(":id_registro", $idRegister);
-        $queryTripulacion->execute();
+    // Consulta para obtener la tripulación (documento y nombre)
+    $queryTripulacion = $connection->prepare("SELECT usuarios.documento, usuarios.nombres, usuarios.apellidos
+                                          FROM detalle_tripulacion
+                                          INNER JOIN usuarios ON detalle_tripulacion.documento = usuarios.documento
+                                          WHERE detalle_tripulacion.id_registro = :id_registro");
+    $queryTripulacion->bindParam(":id_registro", $idRegister);
+    $queryTripulacion->execute();
 
-        // Obtener la tripulación en un array
-        $tripuResult = $queryTripulacion->fetchAll(PDO::FETCH_COLUMN);
+    // Obtener la tripulación en un array de arrays
+    $tripuResult = $queryTripulacion->fetchAll(PDO::FETCH_ASSOC);
 
-        // Concatenar los documentos si hay más de uno
-        $tripuConcatenadas = count($tripuResult) > 1 ? implode(", ", $tripuResult) : $tripuResult[0];
-
+    // Concatenar los documentos y nombres
+    $tripuConcatenadas = [];
+    foreach ($tripuResult as $row) {
+        $tripuConcatenadas[] = $row['documento'] . " (" . $row['nombres'] .  $row['apellidos'] .  ")";
+    }
+    $registradorConcatenado = $_POST['documento'] . " (" . $data['nombres'] . " " . $data['apellidos'] . ")";
         // Preparar los datos para enviar a Google Sheets
         $datos = [
             'id_registro' => $idRegister,
             'fecha_inicio' => $fecha_inicio,
             'hora_inicio' => $hora_inicio,
-            'documento' => $documento,
+            'documento' => $registradorConcatenado,
             'placa' => $vehiculo,
             'kilometroje_inicial' => $kilometraje ?? 'No se registró Kilometraje',
             'horometro_inicial' => $horometro,
@@ -181,7 +184,7 @@ if ((isset($_POST["MM_formRegisterVehicleCompacter"])) && ($_POST["MM_formRegist
             'id_estado' => $data['estado'],
             'fecha_registro' => $fecha_registro,
             'ciudad' => $data['ciudad'],
-            'tripulacion' => $tripuConcatenadas,
+            'tripulacion' => implode(", ", $tripuConcatenadas),
             'imagen_km_inicial' => $imagenRuta ?? 'No se registró Imagen',
             'tipo_operacion' => 'registro_inicial'
         ];
@@ -438,7 +441,7 @@ if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRec
     // OBTENEMOS LA FECHA ACTUAL 
     $fecha_registro = date('Y-m-d H:i:s');
     $pendiente = 4;
-
+    
     // Inserta los datos en la base de datos, incluyendo la imagen si existe
     $registerRecoleccionRelleno = $connection->prepare("INSERT INTO recoleccion_relleno (fecha_inicio, hora_inicio, km_inicio, ciudad, foto_kilometraje_inicial, horometro_inicio, id_vehiculo, id_labor, documento, id_estado, fecha_registro) VALUES(:fecha_inicio, :hora_inicio, :km_inicio, :ciudad, :foto_kilometraje, :horometro_inicio, :id_vehiculo, :id_labor, :documento, :id_estado, :fecha_registro)");
 
@@ -460,7 +463,7 @@ if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRec
         $idRegister = $connection->lastInsertId();
 
         // Consulta para obtener datos necesarios de la tabla vehiculo_compactador
-        $query = "SELECT  recoleccion_relleno.*, labores.labor, vehiculos.placa, usuarios.documento, estados.estado, ciudades.ciudad
+        $query = "SELECT  recoleccion_relleno.*, labores.labor, vehiculos.placa, usuarios.documento,usuarios.nombres,usuarios.apellidos, estados.estado, ciudades.ciudad
                   FROM recoleccion_relleno
                   INNER JOIN labores ON recoleccion_relleno.id_labor = labores.id_labor
                   INNER JOIN vehiculos ON recoleccion_relleno.id_vehiculo = vehiculos.placa
@@ -473,12 +476,15 @@ if ((isset($_POST["MM_formRegisterRecoleccion"])) && ($_POST["MM_formRegisterRec
         $execute->execute();
         $data = $execute->fetch(PDO::FETCH_ASSOC);
 
+
+       $registradorConcatenado = $_POST['documento'] . " (" . $data['nombres'] . " " . $data['apellidos'] . ")";
+
         // Preparar los datos para enviar a Google Sheets
         $datos = [
             'id_registro' => $idRegister,
             'fecha_inicio' => $fecha_inicio,
             'hora_inicio' => $hora_inicio,
-            'documento' => $documento,
+            'documento' => $registradorConcatenado,
             'placa' => $vehiculo,
             'kilometroje_inicial' => $kilometraje ?? 'No se registró Kilometraje',
             'horometro_inicial' => $horometro,

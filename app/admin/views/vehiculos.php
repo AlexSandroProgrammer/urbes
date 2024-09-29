@@ -141,7 +141,7 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                                                 class="form-control" required name="fecha_soat" id="soat"
                                                 placeholder="Ingresa el nombre del vehículo"
                                                 value="<?php echo $selectCar['fecha_soat'] ?>"
-                                                aria-describedby="nombre-vehiculo-help" />
+                                                aria-describedby="soat-help" />
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -152,7 +152,7 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                                                 class="form-control" required name="fecha_tecno" id="tecno"
                                                 placeholder="Ingresa el nombre del vehículo"
                                                 value="<?php echo $selectCar['fecha_tecno'] ?>"
-                                                aria-describedby="nombre-vehiculo-help" />
+                                                aria-describedby="tecnomecanica-help" />
                                         </div>
                                     </div>
                                     <input type="hidden" class="form-control" id="placa" name="placa"

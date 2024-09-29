@@ -34,6 +34,7 @@
     <!-- Page CSS -->
     <!-- Helpers -->
     <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/vendor/js/helpers.js"></script>
     <script src="../../assets/js/config.js"></script>
     <script src="../../js/functions.js"></script>
     <script src="../../js/sweetalert.js"></script>
@@ -182,6 +183,25 @@
                                 </a>
 
                             </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Misc">Aforos</div>
+                                </a>
+                                <ul class="menu-sub">
+
+                                    <li class="menu-item">
+                                        <a href="lista_aforos.php" class="menu-link">
+                                            <div data-i18n="Misc">Lista Aforos</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="reporte_mensual.php" class="menu-link">
+                                            <div data-i18n="Misc">Reporte Mensual Aforo</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </li>
                     <li class="menu-item">
@@ -316,6 +336,19 @@
                             <li class="menu-item">
                                 <a href="vehiculos.php" class="menu-link">
                                     <div data-i18n="Error">Lista de vehiculos</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-star"></i>
+                            <div data-i18n="Misc">Empresas</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="Empresas.php" class="menu-link">
+                                    <div data-i18n="Error">Lista de Empresas</div>
                                 </a>
                             </li>
                         </ul>

@@ -55,7 +55,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formUpdateRecoleccion" onsubmit="disableSubmitButton(this);">>
+                            name="formUpdateRecoleccion" onsubmit="disableSubmitButton(this);">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Hola(a)
                                     <?= $nombre_completo ?>, te invitamos a terminar de rellanar al registro del

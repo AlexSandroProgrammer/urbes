@@ -71,9 +71,10 @@ if ((isset($_POST["MM_formRegisterSweepingCart"])) && ($_POST["MM_formRegisterSw
        
 
         // Consulta para obtener los datos necesarios de la tabla carro_barrido
-        $querySheets = $connection->prepare("SELECT carro_barrido.*, actividades.actividad, ciudades.ciudad, estados.estado
+        $querySheets = $connection->prepare("SELECT carro_barrido.*, actividades.actividad, ciudades.ciudad, estados.estado,usuarios.nombres,usuarios.apellidos
                                              FROM carro_barrido
                                              INNER JOIN ciudades ON carro_barrido.ciudad = ciudades.id_ciudad
+                                             INNER JOIN usuarios ON carro_barrido.documento = usuarios.documento
                                              INNER JOIN estados ON carro_barrido.id_estado = estados.id_estado
                                              INNER JOIN actividades ON carro_barrido.id_actividad = actividades.id_actividad
                                              WHERE id_registro_barrido = :id_registro");
@@ -102,13 +103,13 @@ if ((isset($_POST["MM_formRegisterSweepingCart"])) && ($_POST["MM_formRegisterSw
         }
 
       
-
+        $registradorConcatenado = $_POST['documento'] . " (" . $sheets['nombres'] . " " . $sheets['apellidos'] . ")";
         // Preparar los datos para enviar a Google Sheets
         $datos = [
             'id_registro' => $idRegister,
             'fecha_inicio' => $fecha_inicio,
             'hora_inicio' => $hora_inicio,
-            'documento' => $documento,
+            'documento' => $registradorConcatenado,
             'actividad' => $sheets['actividad'],
             'id_estado' => $sheets['estado'],
             'fecha_registro' => $fecha_registro,

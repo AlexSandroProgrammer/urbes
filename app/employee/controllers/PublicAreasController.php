@@ -68,21 +68,27 @@ if ((isset($_POST["MM_formRegisterTreePruning"])) && ($_POST["MM_formRegisterTre
                                 labores.labor, 
                                 ciudades.id_ciudad, 
                                 ciudades.ciudad, 
-                                estados.estado
+                                estados.estado,
+                                usuarios.nombres,
+                                usuarios.apellidos
+
                                 FROM  areas_publicas 
                                 INNER JOIN ciudades ON areas_publicas.id_ciudad = ciudades.id_ciudad 
                                 INNER JOIN labores ON areas_publicas.id_labor = labores.id_labor 
                                 INNER JOIN estados ON areas_publicas.id_estado = estados.id_estado 
+                                INNER JOIN usuarios ON areas_publicas.documento = usuarios.documento 
                                 WHERE id_registro = :id_registro");
             $querySheets->bindParam(":id_registro", $id_registro);
             $querySheets->execute();
             $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
- 
+
+
+        $registradorConcatenado = $_POST['documento'] . " (" . $sheets['nombres'] . " " . $sheets['apellidos'] . ")";
          $datos = [
              'id_registro' => $id_registro,
              'fecha_inicio' => $fecha_inicio,
              'hora_inicio' => $hora_inicio,
-             'documento' => $documento, 
+             'documento' => $registradorConcatenado, 
              'labor' => $sheets['labor'],
              'id_estado' => $sheets['estado'],
              'fecha_registro' => $fecha_registro,
@@ -147,21 +153,27 @@ if ((isset($_POST["MM_formRegisterGrassPruning"])) && ($_POST["MM_formRegisterGr
                                labores.labor, 
                                ciudades.id_ciudad, 
                                ciudades.ciudad, 
-                               estados.estado
+                               estados.estado,
+                               usuarios.nombres,
+                               usuarios.apellidos
                                FROM  areas_publicas 
                                INNER JOIN ciudades ON areas_publicas.id_ciudad = ciudades.id_ciudad 
                                INNER JOIN labores ON areas_publicas.id_labor = labores.id_labor 
                                INNER JOIN estados ON areas_publicas.id_estado = estados.id_estado 
+                               INNER JOIN usuarios ON areas_publicas.documento = usuarios.documento
                                WHERE id_registro = :id_registro");
            $querySheets->bindParam(":id_registro", $id_registro);
            $querySheets->execute();
            $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
 
+
+           
+        $registradorConcatenado = $_POST['documento'] . " (" . $sheets['nombres'] . " " . $sheets['apellidos'] . ")";
         $datos = [
             'id_registro' => $id_registro,
             'fecha_inicio' => $fecha_inicio,
             'hora_inicio' => $hora_inicio,
-            'documento' => $documento, 
+            'documento' => $registradorConcatenado , 
             'labor' => $sheets['labor'],
             'id_estado' => $sheets['estado'],
             'fecha_registro' => $fecha_registro,
@@ -227,21 +239,27 @@ if ((isset($_POST["MM_formRegisterWashing"])) && ($_POST["MM_formRegisterWashing
                                labores.labor, 
                                ciudades.id_ciudad, 
                                ciudades.ciudad, 
-                               estados.estado
+                               estados.estado,
+                               usuarios.nombres,
+                               usuarios.apellidos
                                FROM  areas_publicas 
                                INNER JOIN ciudades ON areas_publicas.id_ciudad = ciudades.id_ciudad 
                                INNER JOIN labores ON areas_publicas.id_labor = labores.id_labor 
                                INNER JOIN estados ON areas_publicas.id_estado = estados.id_estado 
+                               INNER JOIN usuarios ON areas_publicas.documento = usuarios.documento
                                WHERE id_registro = :id_registro");
            $querySheets->bindParam(":id_registro", $id_registro);
            $querySheets->execute();
            $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
 
+
+      $registradorConcatenado = $_POST['documento'] . " (" . $sheets['nombres'] . " " . $sheets['apellidos'] . ")";
+
         $datos = [
             'id_registro' => $id_registro,
             'fecha_inicio' => $fecha_inicio,
             'hora_inicio' => $hora_inicio,
-            'documento' => $documento, 
+            'documento' => $registradorConcatenado, 
             'labor' => $sheets['labor'],
             'id_estado' => $sheets['estado'],
             'fecha_registro' => $fecha_registro,

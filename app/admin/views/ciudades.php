@@ -27,7 +27,8 @@ $ciudades = $getCiudades->fetchAll(PDO::FETCH_ASSOC);
                                 name="formRegisterCity">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel1">Registro de Ciudades de Operacion</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel1">Registro de Ciudades de
+                                            Operacion</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -56,60 +57,7 @@ $ciudades = $getCiudades->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
                 </div>
-                <?php
-                if (!empty($_GET["id_city"])) {
-                    $id_city = $_GET["id_city"];
-                    // CONSUMO DE DATOS DE LOS PROCESOS
-                    $queryCity = $connection->prepare("SELECT * FROM ciudades WHERE id_ciudad = :id_city");
-                    $queryCity->bindParam(":id_city", $id_city);
-                    $queryCity->execute();
-                    $selectCity = $queryCity->fetch(PDO::FETCH_ASSOC);
-                    if ($selectCity) {
-                ?>
-                        <div class="row">
-                            <div class="col-xl">
-                                <div class="card mb-4">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">Actualizacion datos de la ciudad
-                                            <?php echo $selectCity['ciudad'] ?>
-                                        </h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="" method="POST" autocomplete="off" name="formUpdateCity">
-                                            <div class=" mb-3">
-                                                <label class="form-label" for="ciudad">Ciudad</label>
-                                                <div class="input-group input-group-merge">
-                                                    <span id="nombre-area" class="input-group-text"><i
-                                                            class="fas fa-layer-group"></i></span>
-                                                    <input type="text" minlength="4" maxlength="70" autofocus
-                                                        class="form-control" required name="ciudad" id="ciudad"
-                                                        placeholder="Ingresa el nombre de la Ciudad"
-                                                        value="<?php echo $selectCity['ciudad']  ?>"
-                                                        aria-describedby="ciudad-2" />
-                                                </div>
-                                            </div>
-                                            <input type="hidden" class="form-control" id="id_ciudad" name="id_ciudad"
-                                                value="<?php echo $selectCity['id_ciudad']  ?>" />
-                                            <div class="modal-footer">
-                                                <a class="btn btn-danger" href="ciudades.php">
-                                                    Cancelar
-                                                </a>
-                                                <input type="submit" class="btn btn-primary" value="Actualizar"></input>
-                                                <input type="hidden" class="btn btn-info" value="formUpdateCity"
-                                                    name="MM_formUpdateCity"></input>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                <?php
-                    } else {
-                        showErrorOrSuccessAndRedirect("error", "Registro no encontrado", "El registro que buscas no esta registrado.", "ciudades.php");
-                        exit();
-                    }
-                }
-                ?>
+
                 <div class="row">
                     <div class="col-lg-12 mt-3">
                         <div class="table-responsive">
@@ -117,7 +65,6 @@ $ciudades = $getCiudades->fetchAll(PDO::FETCH_ASSOC);
                                 width="100%">
                                 <thead>
                                     <tr>
-                                        <th>Acciones</th>
                                         <th>Ciudades</th>
                                         <th>Fecha Registro</th>
                                         <th>Fecha Actualizacion</th>
@@ -127,22 +74,11 @@ $ciudades = $getCiudades->fetchAll(PDO::FETCH_ASSOC);
                                     <?php
                                     foreach($ciudades as $city) {
                                     ?>
-                                        <tr>
-                                            <td>
-                                                <form method="GET" class="mt-2" action="ciudades.php">
-                                                    <input type="hidden" name="id_city"
-                                                        value="<?= $city['id_ciudad'] ?>">
-                                                    <button class="btn btn-success"
-                                                        onclick="return confirm('¿Desea actualizar el registro seleccionado?');"
-                                                        type="submit">
-                                                        <i class="bx bx-refresh" title="Actualizar"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                            <td><?php echo $city['ciudad'] ?></td>
-                                            <td><?php echo $city['fecha_registro'] ?></td>
-                                            <td><?php echo $city['fecha_actualizacion'] ?></td>
-                                        </tr>
+                                    <tr>
+                                        <td><?php echo $city['ciudad'] ?></td>
+                                        <td><?php echo $city['fecha_registro'] ?></td>
+                                        <td><?php echo $city['fecha_actualizacion'] ?></td>
+                                    </tr>
                                     <?php
                                     }
                                     ?>

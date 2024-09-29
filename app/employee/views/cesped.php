@@ -49,7 +49,7 @@ $zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formRegisterGrassPruning" onsubmit="disableSubmitButton(this);">>
+                            name="formRegisterGrassPruning" onsubmit="disableSubmitButton(this);">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del

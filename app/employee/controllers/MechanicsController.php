@@ -64,20 +64,27 @@ if ((isset($_POST["MM_formRegisterMechanics"])) && ($_POST["MM_formRegisterMecha
          // Consultar los nombres de la ciudad, documento y usuario
          $querySheets = $connection->prepare("SELECT   mecanica.*,  
                                 actividades.actividad,
-                                estados.estado
+                                estados.estado,
+                                usuarios.nombres,
+                                usuarios.apellidos
                                 FROM  mecanica 
                                 INNER JOIN actividades ON mecanica.id_actividad = actividades.id_actividad 
                                 INNER JOIN estados ON mecanica.id_estado = estados.id_estado 
+                                INNER JOIN usuarios ON mecanica.documento = usuarios.documento
                                 WHERE id_registro = :id_registro");
             $querySheets->bindParam(":id_registro", $id_registro);
             $querySheets->execute();
             $sheets = $querySheets->fetch(PDO::FETCH_ASSOC);
  
+
+
+                
+    $registradorConcatenado = $_POST['documento'] . " (" . $sheets['nombres'] . " " . $sheets['apellidos'] . ")";
          $datos = [
              'id_registro' => $id_registro,
              'fecha_inicio' => $fecha_inicio,
              'hora_inicio' => $hora_inicio,
-             'documento' => $documento, 
+             'documento' => $registradorConcatenado, 
              'actividad' => $sheets['actividad'],
              'id_estado' => $sheets['estado'],
              'vehiculo' => $id_vehiculo, 
@@ -152,6 +159,7 @@ if ((isset($_POST["MM_formFinishMechanics"])) && ($_POST["MM_formFinishMechanics
         $finishRegister->execute();
 
         if ($finishRegister) {
+            
             $querySheets = $connection->prepare("
             SELECT mecanica.*, estados.estado
             FROM mecanica

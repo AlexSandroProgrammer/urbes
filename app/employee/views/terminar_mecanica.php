@@ -51,7 +51,7 @@ $vehiculo =  $Register['placa'] . ' ' . $Register['vehiculo'];
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formFinishMechanics" onsubmit="disableSubmitButton(this);">>
+                            name="formFinishMechanics" onsubmit="disableSubmitButton(this);">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del

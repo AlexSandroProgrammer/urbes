@@ -42,7 +42,7 @@ if ($tipo_usuario != 4) {
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
-                            name="formRegisterMechanics" onsubmit="disableSubmitButton(this);">>
+                            name="formRegisterMechanics" onsubmit="disableSubmitButton(this);">
                             <div class="row">
                                 <h5 class="mb-5 text-center"> <i class="bx bx-user"></i> Bienvenido(a)
                                     <?= $nombre_completo ?> al registro del
