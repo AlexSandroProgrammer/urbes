@@ -46,10 +46,10 @@ if ($documentoSession) {
                         <h5 class="card-title text-primary">1. Formulario Vehículo Compactador</h5>
                         <p class="card-text">Presiona clic para ingresar en el formulario</p>
                         <div class="d-flex flex-column flex-lg-row gap-2">
-                            <a href="vehiculo_compactador.php" class="btn btn-outline-primary">
+                            <a href="vehiculo_compactador.php" class="btn btn-primary">
                                 Recolección <i class='bx bx-right-arrow-alt'></i>
                             </a>
-                            <a href="recoleccion_relleno.php" class="btn btn-outline-primary">
+                            <a href="recoleccion_relleno.php" class="btn btn-primary">
                                 Disposición relleno <i class='bx bx-right-arrow-alt'></i>
                             </a>
                         </div>
@@ -67,7 +67,7 @@ if ($documentoSession) {
                     <div class="card-body">
                         <h5 class="card-title text-success">2. Aforos</h5>
                         <p class="card-text">Presiona clic para ingresar en el formulario</p>
-                        <a href="aforos.php" class="btn btn-outline-success">
+                        <a href="aforos.php" class="btn btn-success">
                             Ingresar <i class='bx bx-right-arrow-alt'></i>
                         </a>
                     </div>
@@ -84,7 +84,7 @@ if ($documentoSession) {
                     <div class="card-body">
                         <h5 class="card-title text-info">3. Formulario Mecánica Vehículo Compactador</h5>
                         <p class="card-text">Presiona clic para ingresar en el formulario</p>
-                        <a href="mecanica.php" class="btn btn-outline-info">
+                        <a href="mecanica.php" class="btn btn-info">
                             Ingresar <i class='bx bx-right-arrow-alt'></i>
                         </a>
                     </div>
@@ -101,7 +101,7 @@ if ($documentoSession) {
                     <div class="card-body">
                         <h5 class="card-title text-warning">4. Formulario Carro de Barrido</h5>
                         <p class="card-text">Presiona clic para ingresar en el formulario</p>
-                        <a href="carro_barrido.php" class="btn btn-outline-warning">
+                        <a href="carro_barrido.php" class="btn btn-warning">
                             Ingresar <i class='bx bx-right-arrow-alt'></i>
                         </a>
                     </div>
@@ -120,17 +120,17 @@ if ($documentoSession) {
                         <p class="card-text">Presiona clic para ingresar en el formulario</p>
                         <div class="row g-2">
                             <div class="col-12">
-                                <a href="lavado.php" class="btn btn-outline-primary w-50">
+                                <a href="lavado.php" class="btn btn-primary w-50">
                                     Lavado A. Públicas <i class='bx bx-right-arrow-alt'></i>
                                 </a>
                             </div>
                             <div class="col-12">
-                                <a href="cesped.php" class="btn btn-outline-success w-50">
+                                <a href="cesped.php" class="btn btn-success w-50">
                                     Poda De Césped <i class='bx bx-right-arrow-alt'></i>
                                 </a>
                             </div>
                             <div class="col-12">
-                                <a href="poda.php" class="btn btn-outline-info w-50">
+                                <a href="poda.php" class="btn btn-info w-50">
                                     Poda De Árboles <i class='bx bx-right-arrow-alt'></i>
                                 </a>
                             </div>
@@ -144,10 +144,10 @@ if ($documentoSession) {
 
     <?php
         require_once("../components/footer.php");
-    ?>
+        ?>
     <?php
 } else {
-    header("Location:./index.php");
+    header("Location:index.php?logout");
     exit;
 }
-?>
+    ?>

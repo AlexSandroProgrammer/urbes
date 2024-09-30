@@ -1,16 +1,13 @@
 <?php
 $titlePage = "Panel de Administrador";
 require_once("../components/sidebar.php");
-
-
-
 // Obtener vehículos desde la base de datos que tengan fechas de vencimiento
 $queryVehiculos = $connection->prepare("SELECT placa, vehiculo, fecha_soat, fecha_tecno FROM vehiculos");
 $queryVehiculos->execute();
 $vehiculos = $queryVehiculos->fetchAll(PDO::FETCH_ASSOC);
-
 // Función para calcular días restantes
-function calcularDiasRestantes($fecha_vencimiento) {
+function calcularDiasRestantes($fecha_vencimiento)
+{
     $fecha_actual = new DateTime();
     $fecha_vencimiento = new DateTime($fecha_vencimiento);
     $diferencia = $fecha_actual->diff($fecha_vencimiento);
@@ -46,13 +43,11 @@ function calcularDiasRestantes($fecha_vencimiento) {
                     </div>
                 </div>
             </div>
-
             <!-- Alertas de vehículos con fechas cercanas de vencimiento -->
             <?php
             foreach ($vehiculos as $vehiculo) {
                 $dias_restantes_soat = calcularDiasRestantes($vehiculo['fecha_soat']);
                 $dias_restantes_tecno = calcularDiasRestantes($vehiculo['fecha_tecno']);
-
                 // Mostrar alerta si faltan 15 días o menos para el vencimiento del SOAT o Tecnomecánica
                 if ($dias_restantes_soat <= 15 && $dias_restantes_soat > 0) {
                     echo "
@@ -70,7 +65,6 @@ function calcularDiasRestantes($fecha_vencimiento) {
                 }
             }
             ?>
-
             <!-- Resto del contenido -->
             <!-- Order Statistics -->
             <div class="col-md-6 col-lg-12 col-xl-6 order-0 mb-4">
