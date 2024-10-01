@@ -20,12 +20,6 @@ function enviarAforos($datos)
 
     return $resultado;
 }
-?>
-
-
-
-<?php
-
 
 // Método para registrar aforo
 if ((isset($_POST["MM_formRegisterAforo"])) && ($_POST["MM_formRegisterAforo"] == "formRegisterAforo")) {
@@ -36,7 +30,6 @@ if ((isset($_POST["MM_formRegisterAforo"])) && ($_POST["MM_formRegisterAforo"] =
     $peso = filter_input(INPUT_POST, 'peso', FILTER_VALIDATE_FLOAT);
     $fechaActual = $_POST['fecha_registro'] ?? date('Y-m-d');
     $nombres = $_POST['nombres'];
-    // Usar fecha actual si no se proporciona
 
     // Verificar campos obligatorios
     if (isEmpty([$matricula, $peso, $fechaActual])) {
@@ -48,7 +41,7 @@ if ((isset($_POST["MM_formRegisterAforo"])) && ($_POST["MM_formRegisterAforo"] =
     $foto_aforo = manejarImagenSubida('foto_aforo', "../assets/images/", 5000);
 
     // Insertar aforo
-    $insertAforo = $connection->prepare("INSERT INTO aforos (matricula_empresa, fecha_registro, peso, foto,documento) VALUES (:matricula, :fecha_registro, :peso, :foto_aforo, :documento)");
+    $insertAforo = $connection->prepare("INSERT INTO aforos (matricula_empresa, fecha_registro, peso, foto, documento) VALUES (:matricula, :fecha_registro, :peso, :foto_aforo, :documento)");
     $insertAforo->bindParam(':matricula', $matricula);
     $insertAforo->bindParam(':fecha_registro', $fechaActual);
     $insertAforo->bindParam(':peso', $peso);
@@ -139,23 +132,28 @@ function manejarReporteMensual($matricula, $peso, $fechaActual)
         $insertReporte->execute();
     }
 }
+
 // Lógica para el corte mensual
 $currentMonth = date('m');
 $currentYear = date('Y');
-// Verificar si ya se ha registrado una fecha de corte en la sesión
-if (!isset($_SESSION['fecha_corte'])) {
+
+// Verificar la fecha de corte desde la base de datos
+$queryCorte = $connection->prepare("SELECT fecha_corte FROM reporte_mensual WHERE mes = :mes AND anio = :anio");
+$queryCorte->bindParam(":mes", $currentMonth);
+$queryCorte->bindParam(":anio", $currentYear);
+$queryCorte->execute();
+$corteData = $queryCorte->fetch(PDO::FETCH_ASSOC);
+
+if (!$corteData || empty($corteData['fecha_corte'])) {
     // Verificar si es el último día del mes
     if (date('d') == date('t')) {
-        // Guardar la fecha de corte en una variable de sesión
-        $_SESSION['fecha_corte'] = date('Y-m-d H:i:s'); // Fecha y hora actual del corte
-        // Preparar la consulta para actualizar el peso total a 0
-        $corteQuery = $connection->prepare("UPDATE reporte_mensual 
-                                            SET peso_total = 0 
-                                            WHERE mes = :mes 
-                                              AND anio = :anio");
-        // Enlazar los parámetros del mes y año actuales
+        // Guardar la fecha de corte en la base de datos
+        $corteQuery = $connection->prepare("UPDATE reporte_mensual SET fecha_corte = :fecha_corte WHERE mes = :mes AND anio = :anio");
+        $corteFecha = date('Y-m-d H:i:s'); // Fecha y hora actual del corte
+        $corteQuery->bindParam(":fecha_corte", $corteFecha);
         $corteQuery->bindParam(":mes", $currentMonth);
         $corteQuery->bindParam(":anio", $currentYear);
+        
         // Ejecutar la consulta de corte mensual
         if ($corteQuery->execute()) {
 ?>
@@ -166,16 +164,14 @@ if (!isset($_SESSION['fecha_corte'])) {
                 aria-atomic="true">
                 <div class="toast-header">
                     <div class="d-flex w-100 justify-content-between flex-wrap">
-                        <!-- Columna izquierda (Título y icono) -->
                         <div class="d-flex align-items-center">
                             <i class="bx bx-check me-2"></i>
                             <div class="fw-semibold">Notificacion</div>
                         </div>
-
                     </div>
                 </div>
                 <div class="toast-body">
-                    <?php echo "Corte mensual realizado en la fecha: " . $_SESSION['fecha_corte']; ?>
+                    <?php echo "Corte mensual realizado en la fecha: " . $corteFecha; ?>
                 </div>
             </div>
         </div>
@@ -186,35 +182,11 @@ if (!isset($_SESSION['fecha_corte'])) {
             echo '<div class="row g-0">
     <div class="col-12 ui-bg-overlay-container p-3">
         <div class="alert alert-danger" role="alert">
-            Error al realizar el corte mensual. Por favor, inténtelo de nuevo.
+            Error al realizar el corte mensual. Por favor, inténtalo de nuevo.
         </div>
     </div>
 </div>';
         }
     }
-} else {
-    ?>
-<div class="row g-0">
-    <div class="col-12 ui-bg-overlay-container p-3">
-        <div class="toast-container w-100">
-            <div class="bs-toast toast fade show bg-primary w-100" role="alert" aria-live="assertive"
-                aria-atomic="true">
-                <div class="toast-header">
-                    <div class="d-flex w-100 justify-content-between flex-wrap">
-                        <!-- Columna izquierda (Título y icono) -->
-                        <div class="d-flex align-items-center">
-                            <i class="bx bx-check me-2"></i>
-                            <div class="fw-semibold">Notificacion</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="toast-body">
-                    <?php echo "Corte mensual realizado en la fecha: " . $_SESSION['fecha_corte']; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<?php
 }
 ?>
