@@ -13,7 +13,7 @@
                         document.write(new Date().getFullYear());
                         </script>
                         , Todos los derechos reservados, diseñado y desarrollado por
-                        <a href="#" class="footer-link fw-bolder">Alejandro Muñoz - Juan Lopez</a>
+                        <a href="#" class="footer-link fw-bolder">URBES</a>
                     </div>
                     <div>
                         <a href="index.php?logout" class="btn btn-sm btn-outline-danger"><i
