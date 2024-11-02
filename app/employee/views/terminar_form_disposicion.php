@@ -101,7 +101,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     ?>
                                 <!-- hora_inicio -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label class="form-label" for="hora_inicio">Hora Inicio de Recolección</label>
+                                    <label class="form-label" for="hora_inicio">Hora Inicio </label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_inicio_span" class="input-group-text">
                                             <i class="fas fa-clock"></i>
@@ -113,7 +113,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                 </div>
                                 <!-- hora_finalizacion -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label class="form-label" for="hora_finalizacion">Hora Fin de Recolección</label>
+                                    <label class="form-label" for="hora_finalizacion">Hora Fin </label>
                                     <div class="input-group input-group-merge">
                                         <span id="hora_finalizacion_span" class="input-group-text">
                                             <i class="fas fa-clock"></i>
@@ -155,8 +155,8 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="number" value="<?= $data['km_inicio'] ?>" readonly="readonly"
-                                            class="form-control ps-2" id="kilometraje"
+                                        <input type="number" step="0.001" value="<?= $data['km_inicio'] ?>"
+                                            readonly="readonly" class="form-control ps-2" id="kilometraje"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="number" step="0.01" min="0" maxlength="10"
+                                        <input type="number" step="0.001" min="0" maxlength="10"
                                             class="form-control ps-2" name="kilometraje_final" id="kilometraje_final"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
@@ -191,7 +191,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="number" step="0.01" min="0"
+                                        <input type="number" step="0.001" min="0"
                                             value="<?= $data['horometro_inicio'] ?>" readonly="readonly"
                                             class="form-control ps-2" id="horometro" placeholder="Ingresar horometro" />
                                     </div>
@@ -202,13 +202,13 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="number" step="0.01" min="0" required class="form-control ps-2"
+                                        <input type="number" step="0.001" min="0" required class="form-control ps-2"
                                             id="horometro_final" name="horometro_final"
                                             placeholder="Ingresar horometro final" />
                                     </div>
                                 </div>
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <label for="ciudad" class="form-label">Ciudad de Recoleccion</label>
+                                    <label for="ciudad" class="form-label">Ciudad </label>
                                     <div class="input-group input-group-merge">
                                         <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
                                         <input type="text" class="form-control ps-2" id="ciudad" name="ciudad"
@@ -222,8 +222,19 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-weight"></i></span>
-                                        <input type="number" step="0.01" min="0" class="form-control ps-2"
+                                        <input type="number" step="0.001" min="0" class="form-control ps-2"
                                             name="toneladas" id="toneladas" placeholder="Ingresar tonelada" />
+                                    </div>
+                                </div>
+                                <!-- foto toneladas -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="foto_kilometraje_final">Foto Toneladas </label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-camera"></i></span>
+                                        <input type="file" accept="image/*" class="form-control ps-2"
+                                            name="foto_toneladas" id="foto_toneladas" />
+
                                     </div>
                                 </div>
                                 <!-- galones -->
@@ -232,8 +243,20 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-gas-pump"></i></span>
-                                        <input type="number" step="0.01" min="0" class="form-control ps-2"
+                                        <input type="number" step="0.001" min="0" class="form-control ps-2"
                                             name="galones" id="galones" placeholder="Ingresar galones" />
+                                    </div>
+                                </div>
+
+                                <!-- foto toneladas -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                    <label class="form-label" for="foto_kilometraje_final">Foto Galones </label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="nombre_area-span" class="input-group-text"><i
+                                                class="fas fa-camera"></i></span>
+                                        <input type="file" accept="image/*" class="form-control ps-2"
+                                            name="foto_galones" id="foto_galones" />
+
                                     </div>
                                 </div>
                                 <!-- observaciones -->

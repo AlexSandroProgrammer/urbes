@@ -164,9 +164,9 @@ if (isset($_GET['id_registro'])) {
     <?php
         require_once("../components/footer.php");
     } else {
-        showErrorOrSuccessAndRedirect("error", "Error de ruta", "Los datos del Registro Mecanica Veh. Compactador no fueron encontrados", "lista_areas_publicas.php");
+        showErrorOrSuccessAndRedirect("error", "Error de ruta", "Los datos del Registro Mecanica Veh. Compactador no fueron encontrados", "mecanica_vehiculo.php");
     }
 } else {
-    showErrorOrSuccessAndRedirect("error", "Error de ruta", "Los datos del Registro Mecanica Veh. Compactador no fueron encontrados", "lista_areas_publicas.php");
+    showErrorOrSuccessAndRedirect("error", "Error de ruta", "Los datos del Registro Mecanica Veh. Compactador no fueron encontrados", "mecanica_vehiculo.php");
 }
     ?>

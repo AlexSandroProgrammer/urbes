@@ -37,7 +37,7 @@ require_once("../controllers/AuthController.php");
                         </div>
                         <div class="input-group input-group-merge">
                             <span class="input-group-text"><i class="bx bx-lock-open-alt"></i></span>
-                            <input type="password" minlength="6" required maxlength="30" id="password"
+                            <input type="password" minlength="3" required maxlength="30" id="password"
                                 class="form-control" name="password" placeholder="Ingresa tu contraseña"
                                 aria-describedby="password" />
                             <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>

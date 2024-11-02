@@ -84,7 +84,7 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="documento-icon" class="input-group-text"><i
                                                 class="fas fa-id-card"></i></span>
-                                        <input type="text" minlength="6" maxlength="10" readonly
+                                        <input type="text" minlength="5" maxlength="10" readonly
                                             value="<?= $documento ?>" class="form-control ps-2" required id="documento"
                                             name="documento" placeholder="Ingresa tu numero de documento" />
                                     </div>
@@ -148,7 +148,7 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="number" step="0.01" min="0" required class="form-control ps-2"
+                                        <input type="number" step="0.001" min="0" required class="form-control ps-2"
                                             name="horometro" id="horometro" placeholder="Ingresar horometro" />
                                     </div>
                                 </div>

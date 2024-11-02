@@ -18,7 +18,7 @@ $tipo_usuario = $type['id_tipo_usuario'];
 if ($tipo_usuario != 3) {
     // El usuario no es un conductor, redirige al index con un mensaje de error
     showErrorOrSuccessAndRedirect("error", "Error de usuario", "No eres un empleado por lo tanto no puedes ingresar a este formulario", "index.php");
-    exiit();
+    exit();
 }
 
 // Preparamos la consulta para buscar el usuario

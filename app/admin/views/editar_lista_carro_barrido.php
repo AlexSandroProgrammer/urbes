@@ -101,7 +101,7 @@ $zonas_seleccionadas = explode('__', $carro_barrido['zonas_seleccionadas']);
                                     <label class="form-label" for="peso">Peso</label>
                                     <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="fas fa-weight-hanging"></i></span>
-                                        <input type="number" class="form-control" name="peso" step="0.01"
+                                        <input type="number" class="form-control" name="peso" step="0.001"
                                             value="<?= $carro_barrido['peso'] ?>" placeholder="Ingresa el peso en kg"
                                             required />
                                     </div>

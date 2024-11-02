@@ -51,7 +51,7 @@ $vehiculos = $getVehiculos->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="input-group input-group-merge">
                                                 <span id="nombre_area-span" class="input-group-text"><i
                                                         class="fas fa-layer-group"></i></span>
-                                                <input type="text" required minlength="2" maxlength="20" autofocus
+                                                <input type="text" required minlength="2" maxlength="50" autofocus
                                                     class="form-control" name="vehiculo" id="vehiculo"
                                                     placeholder="Ingrese el nombre del vehiculo" />
                                             </div>

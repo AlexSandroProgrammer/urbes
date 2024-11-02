@@ -347,7 +347,7 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="Empresas.php" class="menu-link">
+                                <a href="empresas.php" class="menu-link">
                                     <div data-i18n="Error">Lista de Empresas</div>
                                 </a>
                             </li>
@@ -369,11 +369,24 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-star"></i>
-                            <div data-i18n="Misc">Rutas</div>
+                            <div data-i18n="Misc">Rutas Barrido</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
                                 <a href="zonas.php" class="menu-link">
+                                    <div data-i18n="Error">Lista de Rutas</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-star"></i>
+                            <div data-i18n="Misc">Rutas Recoleccion</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="rutas.php" class="menu-link">
                                     <div data-i18n="Error">Lista de Rutas</div>
                                 </a>
                             </li>

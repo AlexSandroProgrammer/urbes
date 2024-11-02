@@ -49,15 +49,14 @@ if ((isset($_POST["MM_formUpdateZone"])) && ($_POST["MM_formUpdateZone"] == "for
     $id_ciudad = $_POST['ciudad'];
     // validamos que no hayamos recibido ningun dato vacio
     if (isEmpty([$zona, $id_zona])) {
-        showErrorFieldsEmpty("ciudades.php");
+        showErrorFieldsEmpty("zonas.php");
         exit();
     }
     // validamos que no se repitan los datos del nombre del actividad
     // CONSULTA SQL PARA VERIFICAR SI EL REGISTRO YA EXISTE EN LA BASE DE DATOS
-    $zoneQueryUpdate = $connection->prepare("SELECT * FROM zonas INNER JOIN ciudades ON zonas.id_ciudad = ciudades.id_ciudad WHERE zona = :zona AND id_zona <> :id_zona AND id_ciudad <> :id_ciudad ");
+    $zoneQueryUpdate = $connection->prepare("SELECT * FROM zonas INNER JOIN ciudades ON zonas.id_ciudad = ciudades.id_ciudad WHERE zona = :zona AND id_zona <> :id_zona ");
     $zoneQueryUpdate->bindParam(':zona', $zona);
     $zoneQueryUpdate->bindParam(':id_zona', $id_zona);
-    $zoneQueryUpdate->bindParam(':id_ciudad', $id_zona);
     $zoneQueryUpdate->execute();
     // Obtener todos los resultados en un array
     $queryZone = $zoneQueryUpdate->fetchAll(PDO::FETCH_ASSOC);

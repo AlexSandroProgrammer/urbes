@@ -40,7 +40,9 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <th class="custom-table-th">Km Final</th>
                                     <th class="custom-table-th">Foto Km Final</th>
                                     <th class="custom-table-th">Toneladas</th>
+                                    <th class="custom-table-th">Foto Toneladas</th>
                                     <th class="custom-table-th">Galones</th>
+                                    <th class="custom-table-th">Foto Galones</th>
                                     <th class="custom-table-th">Horometro Inicial</th>
                                     <th class="custom-table-th">Horometro Final</th>
                                     <th class="custom-table-th">Observaciones</th>
@@ -105,6 +107,7 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                         <p>Sin foto</p>
                                     </td>
                                     <?php } ?>
+
                                     <td class="custom-table-th">
                                         <?php echo !empty($disposicion['km_fin']) ? $disposicion['km_fin'] : 'No hay registros'; ?>
                                     </td>
@@ -127,9 +130,41 @@ $disposiciones = $query->fetchAll(PDO::FETCH_ASSOC);
                                     <td class="custom-table-th">
                                         <?php echo !empty($disposicion['toneladas']) ? $disposicion['toneladas'] : 'No hay registros'; ?>
                                     </td>
+                                    <?php if (isset($disposicion['foto_tonelada']) && !empty($disposicion['foto_tonelada'])) { ?>
+                                    <td class="avatar">
+                                        <img src="../../employee/assets/images/<?php echo $disposicion['foto_tonelada'] ?>"
+                                            alt class="w-px-100 h-px-100 rounded-circle" />
+                                        <button class="btn btn-primary mt-2 view-photo-btn"
+                                            data-photo="../../employee/assets/images/<?php echo $disposicion['foto_tonelada'] ?>">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <?php } else { ?>
+                                    <td class="avatar">
+                                        <img src="../../employee/assets/images/perfil_sin_foto.jpg" alt
+                                            class="w-px-100 mb-3 h-px-100 rounded-circle" />
+                                        <p>Sin foto</p>
+                                    </td>
+                                    <?php } ?>
                                     <td class="custom-table-th">
                                         <?php echo !empty($disposicion['galones']) ? $disposicion['galones'] : 'No hay registros'; ?>
                                     </td>
+                                    <?php if (isset($disposicion['foto_galones']) && !empty($disposicion['foto_galones'])) { ?>
+                                    <td class="avatar">
+                                        <img src="../../employee/assets/images/<?php echo $disposicion['foto_galones'] ?>"
+                                            alt class="w-px-100 h-px-100 rounded-circle" />
+                                        <button class="btn btn-primary mt-2 view-photo-btn"
+                                            data-photo="../../employee/assets/images/<?php echo $disposicion['foto_galones'] ?>">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <?php } else { ?>
+                                    <td class="avatar">
+                                        <img src="../../employee/assets/images/perfil_sin_foto.jpg" alt
+                                            class="w-px-100 mb-3 h-px-100 rounded-circle" />
+                                        <p>Sin foto</p>
+                                    </td>
+                                    <?php } ?>
                                     <td><?php echo $disposicion['horometro_inicio'] ?></td>
                                     <td class="custom-table-th">
                                         <?php echo !empty($disposicion['horometro_fin']) ? $disposicion['horometro_fin'] : 'No hay registros'; ?>

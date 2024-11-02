@@ -194,7 +194,7 @@ WHERE
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="number" step="0.01" value="<?= $data['km_inicio'] ?>" required
+                                        <input type="number" step="0.001" value="<?= $data['km_inicio'] ?>" required
                                             class="form-control ps-2" name="km_inicio" id="kilometraje"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
@@ -235,7 +235,7 @@ WHERE
                                 <input type="hidden" name="foto_kilometraje_inicial_old"
                                     value="<?= $data['foto_kilometraje_inicial'] ?>">
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <p class="text-danger">No se adjunto ninguna imagen de kilometraje inicial</p>
+
                                     <label class="form-label" for="foto_kilometraje_inicial">Foto del Kilometraje
                                         Inicial</label>
                                     <div class="input-group input-group-merge">
@@ -255,7 +255,7 @@ WHERE
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="number" step="0.01" min="1" value="<?= $data['km_fin'] ?>"
+                                        <input type="number" step="0.001" min="1" value="<?= $data['km_fin'] ?>"
                                             class="form-control ps-2" name="km_fin" id="km_fin"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
@@ -329,7 +329,6 @@ WHERE
                                 <input type="hidden" name="foto_kilometraje_final_old"
                                     value="<?= $data['foto_kilometraje_final'] ?>">
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
-                                    <p class="text-danger">No se adjunto ninguna imagen de kilometraje final</p>
                                     <label class="form-label" for="foto_kilometraje_final">Foto del Kilometraje
                                         Final</label>
                                     <div class="input-group input-group-merge">
@@ -385,7 +384,7 @@ WHERE
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="number" minlength="1" maxlength="10" required
+                                        <input type="number" min="0" step="0.001" required
                                             onkeypress="return(multiplenumber(event));"
                                             value="<?= $data['horometro_inicio'] ?>" class="form-control" id="horometro"
                                             name="horometro_inicio" placeholder="Ingresar horometro" />
@@ -397,7 +396,7 @@ WHERE
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="number" step="0.01" min="0" required
+                                        <input type="number" step="0.001" min="0" required
                                             value="<?= $data['horometro_fin'] ?>" class="form-control"
                                             id="horometro_final" name="horometro_fin"
                                             placeholder="Ingresar horometro final" />

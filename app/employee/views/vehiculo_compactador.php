@@ -10,17 +10,27 @@ $queryUser->execute();
 $user = $queryUser->fetch(PDO::FETCH_ASSOC);
 // nombre completo
 $nombre_completo = $user['nombres'] . ' ' . $user['apellidos'];
+$id_city = $user['id_ciudad'];
 // fecha inicio
 $fecha_inicio = date('Y-m-d');
 // validamos que sea un conductor
 $tipo_usuario = $_SESSION['id_rol'];
 
 if ($tipo_usuario != 4) {
-    // El usuario no es un conductor, redirige al index con un mensaje de error
-    showErrorOrSuccessAndRedirect("error", "Error de usuario", "No eres un conductor por lo tanto no puedes ingresar a este formulario", "index.php");
-    exit();
+// El usuario no es un conductor, redirige al index con un mensaje de error
+showErrorOrSuccessAndRedirect("error", "Error de usuario", "No eres un conductor por lo tanto no puedes ingresar a este
+formulario", "index.php");
+exit();
 }
+
+$queryZona = $connection->prepare("SELECT * FROM rutasr INNER JOIN ciudades ON rutasr.id_ciudad = ciudades.id_ciudad WHERE rutasr.id_ciudad  = :id_ciudad");
+$queryZona->bindParam(":id_ciudad", $id_city);
+$queryZona->execute();
+$zonas = $queryZona->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+
+
 <!-- Content wrapper -->
 <div class="content-wrapper">
     <!-- Content -->
@@ -133,6 +143,7 @@ if ($tipo_usuario != 4) {
                                 <?php
                                 }
                                 ?>
+
                                 <!-- hora_inicio -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
                                     <label class="form-label" for="hora_inicio">Hora Inicio de Recolección</label>
@@ -172,7 +183,32 @@ if ($tipo_usuario != 4) {
 
                                     </div>
                                 </div>
-
+                                <!-- rutas -->
+                                <div class="mb-3 col-12">
+                                    <label class="form-label">Selecciona las Rutas:</label>
+                                    <div class="row">
+                                        <?php if (!empty($zonas)): ?>
+                                        <?php foreach ($zonas as $index => $zona): ?>
+                                        <!-- Columna con un ancho específico (puedes ajustar el tamaño según sea necesario) -->
+                                        <div class="col-md-6 col-lg-4 mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="rutas[]"
+                                                        id="rutas" value="<?= $zona['id_ruta'] ?>">
+                                                    <label class="form-check-label ms-2" for="rutas">
+                                                        <?= htmlspecialchars($zona['ruta']) ?>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php endforeach; ?>
+                                        <?php else: ?>
+                                        <div class="alert alert-info" role="alert">
+                                            No hay zonas disponibles para esta ciudad.
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
 
                                 <!-- kilometraje -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-4">
@@ -180,7 +216,7 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="number" step="0.01" min="0" class="form-control ps-2"
+                                        <input type="number" step="0.001" min="0" class="form-control ps-2"
                                             name="kilometraje" id="kilometraje" placeholder="Ingresar kilometraje" />
                                     </div>
                                 </div>
@@ -190,7 +226,7 @@ if ($tipo_usuario != 4) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="number" step="0.01" min="0" required class="form-control ps-2"
+                                        <input type="number" step="0.001" min="0" required class="form-control ps-2"
                                             name="horometro" id="horometro" placeholder="Ingresar horometro" />
                                     </div>
                                 </div>

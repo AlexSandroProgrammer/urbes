@@ -71,10 +71,10 @@ $states = $getStates->fetchAll(PDO::FETCH_ASSOC);
                                     <?php
                                     foreach ($states as $state) {
                                     ?>
-                                        <tr>
-                                            <td><?php echo $state['id_estado'] ?></td>
-                                            <td><?php echo $state['estado'] ?></td>
-                                        </tr>
+                                    <tr>
+                                        <td><?php echo $state['id_estado'] ?></td>
+                                        <td><?php echo $state['estado'] ?></td>
+                                    </tr>
                                     <?php
                                     }
                                     ?>

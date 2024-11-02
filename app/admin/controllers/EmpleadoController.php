@@ -17,7 +17,7 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
     $ciudad = $_POST['ciudad'];
     $parentezco_familiar = $_POST['parentezco_familiar'];
     $fecha_inicio = $_POST['fecha_inicio'];
-    $fecha_fin = $_POST['fecha_fin'];
+    $fecha_fin = isset($_POST['fecha_fin']) && $_POST['fecha_fin'] !== '' ? $_POST['fecha_fin'] : null;
     $estado = $_POST['estado'];
     $eps = $_POST['eps'];
     $arl = $_POST['arl'];
@@ -39,7 +39,6 @@ if ((isset($_POST["MM_formRegisterEmployee"])) && ($_POST["MM_formRegisterEmploy
         $arl,
         $password,
         $fecha_inicio,
-        $fecha_fin,
         $ciudad,
         $rh,
         $tipo_rol

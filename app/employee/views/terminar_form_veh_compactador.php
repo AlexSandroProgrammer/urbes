@@ -21,18 +21,51 @@ $fecha_final = date('Y-m-d');
 if (isNotEmpty([$_GET['stmp']])) {
     $stmp = $_GET['stmp'];
     // Preparamos la consulta para obtener los datos del registro
-    $query = "SELECT vehiculo_compactador.*, labores.id_labor, labores.labor, vehiculos.placa, vehiculos.vehiculo, usuarios.documento, usuarios.nombres, usuarios.apellidos, ciudades.id_ciudad, ciudades.ciudad, estados.id_estado,estados.estado FROM vehiculo_compactador INNER JOIN labores ON vehiculo_compactador.id_labor = labores.id_labor INNER JOIN vehiculos ON vehiculo_compactador.id_vehiculo = vehiculos.placa INNER JOIN usuarios ON vehiculo_compactador.documento = usuarios.documento JOIN ciudades ON vehiculo_compactador.ciudad = ciudades.id_ciudad INNER JOIN estados ON vehiculo_compactador.id_estado = estados.id_estado WHERE vehiculo_compactador.id_registro_veh_compactador = :id_registro_veh_compact;";
-    // Ejecutamos la query
-    $execute = $connection->prepare($query);
-    $execute->bindParam(":id_registro_veh_compact", $stmp);
-    $execute->execute();
-    $data = $execute->fetch(PDO::FETCH_ASSOC);
+$query = "
+    SELECT 
+        vehiculo_compactador.*,
+        labores.id_labor,
+        labores.labor,
+        vehiculos.placa,
+        vehiculos.vehiculo,
+        usuarios.documento,
+        usuarios.nombres,
+        usuarios.apellidos,
+        ciudades.id_ciudad,
+        ciudades.ciudad,
+        estados.id_estado,
+        estados.estado
+        
+    FROM 
+        vehiculo_compactador 
+    INNER JOIN 
+        labores ON vehiculo_compactador.id_labor = labores.id_labor 
+    INNER JOIN 
+        vehiculos ON vehiculo_compactador.id_vehiculo = vehiculos.placa 
+    INNER JOIN 
+        usuarios ON vehiculo_compactador.documento = usuarios.documento 
+    JOIN 
+        ciudades ON vehiculo_compactador.ciudad = ciudades.id_ciudad 
+    INNER JOIN 
+        estados ON vehiculo_compactador.id_estado = estados.id_estado 
+ 
+    WHERE 
+        vehiculo_compactador.id_registro_veh_compactador = :id_registro_veh_compact;
+";
+
+// Ejecutamos la query
+$execute = $connection->prepare($query);
+$execute->bindParam(":id_registro_veh_compact", $stmp);
+$execute->execute();
+$data = $execute->fetch(PDO::FETCH_ASSOC);
+    
     if (isEmpty([$data])) {
         showErrorOrSuccessAndRedirect('error', "Lo sentimos...!", "Error al momento de obtener los datos del registro ", "index.php");
         exit();
     }
     // CONSULTA PARA TRAER DETALLE DE TRIPULACION
     $id_registro = $data['id_registro_veh_compactador'];
+
     $employees = $connection->prepare("SELECT * FROM detalle_tripulacion INNER JOIN usuarios ON detalle_tripulacion.documento = usuarios.documento WHERE id_registro = :id_registro");
     $employees->bindParam(":id_registro", $id_registro);
     $employees->execute();
@@ -40,6 +73,15 @@ if (isNotEmpty([$_GET['stmp']])) {
     if (isEmpty([$detalle])) {
         echo 'No funciono';
     }
+    $rutas = $connection->prepare("SELECT * FROM detalle_rutas INNER JOIN rutasr ON detalle_rutas.id_ruta= rutasr.id_ruta WHERE id_registro = :id_registro");
+    $rutas->bindParam(":id_registro", $id_registro);
+    $rutas->execute();
+    $ruta = $rutas->fetchAll(PDO::FETCH_ASSOC);
+    if (isEmpty([$rutas])) {
+        echo 'No funciono';
+    }
+
+    
 
 ?>
 <!-- Content wrapper -->
@@ -165,7 +207,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="number" step="0.01" value="<?= $data['km_inicio'] ?>"
+                                        <input type="number" step="0.001" value="<?= $data['km_inicio'] ?>"
                                             readonly="readonly" required class="form-control ps-2" id="kilometraje"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
@@ -190,7 +232,7 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="kilometraje_span" class="input-group-text"><i
                                                 class="fas fa-road"></i></span>
-                                        <input type="number" step="0.01" min="0" class="form-control ps-2"
+                                        <input type="number" step="0.001" min="0" class="form-control ps-2"
                                             name="kilometraje_final" id="kilometraje_final"
                                             placeholder="Ingresar kilometraje" />
                                     </div>
@@ -212,12 +254,12 @@ if (isNotEmpty([$_GET['stmp']])) {
                                     <div class="input-group input-group-merge">
                                         <span id="horometro_span" class="input-group-text"><i
                                                 class="fas fa-clock"></i></span>
-                                        <input type="number" step="0.01" min="0" required class="form-control ps-2"
+                                        <input type="number" step="0.001" min="0" required class="form-control ps-2"
                                             id="horometro_final" name="horometro_final"
                                             placeholder="Ingresar horometro final" />
                                     </div>
                                 </div>
-                                <div class="mb-3 col-12 col-lg-6 col-xl-4">
+                                <div class="mb-3 col-12 col-lg-6 col-xl-6">
                                     <label for="ciudad" class="form-label">Ciudad de Recoleccion</label>
                                     <div class="input-group input-group-merge">
                                         <span id="ciudad-2" class="input-group-text"><i class="fas fa-city"></i></span>
@@ -226,6 +268,24 @@ if (isNotEmpty([$_GET['stmp']])) {
                                             value="<?= $data['ciudad'] ?>" />
                                     </div>
                                 </div>
+                                <!-- Mostrar todas las zonas -->
+                                <!-- Zonas en un select multiple -->
+                                <div class="mb-3 col-12 col-lg-6 col-xl-6">
+                                    <label class="form-label" for="rutas">Rutas</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="zonas_span" class="input-group-text"><i
+                                                class="fas fa-map-marker-alt"></i></span>
+                                        <select class="form-select " id="rutas" name="rutas[]" multiple readonly>
+                                            <?php 
+                                                foreach ($ruta as $rut) {
+                                                echo '<option value="' . htmlspecialchars($rut['id_ruta']) . '" selected>' . htmlspecialchars($rut['ruta']) . '</option>';
+                                                 }
+                                             ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+
                                 <div class="mb-3 col-12 col-lg-6 col-xl-8">
                                     <label for="observaciones" class="form-label">Observaciones</label>
                                     <div class="input-group input-group-merge">

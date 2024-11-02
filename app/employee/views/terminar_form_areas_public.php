@@ -177,7 +177,7 @@ $labor = $Register['labor'];
                                         <span id="documento-icon" class="input-group-text">
                                             <i class="fas fa-weight-hanging"></i>
                                         </span>
-                                        <input type="number" step="0.01" min="0" class="form-control ps-2 " required
+                                        <input type="number" step="0.001" min="0" class="form-control ps-2 " required
                                             id="peso" name="peso" placeholder="Ingresa el peso de la poda" autofocus />
                                     </div>
                                 </div>

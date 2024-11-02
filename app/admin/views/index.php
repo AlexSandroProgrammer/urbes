@@ -46,26 +46,45 @@ function calcularDiasRestantes($fecha_vencimiento)
             <!-- Alertas de vehículos con fechas cercanas de vencimiento -->
             <?php
             foreach ($vehiculos as $vehiculo) {
-                $dias_restantes_soat = calcularDiasRestantes($vehiculo['fecha_soat']);
-                $dias_restantes_tecno = calcularDiasRestantes($vehiculo['fecha_tecno']);
-                // Mostrar alerta si faltan 15 días o menos para el vencimiento del SOAT o Tecnomecánica
-                if ($dias_restantes_soat <= 15 && $dias_restantes_soat > 0) {
+                  $dias_restantes_soat = calcularDiasRestantes($vehiculo['fecha_soat']);
+                  $dias_restantes_tecno = calcularDiasRestantes($vehiculo['fecha_tecno']);
+    
+                   // Alerta para el SOAT
+                if ($dias_restantes_soat < 0) {
+                 // SOAT vencido
                     echo "
-                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-                        <strong>Alerta de SOAT:</strong> El vehículo con placa <strong>{$vehiculo['placa']}</strong> le quedan <strong>{$dias_restantes_soat} días</strong> para el vencimiento del SOAT.
-                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                    </div>";
-                }
-                if ($dias_restantes_tecno <= 15 && $dias_restantes_tecno > 0) {
-                    echo "
-                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-                        <strong>Alerta de Tecnomecánica:</strong> El vehículo con placa <strong>{$vehiculo['placa']}</strong> le quedan <strong>{$dias_restantes_tecno} días</strong> para el vencimiento de la Tecnomecánica.
-                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                    </div>";
-                }
-            }
-            ?>
-            <!-- Resto del contenido -->
+                   <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                     <strong>Alerta de SOAT:</strong> El vehículo con placa <strong>{$vehiculo['placa']}</strong> está <strong>vencido</strong> desde hace <strong>" . abs($dias_restantes_soat) . " días</strong>.
+                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                  </div>";
+             } elseif ($dias_restantes_soat             <= 15) {
+             // SOAT por vencer
+                echo "
+                <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                   <strong>Alerta de SOAT:</strong> El vehículo con placa <strong>{$vehiculo['placa']}</strong> le quedan <strong>{$dias_restantes_soat} días</strong> para el vencimiento del SOAT.
+                  <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>";
+           }
+
+      // Alerta para la Tecnomecánica
+        if ($dias_restantes_tecno < 0) {
+          // Tecnomecánica vencida
+           echo "
+             <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+               <strong>Alerta de Tecnomecánica:</strong> El vehículo con placa <strong>{$vehiculo['placa']}</strong> está <strong>vencido</strong> desde hace <strong>" . abs($dias_restantes_tecno) . " días</strong>.
+               <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+          </div>";
+      } elseif ($dias_restantes_tecno <= 15) {
+        // Tecnomecánica por vencer
+        echo "
+        <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+            <strong>Alerta de Tecnomecánica:</strong> El vehículo con placa <strong>{$vehiculo['placa']}</strong> le quedan <strong>{$dias_restantes_tecno} días</strong> para el vencimiento de la Tecnomecánica.
+            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+    }
+}
+?>
+
             <!-- Order Statistics -->
             <div class="col-md-6 col-lg-12 col-xl-6 order-0 mb-4">
                 <div class="card h-100">

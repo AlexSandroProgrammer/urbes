@@ -81,15 +81,14 @@ $id_city = $user['id_ciudad'];
                                         <span id="documento-icon" class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" minlength="6" maxlength="10" name="nombres"
+                                        <input type="text" minlength="4" maxlength="10" name="nombres"
                                             class="form-control ps-2 " readonly required
                                             value="<?php echo htmlspecialchars($nombre_completo); ?>"
                                             placeholder="Ingresa tu número de documento" autofocus />
                                     </div>
                                 </div>
 
-
-                                <!-- emoresa-->
+                                <!-- Empresa -->
                                 <div class="mb-3 col-12 col-lg-6 col-xl-6">
                                     <label for="matricula" class="form-label">Empresa</label>
                                     <div class="input-group">
@@ -112,25 +111,31 @@ $id_city = $user['id_ciudad'];
                                     </div>
                                 </div>
 
-                                <!-- Peso en KG -->
-                                <div class="mb-3 col-12 col-lg-6">
-                                    <label for="peso" class="form-label">Peso en KG</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-weight-hanging"></i></span>
-                                        <input type="number" step="0.01" min="0" class="form-control" required id="peso"
-                                            name="peso" placeholder="Ingresa el peso" autofocus />
+                                <div class="row" id="peso-foto-container">
+                                    <div class="mb-3 col-12 col-lg-6" id="peso1-container">
+                                        <label for="peso1" class="form-label">Peso en KG</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-weight-hanging"></i></span>
+                                            <input type="number" step="0.001" min="0" class="form-control" id="peso1"
+                                                name="peso1" placeholder="Ingresa el peso" autofocus />
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-12 col-lg-6" id="foto1-container">
+                                        <label for="foto_aforo1" class="form-label">Foto Aforo</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                                            <input type="file" accept="image/*" class="form-control" id="foto_aforo1"
+                                                name="foto_aforo1" />
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- Foto de Aforo -->
-                                <div class="mb-3 col-12 col-lg-6 col-xl-6">
-                                    <label for="foto_aforo" class="form-label">Foto Aforo</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
-                                        <input type="file" accept="image/*" class="form-control" name="foto_aforo"
-                                            id="foto_aforo" />
-                                    </div>
-                                </div>
+                                <button type="button"
+                                    class="btn btn-outline-success btn-sm rounded-pill d-flex justify-content-center align-items-center mx-auto mb-3"
+                                    id="add-more" style="width: 50%; height: 40px;">
+                                    <i class="fas fa-plus me-2"></i> Agregar peso y foto
+                                </button>
 
                                 <!-- Botones de acción -->
                                 <div class="mt-4">
@@ -145,9 +150,41 @@ $id_city = $user['id_ciudad'];
             </div>
         </div>
     </div>
+    <script>
+    let pesoCount = 1;
+    let fotoCount = 1;
 
+    document.getElementById('add-more').addEventListener('click', function() {
+        if (pesoCount < 5 && fotoCount < 5) {
+            pesoCount++;
+            fotoCount++;
+
+            // Crear nuevo campo de peso
+            const pesoFotoContainer = document.getElementById('peso-foto-container');
+            const newFields = `
+            <div class="mb-3 col-12 col-lg-6" id="peso${pesoCount}-container">
+                <label for="peso${pesoCount}" class="form-label">Peso en KG</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-weight-hanging"></i></span>
+                    <input type="number" step="0.001" min="0" class="form-control" id="peso${pesoCount}" name="peso${pesoCount}" placeholder="Ingresa el peso" />
+                </div>
+            </div>
+
+            <div class="mb-3 col-12 col-lg-6" id="foto${fotoCount}-container">
+                <label for="foto_aforo${fotoCount}" class="form-label">Foto Aforo</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <input type="file" accept="image/*" class="form-control" id="foto_aforo${fotoCount}" name="foto_aforo${fotoCount}" />
+                </div>
+            </div>
+        `;
+
+            // Insertar los nuevos campos al final del contenedor
+            pesoFotoContainer.insertAdjacentHTML('beforeend', newFields);
+        }
+    });
+    </script>
 
     <?php
     require_once("../components/footer.php");
     ?>
-</div>

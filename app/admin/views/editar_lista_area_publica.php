@@ -152,7 +152,7 @@ if (isset($_GET['id_registro'])) {
                                     <div class="input-group input-group-merge">
                                         <span id="peso-icon" class="input-group-text"><i
                                                 class="fas fa-weight-hanging"></i></span>
-                                        <input type="number" step="0.01" class="form-control" name="peso"
+                                        <input type="number" step="0.001" class="form-control" name="peso"
                                             value="<?php echo $areaPublica['peso'] ?>" required />
                                     </div>
                                 </div>

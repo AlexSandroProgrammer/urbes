@@ -1,7 +1,7 @@
 <?php
 function enviarAforos($datos)
 {
-    $url = 'https://script.google.com/macros/s/AKfycby_KrWS05GoP7_CRSjb1PAgiHDMzTuHj4hcHfeJ4qPIgGoFXTuohF1hFGhtRMQcem_-rA/exec'; // Reemplaza con la URL de tu aplicación web de Google Apps Script
+    $url = 'https://script.google.com/macros/s/AKfycbwr5wWo7PJMUrD8ocxcuvJXF8HtS7Puv9zKaamjq0PsQFgnGB4wR2xe4fdQmzS7XuYP2g/exec'; // Reemplaza con la URL de tu aplicación web de Google Apps Script
 
     $opciones = [
         'http' => [
@@ -23,43 +23,105 @@ function enviarAforos($datos)
 
 // Método para registrar aforo
 if ((isset($_POST["MM_formRegisterAforo"])) && ($_POST["MM_formRegisterAforo"] == "formRegisterAforo")) {
-
     // Variables del formulario
     $matricula = filter_input(INPUT_POST, 'matricula', FILTER_VALIDATE_INT);
     $documento = filter_input(INPUT_POST, 'documento', FILTER_VALIDATE_INT);
-    $peso = filter_input(INPUT_POST, 'peso', FILTER_VALIDATE_FLOAT);
+    $pesoTotal = 0; // Acumulador para el peso total
     $fechaActual = $_POST['fecha_registro'] ?? date('Y-m-d');
     $nombres = $_POST['nombres'];
 
+    // Arreglos para pesos y fotos
+    $pesos = [];
+    $fotos = [];
+
+    // Extraer pesos y fotos
+    for ($i = 1; $i <= 5; $i++) {
+        $peso = filter_input(INPUT_POST, 'peso' . $i, FILTER_VALIDATE_FLOAT);
+        $foto = $_FILES['foto_aforo' . $i] ?? null;
+
+        // Almacenar pesos
+        $pesos[$i] = $peso ? $peso : null; // Guardar null si no hay peso
+
+        if ($peso) {
+            $pesoTotal += $peso; // Sumar al peso total
+        }
+
+        // Manejar fotos
+        if ($foto) {
+            $fotos[$i] = manejarImagenSubida('foto_aforo' . $i, "../assets/images/", 5000);
+        } else {
+            $fotos[$i] = null; // Guardar null si no se sube una foto
+        }
+    }
+
     // Verificar campos obligatorios
-    if (isEmpty([$matricula, $peso, $fechaActual])) {
+    if (empty($matricula) || empty($fechaActual)) {
         showErrorFieldsEmpty("aforos.php");
         exit();
     }
 
-    // Manejo de la imagen
-    $foto_aforo = manejarImagenSubida('foto_aforo', "../assets/images/", 5000);
-
     // Insertar aforo
-    $insertAforo = $connection->prepare("INSERT INTO aforos (matricula_empresa, fecha_registro, peso, foto, documento) VALUES (:matricula, :fecha_registro, :peso, :foto_aforo, :documento)");
+    $insertAforo = $connection->prepare("
+        INSERT INTO aforos (matricula_empresa, fecha_registro, peso_1, peso_2, peso_3, peso_4, peso_5, peso, foto_1, foto_2, foto_3, foto_4, foto_5, documento) 
+        VALUES (:matricula, :fecha_registro, :peso1, :peso2, :peso3, :peso4, :peso5, :peso_total, :foto1, :foto2, :foto3, :foto4, :foto5, :documento)"
+    );
+
+    // Asignar valores a los parámetros
     $insertAforo->bindParam(':matricula', $matricula);
     $insertAforo->bindParam(':fecha_registro', $fechaActual);
-    $insertAforo->bindParam(':peso', $peso);
-    $insertAforo->bindParam(':foto_aforo', $foto_aforo);
     $insertAforo->bindParam(':documento', $documento);
+
+    // Asignar pesos
+    $insertAforo->bindParam(':peso1', $pesos[1]);
+    $insertAforo->bindParam(':peso2', $pesos[2]);
+    $insertAforo->bindParam(':peso3', $pesos[3]);
+    $insertAforo->bindParam(':peso4', $pesos[4]);
+    $insertAforo->bindParam(':peso5', $pesos[5]);
+
+    // Asignar peso total
+    $insertAforo->bindParam(':peso_total', $pesoTotal);
+
+    // Asignar fotos
+    $foto1 = $fotos[1] ?? null;
+    $foto2 = $fotos[2] ?? null;
+    $foto3 = $fotos[3] ?? null;
+    $foto4 = $fotos[4] ?? null;
+    $foto5 = $fotos[5] ?? null;
+
+    $insertAforo->bindParam(':foto1', $foto1);
+    $insertAforo->bindParam(':foto2', $foto2);
+    $insertAforo->bindParam(':foto3', $foto3);
+    $insertAforo->bindParam(':foto4', $foto4);
+    $insertAforo->bindParam(':foto5', $foto5);
+
     try {
         if ($insertAforo->execute()) {
             $id_registro = $connection->lastInsertId();
-            manejarReporteMensual($matricula, $peso, $fechaActual);
-            $registradorConcatenado = $_POST['documento'] . " (" . $_POST['nombres'] .  ")";
-            $datos = [
-                'id_registro' => $id_registro,
-                'fecha_registro' => $fechaActual,
-                'documento' => $registradorConcatenado,
-                'peso' => $peso,
-                'tipo_actividad' => 'Aforos'
-            ];
+            manejarReporteMensual($matricula, $pesoTotal, $fechaActual);
+            $registradorConcatenado = $documento . " (" . $nombres .  ")";
+
+           
+            // Enviar datos a Google Sheets
+        $datos = [
+            'id_registro' => $id_registro,
+            'fecha_registro' => $fechaActual,
+            'documento' => $registradorConcatenado,
+            'peso 1' => $pesos[1] ?? 0, // Usar 0 si no hay peso
+            'peso 2' => $pesos[2] ?? 0, // Usar 0 si no hay peso
+            'peso 3' => $pesos[3] ?? 0, // Usar 0 si no hay peso
+            'peso 4' => $pesos[4] ?? 0, // Usar 0 si no hay peso
+            'peso 5' => $pesos[5] ?? 0, // Usar 0 si no hay peso
+            'peso' => $pesoTotal,
+            'tipo_actividad' => 'Aforos'
+        ];
+
             enviarAforos($datos);
+
+            // Verificar si es el último día del mes
+            if (date('Y-m-d') == date('Y-m-t')) {
+                manejarCorteMensual($matricula, $pesoTotal);
+            }
+
             showErrorOrSuccessAndRedirect("success", "Registro Exitoso", "El formulario fue registrado correctamente.", "index.php");
         } else {
             throw new Exception("Error al registrar el aforo.");
@@ -73,7 +135,7 @@ if ((isset($_POST["MM_formRegisterAforo"])) && ($_POST["MM_formRegisterAforo"] =
 // Función para manejar la imagen subida
 function manejarImagenSubida($campo, $rutaDestino, $limiteKB)
 {
-    $permitidos = ['image/jpeg', 'image/png', 'image/jpg'];
+     $permitidos = ['image/jpeg', 'image/png', 'image/jpg'];
     if (isset($_FILES[$campo]) && is_uploaded_file($_FILES[$campo]['tmp_name'])) {
         $tipoArchivo = $_FILES[$campo]['type'];
         $tamanioArchivo = $_FILES[$campo]['size'];
@@ -133,60 +195,34 @@ function manejarReporteMensual($matricula, $peso, $fechaActual)
     }
 }
 
+// Nueva función para manejar el corte mensual
+function manejarCorteMensual($matricula, $pesoTotal)
+{
+   
+
+    $mes = date('m');
+    $anio = date('Y');
+
+    // Verificar si ya se ha realizado el corte
+    $queryCorte = $connection->prepare("SELECT * FROM reporte_mensual WHERE matricula_empresa = :matricula AND mes = :mes AND anio = :anio");
+    $queryCorte->bindParam(':matricula', $matricula);
+    $queryCorte->bindParam(':mes', $mes);
+    $queryCorte->bindParam(':anio', $anio);
+    $queryCorte->execute();
+
+    if ($queryCorte->rowCount() > 0) {
+        // Actualizar el registro del corte
+        $reporte = $queryCorte->fetch(PDO::FETCH_ASSOC);
+        $updateCorte = $connection->prepare("UPDATE reporte_mensual SET fecha_corte = NOW() WHERE id = :id");
+        $updateCorte->bindParam(":id", $reporte['id']);
+        $updateCorte->execute();
+    } else {
+        // Si no hay corte, se puede agregar un mensaje o hacer algo adicional
+        // showErrorOrSuccessAndRedirect("info", "Corte Mensual", "No hay registros para el corte mensual.", "aforos.php");
+    }
+}
+
 // Lógica para el corte mensual
 $currentMonth = date('m');
 $currentYear = date('Y');
-
-// Verificar la fecha de corte desde la base de datos
-$queryCorte = $connection->prepare("SELECT fecha_corte FROM reporte_mensual WHERE mes = :mes AND anio = :anio");
-$queryCorte->bindParam(":mes", $currentMonth);
-$queryCorte->bindParam(":anio", $currentYear);
-$queryCorte->execute();
-$corteData = $queryCorte->fetch(PDO::FETCH_ASSOC);
-
-if (!$corteData || empty($corteData['fecha_corte'])) {
-    // Verificar si es el último día del mes
-    if (date('d') == date('t')) {
-        // Guardar la fecha de corte en la base de datos
-        $corteQuery = $connection->prepare("UPDATE reporte_mensual SET fecha_corte = :fecha_corte WHERE mes = :mes AND anio = :anio");
-        $corteFecha = date('Y-m-d H:i:s'); // Fecha y hora actual del corte
-        $corteQuery->bindParam(":fecha_corte", $corteFecha);
-        $corteQuery->bindParam(":mes", $currentMonth);
-        $corteQuery->bindParam(":anio", $currentYear);
-        
-        // Ejecutar la consulta de corte mensual
-        if ($corteQuery->execute()) {
-?>
-<div class="row g-0">
-    <div class="col-12 ui-bg-overlay-container p-3">
-        <div class="toast-container w-100">
-            <div class="bs-toast toast fade show bg-primary w-100" role="alert" aria-live="assertive"
-                aria-atomic="true">
-                <div class="toast-header">
-                    <div class="d-flex w-100 justify-content-between flex-wrap">
-                        <div class="d-flex align-items-center">
-                            <i class="bx bx-check me-2"></i>
-                            <div class="fw-semibold">Notificacion</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="toast-body">
-                    <?php echo "Corte mensual realizado en la fecha: " . $corteFecha; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<?php
-        } else {
-            echo '<div class="row g-0">
-    <div class="col-12 ui-bg-overlay-container p-3">
-        <div class="alert alert-danger" role="alert">
-            Error al realizar el corte mensual. Por favor, inténtalo de nuevo.
-        </div>
-    </div>
-</div>';
-        }
-    }
-}
 ?>

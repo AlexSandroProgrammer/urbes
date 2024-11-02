@@ -39,7 +39,7 @@ function showErrorOrSuccessAndRedirect($icon, $title, $description, $location)
                     title: '$title',
                     text: '$description',
                     confirmButtonText: 'Aceptar',
-                    timer: 3000, // Tiempo en milisegundos para mostrar la advertencia
+                    timer: 300000, // Tiempo en milisegundos para mostrar la advertencia
                     timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading();
@@ -83,7 +83,7 @@ function showErrorFieldsEmpty($location)
             icon: 'error',
             title: 'Oops...',
             text: 'Algunos datos estan vacios, debes ingresar todos los datos del formulario',
-            timer: 3000, // Tiempo en milisegundos para mostrar la advertencia
+            timer: 300000, // Tiempo en milisegundos para mostrar la advertencia
             timerProgressBar: true,
         }).then(() => {
             window.location='$location'    
